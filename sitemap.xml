@@ -3,28 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://blog.carminezacc.com/programmingflutter/</loc>
+    <loc>http://www.carmine.dev/programmingflutter/</loc>
     <lastmod>2019-07-17T14:39:16+02:00</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.carminezacc.com/aboutme/</loc>
+    <loc>http://www.carmine.dev/aboutme/</loc>
     <lastmod>2019-07-04T14:39:16+02:00</lastmod>
   </url>
   
   <url>
-    <loc>http://blog.carminezacc.com/</loc>
+    <loc>http://www.carmine.dev/</loc>
     <lastmod>2019-07-17T14:39:16+02:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://blog.carminezacc.com/categories/</loc>
+    <loc>http://www.carmine.dev/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://blog.carminezacc.com/tags/</loc>
+    <loc>http://www.carmine.dev/tags/</loc>
     <priority>0</priority>
   </url>
   
