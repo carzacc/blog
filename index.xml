@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Carmine Zaccagnino&#39;s Blog</title>
-    <link>http://example.org/</link>
+    <link>http://blog.carminezacc.com/</link>
     <description>Recent content on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 17 Jul 2019 14:39:16 +0200</lastBuildDate>
     
-	<atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="http://blog.carminezacc.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Programming Flutter</title>
-      <link>http://example.org/programmingflutter/</link>
+      <link>http://blog.carminezacc.com/programmingflutter/</link>
       <pubDate>Wed, 17 Jul 2019 14:39:16 +0200</pubDate>
       
-      <guid>http://example.org/programmingflutter/</guid>
+      <guid>http://blog.carminezacc.com/programmingflutter/</guid>
       <description>Programming Flutter: Native, Cross-Platform Apps the Easy Way is the book I wrote about Flutter with the Pragmatic Bookshelf. You can find it on the official Pragmatic Bookshelf website.</description>
     </item>
     
     <item>
       <title>About Me</title>
-      <link>http://example.org/aboutme/</link>
+      <link>http://blog.carminezacc.com/aboutme/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/aboutme/</guid>
+      <guid>http://blog.carminezacc.com/aboutme/</guid>
       <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages. Even though I am Italian this blog will only contain English when it comes to natural languages. I can make no such guarantees when it comes to programming languages, even though the focus of this blog will certainly be on Flutter.
 Flutter Like many of you, I have learned about many web and mobile frameworks over the years and, when it comes to mobile especially, something was clearly missing: there was no simple way to build fast cross-platform mobile apps that also gave me the low-level access of native apps.</description>
     </item>
