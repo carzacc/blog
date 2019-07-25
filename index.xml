@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Carmine Zaccagnino&#39;s Blog</title>
-    <link>http://www.carmine.dev/</link>
+    <link>https://www.carmine.dev/</link>
     <description>Recent content on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 17 Jul 2019 14:39:16 +0200</lastBuildDate>
     
-	<atom:link href="http://www.carmine.dev/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.carmine.dev/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Programming Flutter</title>
-      <link>http://www.carmine.dev/programmingflutter/</link>
+      <link>https://www.carmine.dev/programmingflutter/</link>
       <pubDate>Wed, 17 Jul 2019 14:39:16 +0200</pubDate>
       
-      <guid>http://www.carmine.dev/programmingflutter/</guid>
+      <guid>https://www.carmine.dev/programmingflutter/</guid>
       <description>Programming Flutter: Native, Cross-Platform Apps the Easy Way is the book I wrote about Flutter with the Pragmatic Bookshelf. You can find it on the official Pragmatic Bookshelf website. Amazon allows you to pre-order the paperback version here, but if you buy the beta eBook you&amp;rsquo;ll also get a discount on the paperback when it comes out, in addition to getting the full final eBook once it comes out, so that might be better, since you can start reading it now (the content is all there already except for the appendices that will come out very soon, it just needs a bit of polish) and then enjoy the full paper book later if you prefer to read books that way.</description>
     </item>
     
     <item>
       <title>About Me</title>
-      <link>http://www.carmine.dev/aboutme/</link>
+      <link>https://www.carmine.dev/aboutme/</link>
       <pubDate>Thu, 04 Jul 2019 14:39:16 +0200</pubDate>
       
-      <guid>http://www.carmine.dev/aboutme/</guid>
+      <guid>https://www.carmine.dev/aboutme/</guid>
       <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages. Even though I am Italian this blog will only contain English when it comes to natural languages. I can make no such guarantees when it comes to programming languages, even though the focus of this blog will certainly be on Flutter.
 Flutter Like many of you, I have learned about many web and mobile frameworks over the years and, when it comes to mobile especially, something was clearly missing: there was no simple way to build fast cross-platform mobile apps that also gave me the low-level access of native apps.</description>
     </item>
