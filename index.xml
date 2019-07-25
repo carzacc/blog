@@ -26,8 +26,7 @@
       <pubDate>Thu, 04 Jul 2019 14:39:16 +0200</pubDate>
       
       <guid>https://www.carmine.dev/aboutme/</guid>
-      <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages. Even though I am Italian this blog will only contain English when it comes to natural languages. I can make no such guarantees when it comes to programming languages, even though the focus of this blog will certainly be on Flutter.
-Flutter Like many of you, I have learned about many web and mobile frameworks over the years and, when it comes to mobile especially, something was clearly missing: there was no simple way to build fast cross-platform mobile apps that also gave me the low-level access of native apps.</description>
+      <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages. Even though I am Italian this blog will only contain English when it comes to natural languages. I can make no such guarantees when it comes to programming languages, even though the focus of this blog will certainly be on Flutter. Very similar to this blog, but with some obvious content length differences, is my @carminezacc twitter account.</description>
     </item>
     
   </channel>
