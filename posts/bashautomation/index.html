@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Bash scripting for everyday actions</title>
+		<meta name="viewport" content="width=device-width">
+		
+		<link rel="stylesheet" href="https://www.carmine.dev/css/hybrid.css">
+		<link rel="stylesheet" href="https://www.carmine.dev/css/style.css">
+		<link rel="stylesheet" href="https://www.carmine.dev/css/colors-dark.css">
+
+		
+	</head>
+	<body>
+		<header id="header">
+			<h1><a href="https://www.carmine.dev/">Carmine Zaccagnino&#39;s Blog</a></h1>
+			<p></p>
+		</header>
+
+		<div id="page">
+			<div id="sidebar">
+				<nav>
+	
+		<ul class="nav">
+			
+				<li><a href="/"><span>Home</span></a></li>
+			
+				<li><a href="/aboutme"><span>What&#39;s This?</span></a></li>
+			
+		</ul>
+	
+		<ul class="nav">
+			
+				<li><a href="/programmingflutter"><span>Programming Flutter</span></a></li>
+			
+				<li><a href="http://www.carminezacc.com"><span>The Rest of My Stuff</span></a></li>
+			
+		</ul>
+	
+</nav>
+
+			</div>
+
+			<div id="content">
+				
+	<article class="post">
+		<h1><a href="https://www.carmine.dev/posts/bashautomation/">Bash scripting for everyday actions</a> </h1>
+
+		<div class="post-content">
+
+<p>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</p>
+
+<p>The great advantage of Bash shell scripting compared to writing a full CLI tool to do what we need is that it is very easy to do, especially for those familiar with the Bash shell already, but it is only feasible to build Bash scripts that can be used for a very limited range of applications.</p>
+
+<h1 id="the-problem-to-solve">The problem to solve</h1>
+
+<p>Let’s identify a problem anyone can have at some point in life: editing some files according to the folder they’re stored in.</p>
+
+<h2 id="a-relatable-if-not-too-specific-story-of-someone-who-needs-to-learn-bash-scripting">A relatable, if not too specific, story of someone who needs to learn Bash scripting</h2>
+
+<p>Let’s say you spend your summer vacation in Italy because you love when the weather is extremely hot, have heard there are beautiful cities, ancient churches, Roman Empire ruins  and you want to taste typical Italian food in the place where it all started. However much time you decide to spend, Italy isn’t too big, there are fast trains, and you decide to visit several cities. Just like any tourist, you take pictures everywhere and, by the time you’re back home, you organize your pictures in folders.</p>
+
+<h3 id="the-current-situation">The current situation</h3>
+
+<p>At this point you can at least figure out where you were when each picture was taken from the date on which it was taken from the hotel/rail/bus/domestic plane reservations you must have because rental cars with automatic transmissions are very expensive and less than 20% of Americans can drive a manual. You arrange your pictures into subfolders: you have folders for each place you visited and you put those folders in three folders called North, Center and South because it’s nice to be able to know that when you’ll look at the pictures in the future.</p>
+
+<h3 id="the-problem">The problem</h3>
+
+<p>That in particular is a problem: looking at the pictures will now require you to browse and select pictures in each subfolder manually, and that’s especially painful on some less advanced I/O devices like TV remotes.</p>
+
+<p>It would be ideal to be able to take all of those neatly organized pictures you have, put them all in one folder with a watermark telling you where you’ve taken them so it won’t look like you would have been better off just downloading some pictures from the Web when you show them to your friends (or kids) 10 years after you’ve been there.</p>
+
+<p>Doing that by hand will require another 10 years and your friends or kids will already have visited all of the places you’ve visited fifty times by the time you are done. Fortunately, there is a way to make that quick and easy, and that is by embracing Bash shell scripting.</p>
+
+<h1 id="solving-the-problem">Solving the problem</h1>
+
+<p>Solving this problem requires two different levels of difficulty depending on what operating system you’re running. If you’re running most GNU/Linux distributions or macOS, Bash is your default shell, so it’s already installed and you can go on with the next section without having to install anything else. If you’re running any other Unix or Unix-like operating system that doesn’t install Bash by default, installing Bash is generally very easy and you can find specific instructions online in the very unlikely case you don’t already know how to install a package or port called bash on your OS of choice.</p>
+
+<h2 id="running-bash-on-windows">Running Bash on Windows</h2>
+
+<p>If you’re running Windows, you’ll have to install the WSL (Windows Subsystem for Linux) by installing one of the packages available in the Windows Store that include Bash. You just need to open the Windows Store, search for Ubuntu (for example) and install it. When starting for the first time, it will prompt you to enter a username and password you’ll need to remember. The password won’t even be shown to you in the form of asterisks, in case you’re confused by the fact it seems like you’re not actually typing anything in.</p>
+
+<p>After that, you’ll be able to access Bash in any directory on your PC by running the</p>
+
+<pre><code>bash
+</code></pre>
+
+<p>command. You can exit the Bash shell by running the</p>
+
+<pre><code>exit
+</code></pre>
+
+<p>command.</p>
+
+<p>More details about how to use it will be provided in the rest of the article.</p>
+
+<h2 id="bash-scripting-the-basics">Bash scripting: the basics</h2>
+
+<p>At its simplest, a Bash script is just a list of shell commands separated by newlines or concatenated together using pipes or some of the many script-oriented constructs Bash includes.</p>
+
+<h3 id="a-quick-introduction-to-bash-and-the-unix-command-line">A quick introduction to Bash and the Unix command line</h3>
+
+<p>This section will be a very quick introduction to the usage of the Bash shell and the Unix command line in general, given that most shells are very similar when it comes to the most basic tasks. There are plenty of books available online that will teach you how to use it, many of which are aimed directly at Linux users, but they also apply to other Unix-like operating systems and to the Windows Subsystem for Linux.</p>
+
+<p>The first thing to understand about any command line interface is that it’s like using a file manager: at any point you’re operating in a specific directory, called the <em>working directory</em>. Running the command (by typing it in and then pressing enter)</p>
+
+<pre><code>pwd
+</code></pre>
+
+<p>will return the current working directory.</p>
+
+<p>The directory structure of Unix-like operating systems is a tree that branches out from the single <em>root</em> directory, the path of which is simply the character <em>/</em>. Other directories are chained after that separated by forward slashes. For example, the <em>home</em> directory at the root of the tree is found at path</p>
+
+<pre><code>/home
+</code></pre>
+
+<p>and a hypothetical <em>user</em> directory inside that would be at path</p>
+
+<pre><code>/home/user
+</code></pre>
+
+<p>Paths can be also expressed as <em>relative</em> paths, based on the current CLI working directory. The current working directory is expressed as <em>./</em> and the parent directory (the directory that contains the working directory) is expressed as <em>../</em>.</p>
+
+<p>You can change the working directory using the <code>cd</code> command followed by the path of the directory, expressed either as a relative path or an absolute path. For example, if you want to change the working directory to the parent directory, you’d write</p>
+
+<pre><code>cd ../
+</code></pre>
+
+<p>The trailing slash can be omitted and, if you’re moving into a subdirectory you can omit the ./ at the start, making the commands</p>
+
+<pre><code>cd ./Pictures/italy_pics/
+</code></pre>
+
+<p>and</p>
+
+<pre><code>cd Pictures/italy_pics
+</code></pre>
+
+<p>equivalent.</p>
+
+<p>Files can be copied using the <code>cp</code> command, which takes two arguments: the path to the file to be copied and the path where you want the copy to be created, including the file name if you want the copy to have a different name: if you have a file called pic001.png in the italy_pics subdirectory and you want to copy it to the current working directory retaining the original file name, you’d run one of the following three commands (in decreasing order of command length)</p>
+
+<pre><code>cp italy_pics/pic001.png ./pic001.png
+cp italy_pics/pic001.png ./
+cp italy_pics/pic001.png .
+</code></pre>
+
+<p>The command to move files is <code>mv</code> and you use it just like <code>cp</code>, except for the fact that it can be used to rename files by trying to move a file into the same directory it came from but with a different file name:</p>
+
+<pre><code>mv italy_pics/pic001.png italy_pics/pic1.png
+</code></pre>
+
+<p>While using the interactive shell, you can use the <em>Tab</em> keyboard button to get automatic completion of commands and arguments when there is only one choice or get a list of possible option. This is not relevant for Bash scripting, but will be more relevant in the coming articles.</p>
+
+<h2 id="running-a-bash-script">Running a Bash script</h2>
+
+<p>Bash is an interpreted language and Bash scripts are ran mostly just like .py files.</p>
+
+<p>To run a bash script saved in a file called <code>script.sh</code>, open a terminal window in the same directory as the script and run</p>
+
+<pre><code>bash script.sh
+</code></pre>
+
+<p>But there is actually a better way: just like with Python scripts, you can add a line at the top of the file, called the shebang line.</p>
+
+<p>The shebang line consists of the two characters <code>#!</code> followed by the path to the interpreter to be used to run the script. In the case of bash, it is found at (or symlinked to) /bin/bash in pretty much every environment in which Bash installed, so you can add</p>
+
+<pre><code>#!/bin/bash
+</code></pre>
+
+<p>at the very top of your script so that the shell knows what interpreter to run.</p>
+
+<p>This is useful because you can make the script executable with</p>
+
+<pre><code>chmod +x script.sh
+</code></pre>
+
+<p>and then run it just like any executable with</p>
+
+<pre><code>./script.sh
+</code></pre>
+
+<h2 id="bin">~/bin</h2>
+
+<p>If it’s a script you think you’ll need to use often, you can either add it to the systemwide binary file paths (where the packages you download are installed) or create a <code>bin</code> folder in your home directory and copy the script there. For example, rename the script file to the command to the name you want to give to the command, for example <code>myfirstscript</code> using <code>mv</code> and then create the <code>~/bin</code> directory and copy the file there with the following three commands (in an interactive Unix shell or Bash shell on Windows):</p>
+
+<pre><code>mv script.sh myfirstscript
+mkdir ~/bin
+cp myfirstscript ~/bin/
+</code></pre>
+
+<p>and you can run the script simply by running</p>
+
+<pre><code>myfirstscript
+</code></pre>
+
+<p>from any working directory as long as you’re using the same user account you used to copy the file.</p>
+
+<h2 id="writing-a-basic-bash-script">Writing a basic Bash script</h2>
+
+<p>Let’s start writing a Bash script by making a script that copies all of our organized pictures into a single directory and renameames them according to the place where they were taken. This is not quite as good as the watermark we wanted, but let’s do one thing at a time</p>
+
+<p>Open any text editor and create a file called <code>picorganizer</code> in the <code>~/bin</code> directory. The first thing you’ll need to add is the shebang line</p>
+
+<pre><code>#!/bin/bash
+</code></pre>
+
+<p>Make it executable right away by opening a terminal and running</p>
+
+<pre><code>chmod +x ~/bin/picorganizer
+</code></pre>
+
+<h2 id="what-our-script-will-actually-need-to-do">What our script will actually need to do</h2>
+
+<p>To solve the problem we have, we need to:</p>
+
+<ol>
+<li><p>List the files in the directories we need  to copy the files from</p></li>
+
+<li><p>For each file we need to take the following three actions</p>
+
+<ul>
+<li>Copy the files in the target folder</li>
+<li>rename the file to a progressive number</li>
+<li>add a watermark of the place where it was taken</li>
+</ul></li>
+</ol>
+
+<h2 id="finding-the-files-we-need-to-copy">Finding the files we need to copy</h2>
+
+<p>The example directory tree we&rsquo;ll be working with (that you can get by running the <code>tree</code> command) will be the following</p>
+
+<pre><code>italy_pics/
+├── Center
+│   ├── Assisi
+│   ├── Florence
+│   ├── Marche
+│   ├── Pisa
+│   ├── Rome_Lazio
+│   └── Siena
+├── North
+│   ├── EmiliaRomagna
+│   ├── Genoa_CinqueTerre
+│   ├── Milan_Lombardy
+│   ├── Trentino
+│   ├── Turin
+│   └── Venice
+└── South
+    ├── Bari_Apulia
+    ├── Basilicata
+    ├── Calabria
+    ├── Campobasso
+    ├── Naples_Campania
+    └── Sicily
+</code></pre>
+
+<p>where each city/region name is a directory containing the pictures taken in that place. These are example places in Italy and do not necessarily represent places I would recommend going to, don&rsquo;t judge me for a semi-pseudo-random selection of places.</p>
+
+<p>To make the script aware of what we&rsquo;re working with, we need to get a list of files and directories and store them in a Bash variable. Let&rsquo;s start by learning the command to list files and directories.</p>
+
+<p>In the Bash interactive shell, we can use the</p>
+
+<pre><code>ls
+</code></pre>
+
+<p>command to simply list the files and directories contained in the working directory, or you can run it with a path argument, like this:</p>
+
+<pre><code>ls /path/to/dir
+</code></pre>
+
+<p>to list the files and directories contained in <code>/path/to/dir</code>.</p>
+
+<p>We can save the output of the <code>ls</code> command to a variable called <code>list</code> by writing, in our Bash script, the following:</p>
+
+<pre><code>list=$(ls)
+</code></pre>
+
+<p>where <code>$(command)</code> means <em>whatever <code>command</code> prints to standard output</em>. You can then use that variable just by prefixing the variable name with <code>$</code> or by prefixing it with <code>$</code> and enclosing the variable name in square brackets: just</p>
+
+<pre><code>ls
+</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code>files = $(ls)
+echo &quot;$files&quot;
+</code></pre>
+
+<p>and to</p>
+
+<pre><code>files = $(ls)
+echo &quot;${files}&quot;
+</code></pre>
+
+<p>This is not actually what we need right now, though: Bash&rsquo;s <code>for in</code> loop is able to iterate over files in the working directory very easily, and we can just nest them and get to the pictures very quickly:</p>
+
+<pre><code>for area in *; do
+  for city in ${area}/*; do
+    for picture in ${area}/${city}/*; do
+      # do something with ${area}/${city}/${picture}
+    done
+  done
+done
+</code></pre>
+
+<p>We can simply copy them all to another directory renamed to reflect where they were taken by adding the <code>cp</code> command to the innermost <code>for</code> loop:</p>
+
+<pre><code>mkdir ../italy_pics_organized
+i=1
+for area in *; do
+  for city in ${area}/*; do
+    for picture in ${city}/*; do
+       extension=${picture##*.}
+       cityname=&quot;${city##*/}&quot;
+       cp ${picture} &quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
+       ((i++))
+    done
+  done
+done
+</code></pre>
+
+<p>There are a few things I haven&rsquo;t yet explained and used here. Now I&rsquo;ll explain them.</p>
+
+<p>First of all, Bash doesn&rsquo;t have variable types: every variable is a string and it doesn&rsquo;t implement any mathematical operators or commands directly, so we need to use arithmetic expansion, which supports some specific <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html">Shell Arithmetic operators</a>.</p>
+
+<p>The <code>${parameter##word}</code> expression used to get the city name and extension in the following way: it looks inside the <code>parameter</code> for the pattern (<code>word</code> in this notation) we specify after <code>##</code> (in our case it&rsquo;s <code>*.</code> for the extension and <code>*/</code> for the city name) and only returns the rest of the <code>parameter</code>, deleting the pattern (but keeping it in the original variable). You can find more information about this and the rest of what can be done with parameter expansion using the <code>$</code> sign <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">here</a>.</p>
+
+<h1 id="using-imagemagick-to-add-a-watermark">Using ImageMagick to Add a Watermark</h1>
+
+<p>We are doing something, and the script isn&rsquo;t going to get much more complicated than that, but we aren&rsquo;t adding a watermark yet. That&rsquo;s because there isn&rsquo;t a built-in tool to do that. No worries, though: the shell is expandable in the easiest way possible: by installing some software that provides a CLI interface.</p>
+
+<p>The tool for the job when it comes to image manipulation is <em>ImageMagick</em>, which you can install by following the instructions on its own <a href="https://imagemagick.org/script/download.php">official download page</a>.</p>
+
+<p>On Linux, what I actually recommend you to do is to install the <em>ImageMagick</em> package on Fedora/RHEL/CentOS by running</p>
+
+<pre><code>sudo dnf install ImageMagick
+</code></pre>
+
+<p>on Fedora or RHEL/CentOS 8 or by running</p>
+
+<pre><code>sudo yum install ImageMagick
+</code></pre>
+
+<p>on RHEL/CentOS 7 or earlier.</p>
+
+<p>On Ubuntu, you can install the <em>imagemagick</em> package using APT by running</p>
+
+<pre><code>sudo apt install imagemagick
+</code></pre>
+
+<p>When using WSL with Ubuntu installed on top of Windows, you need to follow instructions for installation on Ubuntu while inside the Bash shell interface.</p>
+
+<p>ImageMagick provides, among other things, a command called <code>convert</code>, which can be used, in conjunction with the <code>annotate</code> functionality, to add watermarks to images by running a command that looks like the following:</p>
+
+<pre><code>convert input.png -fill &quot;textcolor&quot; -pointsize textsize -gravity WhereTheTextWillBe -annotate +offsetHorizontal+offsetVertical &quot;watermark text&quot; output.png
+</code></pre>
+
+<p>where you need to replace <code>textcolor</code> with either a color name or an RGB hexadecimal color code (e.g. <code>green</code> or <code>#76ff03</code>), <code>textsize</code> with a number specifying the size of the font (e.g. <code>10</code> for a small font, <code>100</code> for a big font), <code>WhereTheText</code> will have to be replaced with something along the lines of <code>NorthEast</code> or <code>SouthWest</code> according to where you want the text to be, and <code>paddingHorizontal</code> and <code>paddingVertical</code> are offsets that can be used to move the text around or, more often, away from the edges. <code>input.png</code> and <code>output.png</code> have to be replaced with paths to the input and output pictures.</p>
+
+<p>For our example, the command I chose, with <code>${picture}</code>, <code>${watermarktext}</code> and <code>${saveto}</code> being variables, is:</p>
+
+<pre><code>convert ${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermarktext}&quot; &quot;${saveto}&quot;
+</code></pre>
+
+<p>So the final script is:</p>
+
+<pre><code>#!/bin/bash
+mkdir ../italy_pics_organized
+i=1
+for area in *; do
+  for city in ${area}/*; do
+    for picture in ${city}/*.jpg; do
+      cityname=&quot;${city##*/}&quot;
+      extension=&quot;${picture##*.}&quot;
+      saveto=&quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
+      watermark=&quot;${cityname} (${area})&quot;
+      convert ${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermark}&quot; &quot;${saveto}&quot;
+      ((i++))
+    done
+  done
+done
+</code></pre>
+
+<h1 id="tips-for-the-future">Tips For the Future</h1>
+
+<p>Here are a few things I didn&rsquo;tell you you might need to know in the future when working with Bash or browsing Bash-related documentation.</p>
+
+<h2 id="the-difference-between-and">The Difference Between # and $</h2>
+
+<p>Usually, when reading documentation about Unix command line usage (including the sections of my <a href="http://carmine.dev/programmingflutter/">book about cross-platform mobile app development</a> that concern Linux installation or CLI usage, for example) you might find that the commands are prefixed with the character <code>$</code>, like in the following example:</p>
+
+<pre><code>$ ls -alh
+</code></pre>
+
+<p>or are prefixed with <code>#</code>, like in the following example:</p>
+
+<pre><code># vim /etc/fstab
+</code></pre>
+
+<p>Those prefixed with <code>$</code> are meant to be executed as an unprivileged, regular user. Those prefixed with <code>#</code> are meant to be executed by the <code>root</code> account or by using <code>sudo</code>.</p>
+
+<h2 id="don-t-delete-your-stuff-a-not-so-funny-anecdote">Don&rsquo;t Delete Your Stuff: a (Not So) Funny Anecdote</h2>
+
+<p>You might want to clean up and use the command</p>
+
+<pre><code>rm -rf *
+</code></pre>
+
+<p>if you know the working directory is going to be each of the directories in which you have pictures organized <em>the old way</em>, for example. Only use such a destructive command if you’re 100% sure there is no way for it to get executed in the wrong folder. Make sure to at least turn it into something that only deletes files with the extension you want to delete like this</p>
+
+<pre><code>rm -rf *.jpg
+rm -rf *.jpeg
+</code></pre>
+
+<p>If you’re thinking nobody would be so dumb not to think of it, there is at least one exception in the world. Some years ago I was a bit too confident and wrote a shell script that did some cleaning up afterwards. At some point during the execution of the script, it executed <code>rm -rf *</code> <em>in my home folder</em>. That’s not great.</p>
+
+<p>I only figured it out when it was halfway through deleting the Documents folder, and it had already deleted the <code>~/bin</code> folder containing, ironically, most of my commonly used (and harmless) bash scripts (some of which I already was using on some remote servers and that I was able to recover) and itself in the process. I had recent backups of most of the important stuff, so it wasn’t the end of the world for me, but I can’t say it wasn’t annoying.</p>
+
+<h2 id="the-bash-if">The Bash if</h2>
+
+<p>Bash has an <code>if</code> clause, I just didn&rsquo;t feel like adding more complication to the script (even though it would have been better for it) by adding functionality that requires its use, its basic syntax is</p>
+
+<pre><code>if [[ condition ]]; then
+  # do something
+fi
+</code></pre>
+
+<p>You can find more information about it online, and online you&rsquo;ll also find a lot more information on Bash than what it&rsquo;s made sense to include in this post.</p>
+
+<p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow this blog to know when the next post (about making a full-featured CLI tool with Python) comes out.</p>
+</div>
+
+		<p class="meta">Posted on <span class="postdate">18. September 2019</span></p>
+	</article>
+
+			</div>
+
+			<footer id="footer">
+				<p class="copyright">Powered by
+					<a href="https://gohugo.io/">Hugo</a> and the
+					<a href="https://github.com/bake/solar-theme-hugo">Solar</a>-theme.</p>
+			</footer>
+		</div>
+
+		
+	</body>
+</html>
