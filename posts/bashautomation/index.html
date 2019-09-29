@@ -48,7 +48,7 @@
 
 		<div class="post-content">
 
-<p>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</p>
+<p>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks. You can also find it on <a href="https://carmine.dev/posts/bashautomation/">my blog</a>.</p>
 
 <p>The great advantage of Bash shell scripting compared to writing a full CLI tool to do what we need is that it is very easy to do, especially for those familiar with the Bash shell already, but it is only feasible to build Bash scripts that can be used for a very limited range of applications.</p>
 
@@ -232,19 +232,19 @@ cp myfirstscript ~/bin/
 
 <pre><code>italy_pics/
 ├── Center
-│   ├── Assisi
-│   ├── Florence
-│   ├── Marche
-│   ├── Pisa
-│   ├── Rome_Lazio
-│   └── Siena
+│   ├── Assisi
+│   ├── Florence
+│   ├── Marche
+│   ├── Pisa
+│   ├── Rome_Lazio
+│   └── Siena
 ├── North
-│   ├── EmiliaRomagna
-│   ├── Genoa_CinqueTerre
-│   ├── Milan_Lombardy
-│   ├── Trentino
-│   ├── Turin
-│   └── Venice
+│   ├── EmiliaRomagna
+│   ├── Genoa_CinqueTerre
+│   ├── Milan_Lombardy
+│   ├── Trentino
+│   ├── Turin
+│   └── Venice
 └── South
     ├── Bari_Apulia
     ├── Basilicata
@@ -282,13 +282,13 @@ cp myfirstscript ~/bin/
 
 <p>is equivalent to</p>
 
-<pre><code>files = $(ls)
+<pre><code>files=$(ls)
 echo &quot;$files&quot;
 </code></pre>
 
 <p>and to</p>
 
-<pre><code>files = $(ls)
+<pre><code>files=$(ls)
 echo &quot;${files}&quot;
 </code></pre>
 
@@ -359,7 +359,7 @@ done
 
 <p>For our example, the command I chose, with <code>${picture}</code>, <code>${watermarktext}</code> and <code>${saveto}</code> being variables, is:</p>
 
-<pre><code>convert ${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermarktext}&quot; &quot;${saveto}&quot;
+<pre><code>convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermarktext}&quot; &quot;${saveto}&quot;
 </code></pre>
 
 <p>So the final script is:</p>
@@ -374,7 +374,34 @@ for area in *; do
       extension=&quot;${picture##*.}&quot;
       saveto=&quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
       watermark=&quot;${cityname} (${area})&quot;
-      convert ${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermark}&quot; &quot;${saveto}&quot;
+      convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermark}&quot; &quot;${saveto}&quot;
+      ((i++))
+    done
+  done
+done
+</code></pre>
+
+<p>After <a href="https://dev.to/moopet">Ben Sinclair</a> in the comments to this post on dev.to noticed that this wouldn&rsquo;t handle spaces in the path properly, I need to point out that you need to change the character used by Bash to separate items to loop through in the <code>for</code> loop by adding two lines at the top like the following:</p>
+
+<pre><code>IFS='
+'
+</code></pre>
+
+<p>which sets the separator to the newline character (<code>\n</code>, aka the <code>LF</code> character in character encoding specifications), so that the script ends up being this:</p>
+
+<pre><code>#!/bin/bash
+mkdir ../italy_pics_organized
+i=1
+IFS='
+'
+for area in *; do
+  for city in ${area}/*; do
+    for picture in ${city}/*.jpg; do
+      cityname=&quot;${city##*/}&quot;
+      extension=&quot;${picture##*.}&quot;
+      saveto=&quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
+      watermark=&quot;${cityname} (${area})&quot;
+      convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermark}&quot; &quot;${saveto}&quot;
       ((i++))
     done
   done
@@ -427,7 +454,9 @@ fi
 
 <p>You can find more information about it online, and online you&rsquo;ll also find a lot more information on Bash than what it&rsquo;s made sense to include in this post.</p>
 
-<p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow this blog to know when the next post (about making a full-featured CLI tool with Python) comes out.</p>
+<p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow <a href="https://carmine.dev/">my blog</a> to know when the next post (about making a full-featured CLI tool with Python) comes out. Also, if you&rsquo;re interested in mobile development, check out <a href="https://carmine.dev/programmingflutter">my book on Flutter</a>.</p>
+
+<p>Thanks to <a href="https://dev.to/moopet">Ben Sinclair on dev.to</a> for finding out I had accidentally left spaces around the assignment operator in the two <code>files=$(ls)</code> code snippets, that I should have added <code>./</code> before ${picture} so that there&rsquo;s no chance the directory name will be interpreted as an option if it starts with an hyphen and for noticing that you might have spaces in one of the directory names or in the name of one of the picture, which would have broken the script.</p>
 </div>
 
 		<p class="meta">Posted on <span class="postdate">18. September 2019</span></p>

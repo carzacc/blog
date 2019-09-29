@@ -17,7 +17,7 @@
       <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
       
       <guid>https://www.carmine.dev/posts/bashautomation/</guid>
-      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.
+      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks. You can also find it on my blog.
 The great advantage of Bash shell scripting compared to writing a full CLI tool to do what we need is that it is very easy to do, especially for those familiar with the Bash shell already, but it is only feasible to build Bash scripts that can be used for a very limited range of applications.</description>
     </item>
     
