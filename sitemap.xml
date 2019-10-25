@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.carmine.dev/posts/wandpython/</loc>
+    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/posts/bashautomation/</loc>
     <lastmod>2019-09-18T01:14:20+02:00</lastmod>
   </url>
@@ -19,7 +24,7 @@
   
   <url>
     <loc>https://www.carmine.dev/</loc>
-    <lastmod>2019-09-18T01:14:20+02:00</lastmod>
+    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -30,7 +35,7 @@
   
   <url>
     <loc>https://www.carmine.dev/posts/</loc>
-    <lastmod>2019-09-18T01:14:20+02:00</lastmod>
+    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
     <priority>0</priority>
   </url>
   

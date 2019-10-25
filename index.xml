@@ -6,10 +6,19 @@
     <description>Recent content on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 18 Sep 2019 01:14:20 +0200</lastBuildDate>
+    <lastBuildDate>Fri, 25 Oct 2019 19:12:21 +0200</lastBuildDate>
     
 	<atom:link href="https://www.carmine.dev/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title>
+      <link>https://www.carmine.dev/posts/wandpython/</link>
+      <pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/wandpython/</guid>
+      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in. I recommend you look at that first because I explain the specific problem being solved, the directory structure and offer a simple solution to the problem.</description>
+    </item>
     
     <item>
       <title>Bash scripting for everyday actions</title>
