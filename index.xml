@@ -21,24 +21,6 @@
     </item>
     
     <item>
-      <title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title>
-      <link>https://www.carmine.dev/wandpython/</link>
-      <pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate>
-      
-      <guid>https://www.carmine.dev/wandpython/</guid>
-      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description>
-    </item>
-    
-    <item>
-      <title>Bash scripting for everyday actions</title>
-      <link>https://www.carmine.dev/bashautomation/</link>
-      <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
-      
-      <guid>https://www.carmine.dev/bashautomation/</guid>
-      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</description>
-    </item>
-    
-    <item>
       <title>Bash scripting for everyday actions</title>
       <link>https://www.carmine.dev/posts/bashautomation/</link>
       <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
