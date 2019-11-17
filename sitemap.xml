@@ -1,10 +1,30 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>https://www.carmine.dev/posts/wandpython/</loc>
     <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/wandpython/</loc>
+    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/</loc>
+    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/posts/</loc>
+    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/bashautomation/</loc>
+    <lastmod>2019-09-18T01:14:20+02:00</lastmod>
   </url>
   
   <url>
@@ -23,25 +43,19 @@
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/</loc>
-    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
-    <priority>0</priority>
+    <loc>https://www.carmine.dev/author/</loc>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/author/carmine-zaccagnino/</loc>
   </url>
   
   <url>
     <loc>https://www.carmine.dev/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.carmine.dev/posts/</loc>
-    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>https://www.carmine.dev/tags/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

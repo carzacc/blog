@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Carmine Zaccagnino&#39;s Blog</title>
@@ -17,7 +17,25 @@
       <pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate>
       
       <guid>https://www.carmine.dev/posts/wandpython/</guid>
-      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in. I recommend you look at that first because I explain the specific problem being solved, the directory structure and offer a simple solution to the problem.</description>
+      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description>
+    </item>
+    
+    <item>
+      <title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title>
+      <link>https://www.carmine.dev/wandpython/</link>
+      <pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/wandpython/</guid>
+      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description>
+    </item>
+    
+    <item>
+      <title>Bash scripting for everyday actions</title>
+      <link>https://www.carmine.dev/bashautomation/</link>
+      <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/bashautomation/</guid>
+      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</description>
     </item>
     
     <item>
@@ -26,8 +44,7 @@
       <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
       
       <guid>https://www.carmine.dev/posts/bashautomation/</guid>
-      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks. You can also find it on my blog.
-The great advantage of Bash shell scripting compared to writing a full CLI tool to do what we need is that it is very easy to do, especially for those familiar with the Bash shell already, but it is only feasible to build Bash scripts that can be used for a very limited range of applications.</description>
+      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</description>
     </item>
     
     <item>
@@ -36,7 +53,7 @@ The great advantage of Bash shell scripting compared to writing a full CLI tool 
       <pubDate>Wed, 17 Jul 2019 14:39:16 +0200</pubDate>
       
       <guid>https://www.carmine.dev/programmingflutter/</guid>
-      <description>Programming Flutter: Native, Cross-Platform Apps the Easy Way is the book I wrote about Flutter with the Pragmatic Bookshelf. You can find it on the official Pragmatic Bookshelf website. Amazon allows you to pre-order the paperback version here, but if you buy the beta eBook you&amp;rsquo;ll also get a discount on the paperback when it comes out, in addition to getting the full final eBook once it comes out, so that might be better, since you can start reading it now (the content is all there already except for the appendices that will come out very soon, it just needs a bit of polish) and then enjoy the full paper book later if you prefer to read books that way.</description>
+      <description>Programming Flutter: Native, Cross-Platform Apps the Easy Way is the book I wrote about Flutter with the Pragmatic Bookshelf. You can find it on the official Pragmatic Bookshelf website.</description>
     </item>
     
     <item>
@@ -45,7 +62,16 @@ The great advantage of Bash shell scripting compared to writing a full CLI tool 
       <pubDate>Thu, 04 Jul 2019 14:39:16 +0200</pubDate>
       
       <guid>https://www.carmine.dev/aboutme/</guid>
-      <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages. Even though I am Italian this blog will only contain English when it comes to natural languages. I can make no such guarantees when it comes to programming languages, even though the focus of this blog will certainly be on Flutter. Very similar to this blog, but with some obvious content length differences, is my @carminezacc Twitter account.</description>
+      <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages.</description>
+    </item>
+    
+    <item>
+      <title>Carmine Zaccagnino</title>
+      <link>https://www.carmine.dev/author/carmine-zaccagnino/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.carmine.dev/author/carmine-zaccagnino/</guid>
+      <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages.</description>
     </item>
     
   </channel>
