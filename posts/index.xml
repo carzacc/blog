@@ -6,7 +6,7 @@
     <description>Recent content in Posts on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 18 Nov 2019 17:33:52 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2019 17:53:52 +0100</lastBuildDate>
     
 	<atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,10 +14,19 @@
     <item>
       <title>Google&#39;s Flutter Framework Could Change Software Forever</title>
       <link>https://www.carmine.dev/posts/flutterdesktopweb/</link>
-      <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
+      <pubDate>Mon, 18 Nov 2019 17:53:52 +0100</pubDate>
       
       <guid>https://www.carmine.dev/posts/flutterdesktopweb/</guid>
       <description>Google is known for moonshot projects. Often they&amp;rsquo;re just that, without much hope of being brought to fruition in the near future.</description>
+    </item>
+    
+    <item>
+      <title>Building a Full-Featured Python CLI Tool With argparse</title>
+      <link>https://www.carmine.dev/posts/argparse/</link>
+      <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/argparse/</guid>
+      <description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages.</description>
     </item>
     
     <item>
