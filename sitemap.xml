@@ -3,17 +3,22 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.carmine.dev/posts/wandpython/</loc>
-    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+    <loc>https://www.carmine.dev/</loc>
+    <lastmod>2019-11-18T17:33:52+01:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/</loc>
-    <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+    <loc>https://www.carmine.dev/posts/flutterdesktopweb/</loc>
+    <lastmod>2019-11-18T17:33:52+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.carmine.dev/posts/</loc>
+    <lastmod>2019-11-18T17:33:52+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/posts/wandpython/</loc>
     <lastmod>2019-10-25T19:12:21+02:00</lastmod>
   </url>
   
