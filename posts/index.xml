@@ -17,7 +17,7 @@
       <pubDate>Mon, 18 Nov 2019 17:53:52 +0100</pubDate>
       
       <guid>https://www.carmine.dev/posts/flutterdesktopweb/</guid>
-      <description>Google is known for moonshot projects. Often they&amp;rsquo;re just that, without much hope of being brought to fruition in the near future.</description>
+      <description>Google is known for moonshot projects. Often they&#39;re just that, without much hope of being brought to fruition in the near future.</description>
     </item>
     
     <item>
@@ -26,7 +26,7 @@
       <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
       
       <guid>https://www.carmine.dev/posts/argparse/</guid>
-      <description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages.</description>
+      <description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages. The first one was an introduction to the hypothetical problem of having to take images divided into subfolders and dump all of them in one folder while altering their name and adding text over them to know what folder they came from (hypotheticall revealing the location where the pictures were taken) to solve and a first simple solution using Bash and ImageMagick.</description>
     </item>
     
     <item>
