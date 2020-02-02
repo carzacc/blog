@@ -91,7 +91,8 @@
         </div>
         
         <div class="content mb-5">
-          <p>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</p>
+          <p><img src="/img/flutternetworkingpart1.png" alt=""></p>
+<p>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</p>
 <p>My blog is here for those who need more than that, and the first topic I&rsquo;m going to cover is how to upload a file using a multi-part/form-data POST request.</p>
 <p>You can find all of the code contained in this example in <a href="https://github.com/carzacc/form-data-post">this GitHub repository</a>.</p>
 <h2 id="what-is-a-multi-part-post-request">What is a Multi-Part POST Request</h2>
@@ -112,8 +113,8 @@
 <li>the <code>MultipartFile.fromString(key, string)</code> factory method, which attaches a text file containing the string passed to it;</li>
 <li>the <code>MultipartFile.fromPath(key, path)</code> factory method, which attaches the file found at the given path.</li>
 </ul>
-<p>In case you’re wondering <em>bytes</em> simply means <em>integers</em>. That’s all a byte is. An 8-bit integer value. A list of integers, coupled with an encoding (that can usually be inferred with the help of the extension that’s part of the file name) is all you need to get images, documents, videos, music or text.</p>
-<p>If you&rsquo;re using one of the first two, remember to set a filename using the specific named <code>filename</code> argument, as not doing that will cause issues with our back-end.</p>
+<p>In case you’re wondering, <em>bytes</em> simply means <em>integers</em>. That’s all a byte is. An 8-bit integer value. A list of integers, coupled with an encoding (that can usually be inferred with the help of the extension that’s part of the file name) is all you need to get images, documents, videos, music or text.</p>
+<p>If you&rsquo;re using one of the first two constructors for the <code>MultipartFile</code>, remember to set a filename using the specific named <code>filename</code> argument, as not doing that will cause issues with our back-end.</p>
 <p>Here are a few examples: if you have a file and a path to it, here’s how you create a multipart POST request and attach that file to the request:</p>
 <ul>
 <li>Using the default constructor you could write a function like the following:</li>
@@ -152,7 +153,7 @@ import 'package:image_picker/image_picker.dart';
 
 <p><code>uploadImage()</code> is the simplest of the functions we saw earlier to upload images: we use <code>MultipartFile.fromPath()</code> directly and return the status string of the request. That&rsquo;s going to be the <code>state</code> variable, which is what is shown in the middle of the screen to the user. The URL is the one we get from the <code>StartPage</code>.</p>
 <p>The <code>FloatingActionButton</code> is fairly simple: <code>ImagePicker.pickImage()</code> shows the familiar image picking screen to the user returns (through a <code>Future</code>) the path to the file the user picks.</p>
-<p>We use that (as part of the floating action button&rsquo;s  <code>onPressed</code> callback) together with the URL passed by the <code>StartPage</code> to the <code>uploadImage</code> function and re-render the view using <code>setState</code> to show the <code>state</code> of the request to the user.</p>
+<p>We use that (as part of the floating action button&rsquo;s  <code>onPressed</code> callback) together with the URL passed by the <code>StartPage</code> to call the <code>uploadImage</code> function and re-render the view using <code>setState</code> to show the <code>state</code> of the request to the user.</p>
 <h2 id="writing-a-simple-back-end-in-node-to-handle-multi-part-post-requests">Writing a Simple Back-End in Node to Handle Multi-Part POST Requests</h2>
 <p>For this section, the tools we&rsquo;re going to use are Node, Express and Multer. There&rsquo;s not going to be much code involved, this is a fairly simple affair.</p>
 <p>First of all, install Node and NPM according to the instructions for your operating system on <a href="https://nodejs.org/en/">Node’s official website</a>.</p>
