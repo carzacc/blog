@@ -9,7 +9,7 @@
   <meta name="description" content="">
   
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.62.2" />
+  <meta name="generator" content="Hugo 0.63.2" />
 
   <!-- plugins -->
   
@@ -181,7 +181,7 @@ cp myfirstscript ~/bin/
 </li>
 </ol>
 <h2 id="finding-the-files-we-need-to-copy">Finding the files we need to copy</h2>
-<p>The example directory tree we'll be working with (that you can get by running the <code>tree</code> command) will be the following</p>
+<p>The example directory tree we&rsquo;ll be working with (that you can get by running the <code>tree</code> command) will be the following</p>
 <pre><code>italy_pics/
 ├── Center
 │   ├── Assisi
@@ -204,8 +204,8 @@ cp myfirstscript ~/bin/
     ├── Campobasso
     ├── Naples_Campania
     └── Sicily
-</code></pre><p>where each city/region name is a directory containing the pictures taken in that place. These are example places in Italy and do not necessarily represent places I would recommend going to, don't judge me for a semi-pseudo-random selection of places.</p>
-<p>To make the script aware of what we're working with, we need to get a list of files and directories and store them in a Bash variable. Let's start by learning the command to list files and directories.</p>
+</code></pre><p>where each city/region name is a directory containing the pictures taken in that place. These are example places in Italy and do not necessarily represent places I would recommend going to, don&rsquo;t judge me for a semi-pseudo-random selection of places.</p>
+<p>To make the script aware of what we&rsquo;re working with, we need to get a list of files and directories and store them in a Bash variable. Let&rsquo;s start by learning the command to list files and directories.</p>
 <p>In the Bash interactive shell, we can use the</p>
 <pre><code>ls
 </code></pre><p>command to simply list the files and directories contained in the working directory, or you can run it with a path argument, like this:</p>
@@ -221,7 +221,7 @@ echo &quot;$files&quot;
 </code></pre><p>and to</p>
 <pre><code>files=$(ls)
 echo &quot;${files}&quot;
-</code></pre><p>This is not actually what we need right now, though: Bash's <code>for in</code> loop is able to iterate over files in the working directory very easily, and we can just nest them and get to the pictures very quickly:</p>
+</code></pre><p>This is not actually what we need right now, though: Bash&rsquo;s <code>for in</code> loop is able to iterate over files in the working directory very easily, and we can just nest them and get to the pictures very quickly:</p>
 <pre><code>for area in *; do
   for city in ${area}/*; do
     for picture in ${area}/${city}/*; do
@@ -242,11 +242,11 @@ for area in *; do
     done
   done
 done
-</code></pre><p>There are a few things I haven't yet explained and used here. Now I'll explain them.</p>
-<p>First of all, Bash doesn't have variable types: every variable is a string and it doesn't implement any mathematical operators or commands directly, so we need to use arithmetic expansion, which supports some specific <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html">Shell Arithmetic operators</a>.</p>
-<p>The <code>${parameter##word}</code> expression used to get the city name and extension in the following way: it looks inside the <code>parameter</code> for the pattern (<code>word</code> in this notation) we specify after <code>##</code> (in our case it's <code>*.</code> for the extension and <code>*/</code> for the city name) and only returns the rest of the <code>parameter</code>, deleting the pattern (but keeping it in the original variable). You can find more information about this and the rest of what can be done with parameter expansion using the <code>$</code> sign <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">here</a>.</p>
+</code></pre><p>There are a few things I haven&rsquo;t yet explained and used here. Now I&rsquo;ll explain them.</p>
+<p>First of all, Bash doesn&rsquo;t have variable types: every variable is a string and it doesn&rsquo;t implement any mathematical operators or commands directly, so we need to use arithmetic expansion, which supports some specific <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Arithmetic.html">Shell Arithmetic operators</a>.</p>
+<p>The <code>${parameter##word}</code> expression used to get the city name and extension in the following way: it looks inside the <code>parameter</code> for the pattern (<code>word</code> in this notation) we specify after <code>##</code> (in our case it&rsquo;s <code>*.</code> for the extension and <code>*/</code> for the city name) and only returns the rest of the <code>parameter</code>, deleting the pattern (but keeping it in the original variable). You can find more information about this and the rest of what can be done with parameter expansion using the <code>$</code> sign <a href="https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html">here</a>.</p>
 <h1 id="using-imagemagick-to-add-a-watermark">Using ImageMagick to Add a Watermark</h1>
-<p>We are doing something, and the script isn't going to get much more complicated than that, but we aren't adding a watermark yet. That's because there isn't a built-in tool to do that. No worries, though: the shell is expandable in the easiest way possible: by installing some software that provides a CLI interface.</p>
+<p>We are doing something, and the script isn&rsquo;t going to get much more complicated than that, but we aren&rsquo;t adding a watermark yet. That&rsquo;s because there isn&rsquo;t a built-in tool to do that. No worries, though: the shell is expandable in the easiest way possible: by installing some software that provides a CLI interface.</p>
 <p>The tool for the job when it comes to image manipulation is <em>ImageMagick</em>, which you can install by following the instructions on its own <a href="https://imagemagick.org/script/download.php">official download page</a>.</p>
 <p>On Linux, what I actually recommend you to do is to install the <em>ImageMagick</em> package on Fedora/RHEL/CentOS by running</p>
 <pre><code>sudo dnf install ImageMagick
@@ -277,7 +277,7 @@ for area in *; do
     done
   done
 done
-</code></pre><p>After <a href="https://dev.to/moopet">Ben Sinclair</a> in the comments to this post on dev.to noticed that this wouldn't handle spaces in the path properly, I need to point out that you need to change the character used by Bash to separate items to loop through in the <code>for</code> loop by adding two lines at the top like the following:</p>
+</code></pre><p>After <a href="https://dev.to/moopet">Ben Sinclair</a> in the comments to this post on dev.to noticed that this wouldn&rsquo;t handle spaces in the path properly, I need to point out that you need to change the character used by Bash to separate items to loop through in the <code>for</code> loop by adding two lines at the top like the following:</p>
 <pre><code>IFS='
 '
 </code></pre><p>which sets the separator to the newline character (<code>\n</code>, aka the <code>LF</code> character in character encoding specifications), so that the script ends up being this:</p>
@@ -299,14 +299,14 @@ for area in *; do
   done
 done
 </code></pre><h1 id="tips-for-the-future">Tips For the Future</h1>
-<p>Here are a few things I didn'tell you you might need to know in the future when working with Bash or browsing Bash-related documentation.</p>
+<p>Here are a few things I didn&rsquo;tell you you might need to know in the future when working with Bash or browsing Bash-related documentation.</p>
 <h2 id="the-difference-between--and-">The Difference Between # and $</h2>
 <p>Usually, when reading documentation about Unix command line usage (including the sections of my <a href="http://carmine.dev/programmingflutter/">book about cross-platform mobile app development</a> that concern Linux installation or CLI usage, for example) you might find that the commands are prefixed with the character <code>$</code>, like in the following example:</p>
 <pre><code>$ ls -alh
 </code></pre><p>or are prefixed with <code>#</code>, like in the following example:</p>
 <pre><code># vim /etc/fstab
 </code></pre><p>Those prefixed with <code>$</code> are meant to be executed as an unprivileged, regular user. Those prefixed with <code>#</code> are meant to be executed by the <code>root</code> account or by using <code>sudo</code>.</p>
-<h2 id="dont-delete-your-stuff-a-not-so-funny-anecdote">Don't Delete Your Stuff: a (Not So) Funny Anecdote</h2>
+<h2 id="dont-delete-your-stuff-a-not-so-funny-anecdote">Don&rsquo;t Delete Your Stuff: a (Not So) Funny Anecdote</h2>
 <p>You might want to clean up and use the command</p>
 <pre><code>rm -rf *
 </code></pre><p>if you know the working directory is going to be each of the directories in which you have pictures organized <em>the old way</em>, for example. Only use such a destructive command if you’re 100% sure there is no way for it to get executed in the wrong folder. Make sure to at least turn it into something that only deletes files with the extension you want to delete like this</p>
@@ -315,13 +315,13 @@ rm -rf *.jpeg
 </code></pre><p>If you’re thinking nobody would be so dumb not to think of it, there is at least one exception in the world. Some years ago I was a bit too confident and wrote a shell script that did some cleaning up afterwards. At some point during the execution of the script, it executed <code>rm -rf *</code> <em>in my home folder</em>. That’s not great.</p>
 <p>I only figured it out when it was halfway through deleting the Documents folder, and it had already deleted the <code>~/bin</code> folder containing, ironically, most of my commonly used (and harmless) bash scripts (some of which I already was using on some remote servers and that I was able to recover) and itself in the process. I had recent backups of most of the important stuff, so it wasn’t the end of the world for me, but I can’t say it wasn’t annoying.</p>
 <h2 id="the-bash-if">The Bash if</h2>
-<p>Bash has an <code>if</code> clause, I just didn't feel like adding more complication to the script (even though it would have been better for it) by adding functionality that requires its use, its basic syntax is</p>
+<p>Bash has an <code>if</code> clause, I just didn&rsquo;t feel like adding more complication to the script (even though it would have been better for it) by adding functionality that requires its use, its basic syntax is</p>
 <pre><code>if [[ condition ]]; then
   # do something
 fi
-</code></pre><p>You can find more information about it online, and online you'll also find a lot more information on Bash than what it's made sense to include in this post.</p>
-<p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow <a href="https://carmine.dev/">my blog</a> to know when the next post (about making a full-featured CLI tool with Python) comes out. Also, if you're interested in mobile development, check out <a href="https://carmine.dev/programmingflutter">my book on Flutter</a>.</p>
-<p>Thanks to <a href="https://dev.to/moopet">Ben Sinclair on dev.to</a> for finding out I had accidentally left spaces around the assignment operator in the two <code>files=$(ls)</code> code snippets, that I should have added <code>./</code> before ${picture} so that there's no chance the directory name will be interpreted as an option if it starts with an hyphen and for noticing that you might have spaces in one of the directory names or in the name of one of the picture, which would have broken the script.</p>
+</code></pre><p>You can find more information about it online, and online you&rsquo;ll also find a lot more information on Bash than what it&rsquo;s made sense to include in this post.</p>
+<p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow <a href="https://carmine.dev/">my blog</a> to know when the next post (about making a full-featured CLI tool with Python) comes out. Also, if you&rsquo;re interested in mobile development, check out <a href="https://carmine.dev/programmingflutter">my book on Flutter</a>.</p>
+<p>Thanks to <a href="https://dev.to/moopet">Ben Sinclair on dev.to</a> for finding out I had accidentally left spaces around the assignment operator in the two <code>files=$(ls)</code> code snippets, that I should have added <code>./</code> before ${picture} so that there&rsquo;s no chance the directory name will be interpreted as an option if it starts with an hyphen and for noticing that you might have spaces in one of the directory names or in the name of one of the picture, which would have broken the script.</p>
 
         </div>
       </div>

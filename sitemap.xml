@@ -3,13 +3,18 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://www.carmine.dev/posts/multipartpost/</loc>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/</loc>
-    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.carmine.dev/posts/</loc>
-    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
   </url>
   
   <url>

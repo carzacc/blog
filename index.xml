@@ -6,10 +6,19 @@
     <description>Recent content on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jan 2020 21:44:50 +0100</lastBuildDate>
+    <lastBuildDate>Sun, 02 Feb 2020 17:54:02 +0100</lastBuildDate>
     
 	<atom:link href="https://www.carmine.dev/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Advanced Flutter Networking Part 1: Uploading a File to a REST API from Flutter Using a Multi-Part (form-data) POST Request</title>
+      <link>https://www.carmine.dev/posts/multipartpost/</link>
+      <pubDate>Sun, 02 Feb 2020 17:54:02 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/multipartpost/</guid>
+      <description>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</description>
+    </item>
     
     <item>
       <title>The Early Adopter Conundrum and Reacting to Comments</title>
@@ -17,7 +26,7 @@
       <pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate>
       
       <guid>https://www.carmine.dev/posts/earlyadopter/</guid>
-      <description>When you love new stuff but don&#39;t really want to lose old stuff you write this kind of stuff. It&#39;s about tech stuff that&#39;s old and tech stuff that&#39;s new.</description>
+      <description>When you love new stuff but don&amp;rsquo;t really want to lose old stuff you write this kind of stuff. It&amp;rsquo;s about tech stuff that&amp;rsquo;s old and tech stuff that&amp;rsquo;s new.</description>
     </item>
     
     <item>
@@ -26,7 +35,7 @@
       <pubDate>Mon, 09 Dec 2019 22:48:23 +0100</pubDate>
       
       <guid>https://www.carmine.dev/articleselsewhere/</guid>
-      <description>Here&#39;s an incomplete summary of stuff I wrote that you don&#39;t find on here. Click on the Posted on or Published on entry to go to the article.</description>
+      <description>Here&amp;rsquo;s an incomplete summary of stuff I wrote that you don&amp;rsquo;t find on here. Click on the Posted on or Published on entry to go to the article.</description>
     </item>
     
     <item>
@@ -35,7 +44,7 @@
       <pubDate>Mon, 18 Nov 2019 17:53:52 +0100</pubDate>
       
       <guid>https://www.carmine.dev/posts/flutterdesktopweb/</guid>
-      <description>Google is known for moonshot projects. Often they&#39;re just that, without much hope of being brought to fruition in the near future.</description>
+      <description>Google is known for moonshot projects. Often they&amp;rsquo;re just that, without much hope of being brought to fruition in the near future.</description>
     </item>
     
     <item>

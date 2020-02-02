@@ -9,7 +9,7 @@
   <meta name="description" content="">
   
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.62.2" />
+  <meta name="generator" content="Hugo 0.63.2" />
 
   <!-- plugins -->
   
@@ -93,11 +93,11 @@
         <div class="content mb-5">
           <p>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages. The <a href="https://carmine.dev/posts/bashautomation/">first one</a> was an introduction to the hypothetical problem of having to take images divided into subfolders and dump all of them in one folder while altering their name and adding text over them to know what folder they came from (hypotheticall revealing the location where the pictures were taken) to solve and a first simple solution using Bash and ImageMagick.</p>
 <p>In <a href="https://carmine.dev/posts/wandpython/">the second post</a> we switched to Python and solved the <a href="https://carmine.dev/posts/wandpython/">https://carmine.dev/posts/wandpython/</a> same problem in a better way. With the Python version we can specify input and output directories and the code is much easier to understand.</p>
-<p>In this post we're going to take that Python code and make it work within a proper CLI tool built with the aid of <code>argparse</code>.</p>
+<p>In this post we&rsquo;re going to take that Python code and make it work within a proper CLI tool built with the aid of <code>argparse</code>.</p>
 <h1 id="what-our-tool-will-be">What our Tool Will Be</h1>
-<p>We're going to implement the tool in three files:</p>
+<p>We&rsquo;re going to implement the tool in three files:</p>
 <ul>
-<li><code>imageprocessor.py</code>, which contains the code we wrote in the previous post and that provides an easy-to-use interface to Wand and ImageMagick in the form of a class called <code>ImageProcessor</code>, I'm not going to explain it line-by-line in this post, so you should read my previous post (linked at the start of this post) if you want to know how it came together;</li>
+<li><code>imageprocessor.py</code>, which contains the code we wrote in the previous post and that provides an easy-to-use interface to Wand and ImageMagick in the form of a class called <code>ImageProcessor</code>, I&rsquo;m not going to explain it line-by-line in this post, so you should read my previous post (linked at the start of this post) if you want to know how it came together;</li>
 <li><code>actions.py</code>, which processes the arguments provided by <code>argparse</code> and uses the <code>ImageProcessor</code> to process the pictures.</li>
 <li><code>myclitool.py</code>, which is the executable that configures argparse to make it do what we want it to do.</li>
 </ul>
@@ -108,30 +108,30 @@
 <li><code>copy dir save_dir</code>, which does the same but without adding text over the images, it only renames them and dumps them in the <code>save_dir</code>.</li>
 </ul>
 <h1 id="building-the-tool">Building the Tool</h1>
-<p>Let's implement the tool starting from the code that actually performs the actions and then we'll work our way through the abstraction layers and eventually get to the part that actually implements the CLI interface using <code>argparse</code>.</p>
+<p>Let&rsquo;s implement the tool starting from the code that actually performs the actions and then we&rsquo;ll work our way through the abstraction layers and eventually get to the part that actually implements the CLI interface using <code>argparse</code>.</p>
 <h2 id="myclitoolpy"><code>myclitool.py</code></h2>
 <h3 id="an-introduction-to-argparse">An Introduction to <code>argparse</code></h3>
 <p>As we learned in the previous post, it is possible to build a perfectly functional CLI tool in Python without having to use any third-party package.</p>
-<p>Actually, that might not be completely true. It depends on your definition of <em>perfectly functional</em>. Without <code>argparse</code>, you need to have your own help and usage responses and you need to parse arguments one by one as they are provided to the tool. Doing anything that's a bit more complex requires writing lots of code: having many subcommands, each with their own subcommands and usage strings, and perhaps different option would make the app very long and unreadable very quickly.</p>
-<p>That's where <code>argparse</code> helps: you define what you want your tool to respond to, write the functions that interact with the arguments in a logical and simple way, and it's done in a tenth (or less) of the lines of code it would have taken in plain Python!</p>
+<p>Actually, that might not be completely true. It depends on your definition of <em>perfectly functional</em>. Without <code>argparse</code>, you need to have your own help and usage responses and you need to parse arguments one by one as they are provided to the tool. Doing anything that&rsquo;s a bit more complex requires writing lots of code: having many subcommands, each with their own subcommands and usage strings, and perhaps different option would make the app very long and unreadable very quickly.</p>
+<p>That&rsquo;s where <code>argparse</code> helps: you define what you want your tool to respond to, write the functions that interact with the arguments in a logical and simple way, and it&rsquo;s done in a tenth (or less) of the lines of code it would have taken in plain Python!</p>
 <h4 id="how-to-use-argparse">How to Use <code>argparse</code></h4>
 <p>The first element in the chain of objects used to configure <code>argparse</code> to do what we want is the <code>ArgumentParser</code>, which is the top level object all other objects should report to.</p>
 <p>It is initialized with something like:</p>
 <pre><code>parser = argparse.ArgumentParser(
   description=&quot;Improve the way you look at your picture collection with this simple CLI tool&quot;
 )
-</code></pre><p>Further down the chain we're going to have subparsers, the pre-requisite for which is an object you can generate like this:</p>
+</code></pre><p>Further down the chain we&rsquo;re going to have subparsers, the pre-requisite for which is an object you can generate like this:</p>
 <pre><code>subparsers = parser.add_subparsers()
 </code></pre><p>and that you can then use to add subparsers that will be linked to the original <code>parser</code>, optionally with an help text that will be used if the user requests usage information:</p>
 <pre><code>generate = subparser.add_parser(
   &quot;generate&quot;, help=&quot;Generate the pictures&quot;
 )
-</code></pre><p>Arguments are very easy to add, we'll see how we get them and how to use them later, and the help text is there for the same purpose as all other help text, as a way to give more information to the user when they request usage information:</p>
+</code></pre><p>Arguments are very easy to add, we&rsquo;ll see how we get them and how to use them later, and the help text is there for the same purpose as all other help text, as a way to give more information to the user when they request usage information:</p>
 <pre><code>generate.add_argument(&quot;dir&quot;, type=str, help=&quot;The directory where the tree of input picture starts&quot;)
 generate.add_argument(&quot;save_dir&quot;, type=str, help=&quot;The directory where to save the output pictures&quot;)
-</code></pre><p>Now we need to define a function to process the directories, which we'll talk about when we come to the <code>action.py</code> file. Meanwhile, let's say we'll call it <code>process_dir</code> and let's set it as the function to be called when the user calls the <code>generate</code> command:</p>
+</code></pre><p>Now we need to define a function to process the directories, which we&rsquo;ll talk about when we come to the <code>action.py</code> file. Meanwhile, let&rsquo;s say we&rsquo;ll call it <code>process_dir</code> and let&rsquo;s set it as the function to be called when the user calls the <code>generate</code> command:</p>
 <pre><code>generate.set_defaults(func=actions.process_dir)
-</code></pre><p>Let's do the same things we did for <code>generate</code> with <code>copy</code>:</p>
+</code></pre><p>Let&rsquo;s do the same things we did for <code>generate</code> with <code>copy</code>:</p>
 <pre><code>copy = subparser.add_parser(&quot;copy&quot;, help=&quot;Copy the pictures to the output path without adding text&quot;)
 copy.add_argument(&quot;dir&quot;, type=str, help=&quot;The directory where the tree of input picture starts&quot;)
 copy.add_argument(&quot;save_dir&quot;, type=str, help=&quot;The directory where to save the output pictures&quot;)
@@ -148,20 +148,20 @@ args.func(args)
   print(args.arg1) # prints arg1
   print(args.arg2) # prints arg2
 </code></pre><h3 id="handling-the-generate-command">Handling the generate Command</h3>
-<p>The function to handle the <code>generate</code> CLI subcommand is going to be called <code>process_dir</code> to further underline the fact it's the one meant to process the pictures and not just copy them.</p>
+<p>The function to handle the <code>generate</code> CLI subcommand is going to be called <code>process_dir</code> to further underline the fact it&rsquo;s the one meant to process the pictures and not just copy them.</p>
 <p>Given that we are getting arguments called <code>dir</code> and <code>save_dir</code></p>
 <pre><code>def process_dir(args):
     image_processor = ImageProcessor(args.dir, args.save_dir)
     image_processor.process_dir()
 </code></pre><h3 id="handling-the-copy-command">Handling the copy Command</h3>
-<p>The difference between these two functions is very subtle because of the way we implemented the <code>ImageProcessor</code>'s constructor, which takes an optional boolean value that tells the <code>process</code> method whether or not it's supposed to process the images.</p>
+<p>The difference between these two functions is very subtle because of the way we implemented the <code>ImageProcessor</code>'s constructor, which takes an optional boolean value that tells the <code>process</code> method whether or not it&rsquo;s supposed to process the images.</p>
 <pre><code>def copy(args):
     image_processor = ImageProcessor(args.dir, args.save_dir, process=False)
     image_processor.process_dir()
 </code></pre><p>In the end, the <code>actions.py</code> file is</p>
 <!-- raw HTML omitted -->
 <h2 id="imageprocessorpy"><code>imageprocessor.py</code></h2>
-<p>We also need the <code>ImageProcessor</code> code which, as I said, is explained in the previous post and you can find here with some useful comments so that you can work out how it's put together without having to read that:</p>
+<p>We also need the <code>ImageProcessor</code> code which, as I said, is explained in the previous post and you can find here with some useful comments so that you can work out how it&rsquo;s put together without having to read that:</p>
 <!-- raw HTML omitted -->
 <h1 id="using-the-tool">Using the Tool</h1>
 <p>If <code>python3</code> is the name of the command you use to run Python scripts (depends on your environment, it may be just <code>python</code>) you can use</p>
@@ -182,8 +182,8 @@ args.func(args)
 <pre><code>./myclitool.py {command} [arguments]
 </code></pre><p>On Windows you need to use <a href="https://www.python.org/dev/peps/pep-0397/">the Python Launcher for Windows</a>.</p>
 <h1 id="wrapping-up-and-where-to-go-from-here">Wrapping Up and Where to Go From Here</h1>
-<p>We're done! We've built a full CLI tool with usage strings, help commands and two subcommands each taking two arguments.</p>
-<p>The next step is to go back to Bash and take advantage of its great completion infrastructure to provide a completion script that works on Linux and macOS. No such feature is available in Windows's CMD. Even though there is PSReadline on Windows, I'm not going to write about it because I have no experience with it, as is the case woth most of the Windows-specific programming interfaces and tools. As always, remember <a href="https://carmine.dev/programmingflutter/">to check out my Flutter book</a> and <a href="https://twitter.com/carminezacc">follow me on Twitter</a>.</p>
+<p>We&rsquo;re done! We&rsquo;ve built a full CLI tool with usage strings, help commands and two subcommands each taking two arguments.</p>
+<p>The next step is to go back to Bash and take advantage of its great completion infrastructure to provide a completion script that works on Linux and macOS. No such feature is available in Windows&rsquo;s CMD. Even though there is PSReadline on Windows, I&rsquo;m not going to write about it because I have no experience with it, as is the case woth most of the Windows-specific programming interfaces and tools. As always, remember <a href="https://carmine.dev/programmingflutter/">to check out my Flutter book</a> and <a href="https://twitter.com/carminezacc">follow me on Twitter</a>.</p>
 
         </div>
       </div>

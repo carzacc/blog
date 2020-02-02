@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Advanced Flutter Networking Part 1: Uploading a File to a REST API from Flutter Using a Multi-Part (form-data) POST Request</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  
+  <meta name="author" content="Carmine Zaccagnino">
+  <meta name="generator" content="Hugo 0.63.2" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" integrity="" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+
+</head><body>
+<!-- preloader start -->
+<div class="preloader">
+  
+</div>
+<!-- preloader end -->
+<!-- navigation -->
+<header class="fixed-top navigation">
+  <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="https://www.carmine.dev/img/logo.svg" alt="Carmine Zaccagnino&#39;s Blog"></a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+        <i class="ti-menu h3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
+          </li>
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">My Articles and Posts Elsewhere</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
+            </li>
+            
+          
+        </ul>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto block shadow mb-5">
+        <h2>Advanced Flutter Networking Part 1: Uploading a File to a REST API from Flutter Using a Multi-Part (form-data) POST Request</h2>
+        <div class="mb-3"><span>by <a href="/author/carmine-zaccagnino">Carmine zaccagnino</a></span>,
+          <span>at 02 February 2020</span>, category :
+          
+        </div>
+        
+        <div class="content mb-5">
+          <p>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</p>
+<p>My blog is here for those who need more than that, and the first topic I&rsquo;m going to cover is how to upload a file using a multi-part/form-data POST request.</p>
+<p>You can find all of the code contained in this example in <a href="https://github.com/carzacc/form-data-post">this GitHub repository</a>.</p>
+<h2 id="what-is-a-multi-part-post-request">What is a Multi-Part POST Request</h2>
+<p>Usually, the body of a POST request is made of textual key-value pairs. With a multipart POST request, you can also include files with binary content (images, various documents, etc.), in addition to the regular text values.</p>
+<h2 id="making-multi-part-post-requests-with-flutters-http-library">Making Multi-Part POST Requests with Flutter&rsquo;s HTTP Library</h2>
+<p>This little section is going to focus on one thing: creating a function that, given a file path and an URL, is able to send that file to that URL with that multipart POST request.</p>
+<p>The next section is going to focus on how to build an app that lets the user insert the URL to which to send the request, pick an image and send it to the server, getting back the status of the request.</p>
+<p>This means we&rsquo;re not going to worry about dependencies in this section. All you need to know for this section is that we&rsquo;ve got this at the top of our <code>main.dart</code>:</p>
+<pre><code>import 'package:http/http.dart' as http;
+</code></pre><p>This allows us to <em>create</em> (not send) a multipart POST request using</p>
+<pre><code>var req = http.MultipartRequest('POST', Uri.parse(url));
+</code></pre><p>This <code>req</code> object has a member <code>Map</code> called <code>fields</code> for textual values and a <code>List</code> called <code>files</code> to which you can add <code>MultipartFiles</code>.</p>
+<h3 id="the-multipartfile">The MultipartFile</h3>
+<p>The most important element of this whole thing is the <code>MultipartFile</code>. It can be constructed in a few ways:</p>
+<ul>
+<li>the default <code>MultipartFile(key, stream, length)</code> constructor, which you can use if you need to create the file from a <code>Stream</code> of bytes of which we know the length;</li>
+<li>the <code>MultipartFile.fromBytes(key, bytes)</code> factory method, which attaches a file obtained from a <code>List</code> of bytes;</li>
+<li>the <code>MultipartFile.fromString(key, string)</code> factory method, which attaches a text file containing the string passed to it;</li>
+<li>the <code>MultipartFile.fromPath(key, path)</code> factory method, which attaches the file found at the given path.</li>
+</ul>
+<p>In case you’re wondering <em>bytes</em> simply means <em>integers</em>. That’s all a byte is. An 8-bit integer value. A list of integers, coupled with an encoding (that can usually be inferred with the help of the extension that’s part of the file name) is all you need to get images, documents, videos, music or text.</p>
+<p>If you&rsquo;re using one of the first two, remember to set a filename using the specific named <code>filename</code> argument, as not doing that will cause issues with our back-end.</p>
+<p>Here are a few examples: if you have a file and a path to it, here’s how you create a multipart POST request and attach that file to the request:</p>
+<ul>
+<li>Using the default constructor you could write a function like the following:</li>
+</ul>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4037d367611b995d505927c7fd16835b.js"></script>
+
+<ul>
+<li>Using<code>MultipartFile.fromBytes()</code> you could write a function like the following:</li>
+</ul>
+<script type="application/javascript" src="https://gist.github.com/carzacc/e6d35fe65f4d4078323d0216a7870f71.js"></script>
+
+<ul>
+<li>Using<code>MultipartFile.fromPath()</code> you could write a function like the following:</li>
+</ul>
+<script type="application/javascript" src="https://gist.github.com/carzacc/f86551ee0de4ba18997686dd77ed08c0.js"></script>
+
+<h3 id="adding-regular-text-fields">Adding Regular Text Fields</h3>
+<p>You could add regular text fields to a Multipart POST requests simply by adding, after settomg initialized the <code>MultipartRequest</code> object, an item in the <code>fields</code> member <code>Map</code>:</p>
+<pre><code>var request = http.MultipartRequest('POST', Uri.parse(url));
+request.fields['key'] = 'value';
+</code></pre><h2 id="building-an-app-around-that">Building an App Around That</h2>
+<p>Now, to see it in action, let&rsquo;s write an app that allows the user to insert an URL, pick an image, and then upload the image to the server at that URL. We&rsquo;ll write the very simple back-end code required to accept files this way in Node after we&rsquo;re done with the app. Feel free to skip ahead if you&rsquo;re more interested in that.</p>
+<p>Let&rsquo;s start, as we must, with an evaluation of the dependencies and the <code>pubspec.yaml</code> file. We&rsquo;ll use two packages from Dart Pub: the <code>image_picker</code> Flutter package that will handle the image selection dialog for us, about which <a href="https://medium.com/@carminezaccagnino/taking-and-or-using-pictures-in-flutter-apps-using-the-image-picker-package-b8e366654a0">I wrote a tutorial on Medium a year ago (not part of the metered paywall in case you&rsquo;re wondering)</a> and the <a href="https://pub.dev/packages/http">Dart <code>http</code> package</a> that provides the networking features we need.</p>
+<p>Add both the dependencies in <code>pubspec.yaml</code> (check the GitHub repo I linked at the start of the post if you don&rsquo;t know how to do that) and import them both into the <code>lib/main.dart</code> file along with the usual Flutter Material Design API:</p>
+<pre><code>import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+</code></pre><h3 id="the-start-page">The Start Page</h3>
+<p>Now let&rsquo;s think about the actions the user needs to take in our app: in order to upload images, we first need an URL, so let&rsquo;s show a screen that allows the user to set the URL first, and then we allow them to upload images. We&rsquo;ll call this first screen <code>StartPage</code>. This is the usual Flutter code used to initialize an app, this tutorial really is meant for those who don&rsquo;t need much explanation as to what it does and why (that&rsquo;s more the realm of introductory tutorials and books like the one I&rsquo;ve written):</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/f07e674086d9092c4e9197e03c72db7b.js"></script>
+
+<p>We use a <code>TextEditingController</code> to let the user both submit the value from the Android keyboard or press our cusdtom <code>FlatButton</code> below the <code>TextField</code>.</p>
+<h3 id="the-upload-page">The Upload Page</h3>
+<p>Here&rsquo;s the code for the upload page, I&rsquo;ll explain it down below after the code:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/b592ac6630b6158bcaefd955b9a50509.js"></script>
+
+<p><code>uploadImage()</code> is the simplest of the functions we saw earlier to upload images: we use <code>MultipartFile.fromPath()</code> directly and return the status string of the request. That&rsquo;s going to be the <code>state</code> variable, which is what is shown in the middle of the screen to the user. The URL is the one we get from the <code>StartPage</code>.</p>
+<p>The <code>FloatingActionButton</code> is fairly simple: <code>ImagePicker.pickImage()</code> shows the familiar image picking screen to the user returns (through a <code>Future</code>) the path to the file the user picks.</p>
+<p>We use that (as part of the floating action button&rsquo;s  <code>onPressed</code> callback) together with the URL passed by the <code>StartPage</code> to the <code>uploadImage</code> function and re-render the view using <code>setState</code> to show the <code>state</code> of the request to the user.</p>
+<h2 id="writing-a-simple-back-end-in-node-to-handle-multi-part-post-requests">Writing a Simple Back-End in Node to Handle Multi-Part POST Requests</h2>
+<p>For this section, the tools we&rsquo;re going to use are Node, Express and Multer. There&rsquo;s not going to be much code involved, this is a fairly simple affair.</p>
+<p>First of all, install Node and NPM according to the instructions for your operating system on <a href="https://nodejs.org/en/">Node’s official website</a>.</p>
+<p>After that, create a directory, run the command</p>
+<pre><code>$ npm init
+</code></pre><p>and fill out to your preference the choices given to you (the default values are fine in case of doubt)</p>
+<p>and then</p>
+<pre><code>$ npm --save install express multer
+</code></pre><p>Create a file called <code>index.js</code> with the following content:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/22cfe51227660d02aa6cf3e44d4e3555.js"></script>
+
+<p>As you can see it&rsquo;s not much code, but I&rsquo;m going to explain it nonetheless.</p>
+<p>The first 4 lines are simply dealing with dependencies: the first three are straight-up imports of dependencies, whereas line 4 sets up the Multer middleware (the one that handles file uploads) to save uploaded files to the <code>uploads</code> directory.</p>
+<p>Line 6 instantiates an Express server object, as the Express API documentation requires.</p>
+<h3 id="creating-an-express-rule-for-handling-multipart-post-requests">Creating an Express Rule for Handling Multipart POST requests</h3>
+<p>After that, on lines 8 to 19, we define a rule for incoming POST requests to the <code>/upload</code> path (in other words, it responds to POST requests sent to <code>&lt;server IP&gt;:&lt;port&gt;/upload</code>), it takes one file on the <code>picture</code> key, and it fires the callback function we defined as <code>(req, res) {...}</code> in the lines 8 to 19.</p>
+<p>The callback prints to the console the name of the file that was received (on line 9), it then renames the file to the original file name.</p>
+<p>It does that on lines 10 to 16 by creating, as is done using Node&rsquo;s <code>fs</code> interface, streams (much like <code>FILE*</code> variables in C) that allow our script to read from an input file (<code>req.file.path</code> is the path Multer saved the received file to) and write to an output file (using the passed <code>req.file.originalname</code>, which is the filename specified in the POST request by the sender, which is our Flutter app). When this is finished (lines 13 to 16) we delete (<code>unlinkSync</code>) the temporary file created by Multer (which has a name that ensures there aren&rsquo;t two files with the same name but doesn&rsquo;t even keep the same extension as the original file) and send back a response saying everything was OK.</p>
+<p>If an error happens (often because no file name was specified, on line 17) we will inform the sender of that.</p>
+<p>On lines 22 and 23 we start the server on the port specified by the <code>PORT</code> environment variable or on port 3000 if no port was specified using environment variables.</p>
+<p>That&rsquo;s it.</p>
+<h2 id="making-our-example-work">Making Our Example Work</h2>
+<p>To use the example code, start the server by running <code>node index.js</code>. Then, fire up the Flutter app on a phone/emulator, get your PC&rsquo;s local IP (if the phone is connected to the same local network or it&rsquo;s running on an emulator) to substitute to <code>&lt;server_ip&gt;</code> in <code>http://&lt;server_ip&gt;:3000/upload</code>, which is what you need to type into the <code>TextField</code> in the app. For example, if your PC&rsquo;s IP is <code>192.168.1.2</code>, you&rsquo;d type in <code>http://192.168.1.2:3000/upload</code>. After that, press the <code>+</code> icon, pick an image, and you&rsquo;ll see the Node script will print out a message like <code>Received image_picker&lt;gibberish&gt;.jpg</code>. By opening the <code>uploads</code> subdirectory in the directory where you have the back-end Node script, you&rsquo;ll find a file called <code>image_picker&lt;gibberish&gt;.jpg</code>.</p>
+<p>I hope you found this tutorial useful and I invite you to tell me what topic I should cover next.</p>
+
+        </div>
+      </div>
+      <div class="col-lg-8 mx-auto block shadow">
+        
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="py-4 bg-light border-top">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+        <a href="https://www.carmine.dev/"><img src="https://www.carmine.dev/img/logo.svg" class="img-fluid"
+            alt="Carmine Zaccagnino&#39;s Blog"></a>
+      </div>
+      <div class="col-lg-4 text-center mb-4 mb-lg-0">
+        <ul class="list-inline mb-0">
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+        <ul class="list-inline social-icon mb-0">
+          
+          <li class="list-inline-item"><a href="https://twitter.com/carminezacc"><i class="ti-twitter-alt"></i></a></li>
+          
+        </ul>
+      </div>
+      <div class="col-12 text-center mt-4">
+        <span></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+<!-- JS Plugins -->
+
+<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/search.js"></script>
+
+<!-- Main Script -->
+
+<script src="https://www.carmine.dev/js/script.min.js"></script>
+<!-- google analitycs -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-108378671-3', 'auto');
+  ga('send', 'pageview');
+</script></body>
+</html>
