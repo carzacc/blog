@@ -13,12 +13,57 @@
   </url>
   
   <url>
+    <loc>https://www.carmine.dev/categories/</loc>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/flutter/</loc>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/networking/</loc>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/node.js/</loc>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/posts/</loc>
     <lastmod>2020-02-02T17:54:02+01:00</lastmod>
   </url>
   
   <url>
+    <loc>https://www.carmine.dev/categories/tutorial/</loc>
+    <lastmod>2020-02-02T17:54:02+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/linux/</loc>
+    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/opinion/</loc>
+    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/screen/</loc>
+    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/posts/earlyadopter/</loc>
+    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/tmux/</loc>
     <lastmod>2020-01-01T21:44:50+01:00</lastmod>
   </url>
   
@@ -38,8 +83,23 @@
   </url>
   
   <url>
+    <loc>https://www.carmine.dev/categories/python/</loc>
+    <lastmod>2019-11-18T17:33:52+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/scripting/</loc>
+    <lastmod>2019-11-18T17:33:52+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/posts/wandpython/</loc>
     <lastmod>2019-10-25T19:12:21+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/bash/</loc>
+    <lastmod>2019-09-18T01:14:20+02:00</lastmod>
   </url>
   
   <url>
@@ -63,10 +123,6 @@
   
   <url>
     <loc>https://www.carmine.dev/author/carmine-zaccagnino/</loc>
-  </url>
-  
-  <url>
-    <loc>https://www.carmine.dev/categories/</loc>
   </url>
   
   <url>
