@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>networking on Carmine Zaccagnino&#39;s Blog</title>
+    <link>https://www.carmine.dev/categories/networking/</link>
+    <description>Recent content in networking on Carmine Zaccagnino&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 02 Feb 2020 17:54:02 +0100</lastBuildDate>
+    
+	<atom:link href="https://www.carmine.dev/categories/networking/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Advanced Flutter Networking Part 1: Uploading a File to a REST API from Flutter Using a Multi-Part (form-data) POST Request</title>
+      <link>https://www.carmine.dev/posts/multipartpost/</link>
+      <pubDate>Sun, 02 Feb 2020 17:54:02 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/multipartpost/</guid>
+      <description>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</description>
+    </item>
+    
+  </channel>
+</rss>
