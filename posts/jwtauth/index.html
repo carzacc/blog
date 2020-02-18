@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Advanced Flutter Networking Part 2: User Authentication &#43; JWT Authorization With Flutter and Node</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  
+  <meta name="author" content="Carmine Zaccagnino">
+  <meta name="generator" content="Hugo 0.64.1" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" integrity="" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+
+</head><body>
+<!-- preloader start -->
+<div class="preloader">
+  
+</div>
+<!-- preloader end -->
+<!-- navigation -->
+<header class="fixed-top navigation">
+  <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="https://www.carmine.dev/img/logo.svg" alt="Carmine Zaccagnino&#39;s Blog"></a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+        <i class="ti-menu h3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
+          </li>
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">My Articles and Posts Elsewhere</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
+            </li>
+            
+          
+        </ul>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto block shadow mb-5">
+        <h2>Advanced Flutter Networking Part 2: User Authentication + JWT Authorization With Flutter and Node</h2>
+        <div class="mb-3"><span>by <a href="/author/carmine-zaccagnino">Carmine zaccagnino</a></span>,
+          <span>at 18 February 2020</span>, category :
+          
+          <a href="/categories/networking">Networking</a>
+          
+          <a href="/categories/flutter">Flutter</a>
+          
+          <a href="/categories/node.js">Node.js</a>
+          
+          <a href="/categories/authentication">Authentication</a>
+          
+          <a href="/categories/tutorial">Tutorial</a>
+          
+        </div>
+        
+        <div class="content mb-5">
+          <p><img src="/img/jwt.png" alt="">
+<em>Photo by James Sutton on Unsplash</em></p>
+<p>The series of posts about advanced networking topics applied to Flutter apps continues. As always, this is meant for people who already have a good understanding of Flutter and know how to use Flutter widgets and the basics of the <code>http</code> library.</p>
+<p>That&rsquo;s the kind of stuff you can learn by reading <a href="https://carmine.dev/programmingflutter/">my Flutter book</a>.</p>
+<p>In particular, this post supposes you know how to make HTTP requests, how to use the most basic widgets (<code>Scaffold</code>, <code>Column</code>, <code>Text</code>, <code>FlatButton</code>, etc.) and that you know how to use a <code>TextField</code> with a <code>TextEditingController</code>, the basics of asynchronous functions and <code>Future</code>s and how to use them with a <code>FutureBuilder</code>, how to display dialogs and how to work with JSON.</p>
+<p>You can learn about them online too, if you hate books. I won&rsquo;t be judging you.</p>
+<p>Regarding the backend, I&rsquo;m going to suppose you know about how to use the Express Node.js framework, and that you know how to use basic SQL commands like <code>CREATE</code>, <code>INSERT</code>, and <code>SELECT</code>.</p>
+<h1 id="what-were-going-to-build">What We’re Going to Build</h1>
+<p>The app we’re going to build is the simplest example of an app that requires authentication: it allows anyone to sign up, and any logged in user can access a piece of data. We’re going to implement the back-end with Node and the front-end with Flutter.</p>
+<h1 id="what-is-jwt">What is JWT</h1>
+<p>JWT  (JSON Web Token) is a standard that specifies a very secure way to transmit session tokens between an user-accessible front-end (that we’ll write using Flutter) and a back-end (that we’ll write using Node).</p>
+<p>Unlike a more traditional user session implementations, in which the session token is stored both on the server and on the client, the client sends the token along with every request and the server can check whether a session exists with that token for that user and decide whether to grant access based on that and what the user is actually allowed to do.</p>
+<p>JWT is different. The server doesn’t store the token: at the time of authentication, it sends a signed token, but it doesn’t store it, instead relying on the signature it attaches to the token (obtained either with RSA, ECDSA or HMAC with SHA256 usually), which allows it to verify both the authenticity of the token and whether it was tampered with.</p>
+<p>This means the token&rsquo;s payload can contain both data the front-end needs, since it can be freely accessed by it, and data (like the user name/ID and/or an expiration date) the server needs to validate the request and the token.</p>
+<p>The actual structure of the JWT is made of three base64-encoded strings separated by a <code>.</code> character: the first contains information needed to verify the signature, the second contains the payload, the third contains the signature.</p>
+<h2 id="analyzing-an-example">Analyzing an Example</h2>
+<p>I&rsquo;ve taken an example of a JWT generated by the backend we&rsquo;ll build as an example in this post. It is <code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNTgxOTY2MzkxLCJleHAiOjE1ODMyNjIzOTF9.IDXKR0PknG96OyVgRf7NEX1olzhhLAiwE_-v-uMbOK0</code>.</p>
+<p>If you pay attention, you&rsquo;ll notice there are two dots. The first (<code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</code>) can be decoded to ASCII to <code>{&quot;alg&quot;:&quot;HS256&quot;,&quot;typ&quot;:&quot;JWT&quot;}</code>, which is a JSON object, which can be formatted like this:</p>
+<pre><code>{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+</code></pre><p><code>HS256</code> is short for <code>HMAC</code>+<code>SHA256</code>, and <code>typ</code> is quite self-explanatory, it tells us what the string we&rsquo;re looking at is.</p>
+<p>The second string (<code>eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiaWF0IjoxNTgxOTY2MzkxLCJleHAiOjE1ODMyNjIzOTF9</code>) can be decoded and formatted to:</p>
+<pre><code>{
+  &quot;username&quot;: &quot;username&quot;,
+  &quot;iat&quot;: 1581966391,
+  &quot;exp&quot;: 1583262391
+}
+</code></pre><p>This is a JWT for an user called <code>username</code>, issued at (<code>iat</code>) second 1581966391 after the Unix epoch (the 17th of February 2020 at 19:06) and that expires at (<code>exp</code>) second 1583262391 (03/03/2020 at the same time as when it was created).</p>
+<p>The third string is just the signature obtained as an HMAC with SHA256.</p>
+<h1 id="our-api-interface">Our API Interface</h1>
+<p>Our backend is going to have three routes:</p>
+<ul>
+<li><code>/signup</code>, which accepts POST requests in urlencoded format, containing two self-explanatory text fields: an <em>username</em> field and a <em>password</em> field and either responds with status code 201 if it was able to create the user, or status code 409 if it wasn&rsquo;t;</li>
+<li><code>/login</code>, which accepts POST requests in urlencoded format and accepts the same fields as <code>/signup</code>, and either responds with status code 200 and the JWT in the body of the response, or with status code 401 if there is no user with the given username and password;</li>
+<li><code>/data</code>, which accepts GET requests, which must have a JWT attached to the <code>Authorization</code> request header, and which will either return the &ldquo;secret data&rdquo; only authenticated users can access (with status code 200) or a response with status code 401, meaning the JWT is invalid or has expired.</li>
+</ul>
+<h1 id="implementing-the-front-end-app-with-flutter">Implementing the Front-End App with Flutter</h1>
+<p>You can find the code for this Flutter app <a href="https://github.com/carzacc/jwt-tutorial-flutter">on GitHub by clicking here</a>.</p>
+<h2 id="using-the-flutter_secure_storage-package">Using The flutter_secure_storage Package</h2>
+<p>The <em>flutter_secure_storage</em> package is very easy to use: it&rsquo;s simply key-value pair storage, but using iOS&rsquo;s Keychain directly or by encrypting the data, storing the encrypted data in Android&rsquo;s Shared Preferences.</p>
+<p>You can write the <em>myvalue</em> and associate it to the <em>mykey</em> key using it by using <code>storage.write()</code> in the following way:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">storage</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">FlutterSecureStorage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000">storage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">key:</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">mykey</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#f57900">value:</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">myvalue</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p><code>storage.write</code> is asynchronous (it has a return type of <code>Future&lt;void&gt;</code>), so you should use <code>await</code> if you need to pause execution while it executes.</p>
+<p>You can read the value associated to the <em>mykey</em> key by using <code>storage.read()</code>, which is also asynchronous, so you need to wait for it to return in order to be able to read the value.</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">storage</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">FlutterSecureStorage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">value</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">await</span> <span style="color:#000">storage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">key:</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">mykey</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p>You can use <code>storage.delete()</code> to delete a value (it&rsquo;s also asynchronous):</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">storage</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">FlutterSecureStorage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000">storage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">delete</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">key:</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">mykey</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p>Two methods exist, called <code>readAll()</code> and <code>deleteAll()</code> (both asynchronous), which respectively return a <code>Map</code> of all the stored values and delete all of the stored values.</p>
+<h2 id="implementation">Implementation</h2>
+<p>The Flutter app doesn’t need to be particularly complicated to be able to work with JWT: it’s mostly about writing an authentication flow, storing the JWT token and sending it with each request.</p>
+<p>In addition to that, for this example we’ll check whether the token has expired on the front-end and we’ll show the username after the user logs in, so we’ll actually have to decode the payload.
+We are going to store the JWT using the <em>flutter_secure_storage</em> package, which is the simplest way to access the secure storage interfaces provided by iOS and Android from a Flutter app.</p>
+<p>Here are two screenshots of what we want to achieve:</p>
+<p><img src="/img/Screenshot_1581601687.png" alt=""></p>
+<p><img src="/img/Screenshot_1581601694.png" alt=""></p>
+<p>Add the <em>flutter_secure_storage</em> and <em>http</em> packages to the app&rsquo;s dependencies in <code>pubspec.yaml</code>:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=pubspec.yaml"></script>
+
+<p>Then, set the minimum supported Android version to SDK level 18 (Android 4.3) because that&rsquo;s required by <em>flutter_secure_storage</em>.</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=build.gradle"></script>
+
+<p>Create the usual <code>lib/main.dart</code>, import the packages, initialize a <code>FlutterSecureStorage</code> object and insert the IP and port where the Node server backend will be running, so that we can use that going forward without having to change anything else from the example code I provided:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=baseConfig.dart"></script>
+
+<h2 id="the-structure-of-our-flutter-app">The Structure of Our Flutter App</h2>
+<p>The structure of our Flutter app is going to be the following:</p>
+<ul>
+<li>the <code>MyApp</code> class, which is going to check whether the user has previously logged in, and decide whether to run the <code>LoginPage</code> or the <code>HomePage</code>;</li>
+<li>the <code>LoginPage</code> is where we are going to allow the user to log in or sign up;</li>
+<li>the <code>HomePage</code> is where we are going to show the user the <em>secret data</em> that can only be accessed by logged-in users. The <code>HomePage</code> needs to be able to be constructed from either just the JWT Base 64 string</li>
+</ul>
+<h2 id="creating-a-log-in-page">Creating a Log-In Page</h2>
+<p>The <code>MaterialApp</code> object we&rsquo;re launching is called <code>MyApp</code>, but we&rsquo;ll worry about that later, given that it needs to check whether we&rsquo;re already logged in, and then choose whether to display a log-in page or the home page.</p>
+<p>That&rsquo;s a bit boring to worry about now, let&rsquo;s build some UI and create a log-in page!</p>
+<p>The log-in page itself will be a <code>StatelessWidget</code> called <code>LoginPage</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">LoginPage</span> <span style="color:#204a87;font-weight:bold">extends</span> <span style="color:#000">StatelessWidget</span> <span style="color:#000;font-weight:bold">{</span>
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
+<p>The nature of the login page and our implementation means we are going to make extensive use of dialogs. This means we&rsquo;ll create a helper method in order to make everything more succint:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">void</span> <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">BuildContext</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">title</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">text</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> 
+	<span style="color:#000">showDialog</span><span style="color:#000;font-weight:bold">(</span>
+	  <span style="color:#f57900">context:</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span>
+	  <span style="color:#f57900">builder:</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+	    <span style="color:#000">AlertDialog</span><span style="color:#000;font-weight:bold">(</span>
+	      <span style="color:#f57900">title:</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">title</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+	      <span style="color:#f57900">content:</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">)</span>
+	    <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+	<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p>We&rsquo;ll also create methods that attempt to login and signup the user, and they&rsquo;re very simple POST requests, as we saw earlier on when we talked about our app&rsquo;s API interface.</p>
+<p>We&rsquo;ll return a string for the login method, which will be <code>null</code> in case of an error (i.e. wrong username/password) and the JWT if the authentication process succeded:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#000">Future</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">String</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">attemptLogIn</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">username</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">password</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">async</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">await</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">post</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">$</span><span style="color:#000">SERVER_IP</span><span style="color:#4e9a06">/login</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#f57900">body:</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">username</span><span style="color:#4e9a06">&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">username</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">password</span><span style="color:#4e9a06">&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">password</span>
+    <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">statusCode</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">200</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">body</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
+<p>The sign-up method doesn&rsquo;t actually have to return anything useful to the app, so we can just return the status code and deal with that later to establish whether the operation was successuful or not:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#000">Future</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">int</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">attemptSignUp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">username</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">password</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">async</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">await</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">post</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#4e9a06">&#39;</span><span style="color:#4e9a06">$</span><span style="color:#000">SERVER_IP</span><span style="color:#4e9a06">/signup</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#f57900">body:</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">username</span><span style="color:#4e9a06">&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">username</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">password</span><span style="color:#4e9a06">&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">password</span>
+    <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">res</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">statusCode</span><span style="color:#000;font-weight:bold">;</span>  
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
+<p>Here comes the fun part!</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#a40000">@</span><span style="color:#000">override</span>
+<span style="color:#000">Widget</span> <span style="color:#000">build</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">BuildContext</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+  <span style="color:#000">Scaffold</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#f57900">appBar:</span> <span style="color:#000">AppBar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">title:</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Log In</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#f57900">body:</span> <span style="color:#8f5902;font-style:italic">/* TODO:INSERT BODY HERE */</span>
+  <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p>what&rsquo;s the <code>body</code> going to be? A <code>Column</code> with two <code>TextFields</code> that allow the user to insert username and password and two <code>FlatButton</code>s: one to log in and one to sign up. We&rsquo;ll also add some padding around it given that it looks horrible to my eyes without it:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#f57900">body:</span> <span style="color:#000">Padding</span><span style="color:#000;font-weight:bold">(</span>
+  <span style="color:#f57900">padding:</span> <span style="color:#000">EdgeInsets</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">all</span><span style="color:#000;font-weight:bold">(</span><span style="color:#0000cf;font-weight:bold">8.0</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#f57900">child:</span> <span style="color:#000">Column</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#f57900">children:</span> <span style="color:#000;font-weight:bold">[</span>
+      <span style="color:#000">TextField</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#f57900">controller:</span> <span style="color:#000">_usernameController</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#f57900">decoration:</span> <span style="color:#000">InputDecoration</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#f57900">labelText:</span> <span style="color:#4e9a06">&#39;</span><span style="color:#4e9a06">Username</span><span style="color:#4e9a06">&#39;</span>
+        <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#000">TextField</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#f57900">controller:</span> <span style="color:#000">_passwordController</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#f57900">obscureText:</span> <span style="color:#204a87;font-weight:bold">true</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#f57900">decoration:</span> <span style="color:#000">InputDecoration</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#f57900">labelText:</span> <span style="color:#4e9a06">&#39;</span><span style="color:#4e9a06">Password</span><span style="color:#4e9a06">&#39;</span>
+        <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#000">FlatButton</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#f57900">child:</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Log In</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#f57900">onPressed:</span> <span style="color:#8f5902;font-style:italic">/* TODO:HANDLE LOG IN */</span>
+        <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#000">FlatButton</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#f57900">child:</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Sign Up</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#f57900">onPressed:</span> <span style="color:#8f5902;font-style:italic">/* TODO:HANDLE SIGN UP */</span>
+        <span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">]</span>
+  <span style="color:#000;font-weight:bold">)</span>
+<span style="color:#000;font-weight:bold">)</span></code></pre></div>
+<p>The <code>labelText</code> in the <code>InputDecoration</code> is the nicest looking way to tell users what each <code>TextField</code> is for.</p>
+<p>Define the <code>_usernameController</code> and <code>_passwordController</code> <code>TextEditingController</code>s  somewhere in the class definition, like this:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">final</span> <span style="color:#000">TextEditingController</span> <span style="color:#000">_usernameController</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TextEditingController</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#204a87;font-weight:bold">final</span> <span style="color:#000">TextEditingController</span> <span style="color:#000">_passwordController</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">TextEditingController</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p>Let&rsquo;s worry about the function to handle logging in, which needs to call the <code>attemptLogIn</code> method with the <code>username</code> and <code>password</code> taken from the <code>TextEditingController</code>s, then check the JWT returned by the <code>attemptLogIn</code> method. If it is <code>null</code>, we need to display a dialog to inform the user we were unable to log them in. If it isn&rsquo;t, we can switch to the <code>HomePage</code> and save the JWT:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#f57900">onPressed:</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">async</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">username</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">_usernameController</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">password</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">_passwordController</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">;</span>
+
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">await</span> <span style="color:#000">attemptLogIn</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">username</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">password</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">!</span><span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">storage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">write</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">key:</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">jwt</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#f57900">value:</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000">Navigator</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">push</span><span style="color:#000;font-weight:bold">(</span>
+      <span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#000">MaterialPageRoute</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#f57900">builder:</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">HomePage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">fromBase64</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#000;font-weight:bold">}</span> <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">An Error Occurred</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">No account was found matching that username and password</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">,</span></code></pre></div>
+<p>The function that handles sign-up is going to be complicated by the checking of a few conditions.</p>
+<p>We are going to check on the front-end that the user doesn&rsquo;t try to use un username or password less than 4 characters long. This should also be done on the back-end, but this tutorial focuses more on Flutter than it does on Node, so we&rsquo;re just going to do this on the front-end.</p>
+<p>If those two inputs are valid, we are going to attempt to sign up, and check the response. If we get HTTP status code 201, it means the user was created and we can simply tell the user to log in with those credentials.</p>
+<p>If we get HTTP status code 409, it means the username is already in use, and we can tell that to the user. If the response&rsquo;s status code is neither 409 nor 201, the request failed (probably because of a network error or an internal server error), we just tell the user an unknown error occurred:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#f57900">onPressed:</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">async</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">username</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">_usernameController</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">password</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">_passwordController</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">text</span><span style="color:#000;font-weight:bold">;</span>
+
+  <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">username</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">length</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span> 
+    <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Invalid Username</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">The username should be at least 4 characters long</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">password</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">length</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span> <span style="color:#0000cf;font-weight:bold">4</span><span style="color:#000;font-weight:bold">)</span> 
+    <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Invalid Password</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">The password should be at least 4 characters long</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">else</span><span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">await</span> <span style="color:#000">attemptSignUp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">username</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">password</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">201</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Success</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">The user was created. Log in now.</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">res</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#0000cf;font-weight:bold">409</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">That username is already registered</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Please try to sign up using another username or log in if you already have an account.</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>  
+    <span style="color:#204a87;font-weight:bold">else</span> <span style="color:#000;font-weight:bold">{</span>
+      <span style="color:#000">displayDialog</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Error</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">An unknown error occurred.</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+    <span style="color:#000;font-weight:bold">}</span>
+  <span style="color:#000;font-weight:bold">}</span>
+<span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">,</span></code></pre></div>
+<p>The entire <code>LoginPage</code> definition looks like this in the end:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=LoginPage.dart"></script>
+
+<h2 id="creating-an-home-page">Creating an Home Page</h2>
+<p>We already know what we need as constructors for the <code>HomePage</code>. Getting the payload from the base64 JWT string should be pretty self-explanatory if you understood the section at the start of this post about the structure of a JWT, and you only need to keep in mind that base64.decode needs a padded base64 string, and that can be obtained with <code>base64.normalize()</code>:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#204a87;font-weight:bold">class</span> <span style="color:#000">HomePage</span> <span style="color:#204a87;font-weight:bold">extends</span> <span style="color:#000">StatelessWidget</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">HomePage</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">this</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">payload</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+
+  <span style="color:#204a87;font-weight:bold">factory</span> <span style="color:#000">HomePage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">fromBase64</span><span style="color:#000;font-weight:bold">(</span><span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+    <span style="color:#000">HomePage</span><span style="color:#000;font-weight:bold">(</span>
+      <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">,</span>
+      <span style="color:#000">json</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">decode</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#000">ascii</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">decode</span><span style="color:#000;font-weight:bold">(</span>
+          <span style="color:#000">base64</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">decode</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">base64</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">normalize</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">split</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">.</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">[</span><span style="color:#0000cf;font-weight:bold">1</span><span style="color:#000;font-weight:bold">]</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">)</span>
+        <span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">)</span>
+    <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+
+  <span style="color:#204a87;font-weight:bold">final</span> <span style="color:#204a87;font-weight:bold">String</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">final</span> <span style="color:#000">Map</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">String</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">dynamic</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#000">payload</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
+<h3 id="the-homepages-build-method">The HomePage&rsquo;s build() method</h3>
+<p>The <code>HomePage</code> widget itself is going to be made of a <code>FutureBuilder</code> that waits for the GET request to the server to get the data, and then either displays it or some text informing the user an error has occurred, if that is the case:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#a40000">@</span><span style="color:#000">override</span>
+<span style="color:#000">Widget</span> <span style="color:#000">build</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">BuildContext</span> <span style="color:#000">context</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+  <span style="color:#000">Scaffold</span><span style="color:#000;font-weight:bold">(</span>
+    <span style="color:#f57900">appBar:</span> <span style="color:#000">AppBar</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">title:</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Secret Data Screen</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#f57900">body:</span> <span style="color:#000">Center</span><span style="color:#000;font-weight:bold">(</span>
+      <span style="color:#f57900">child:</span> <span style="color:#000">FutureBuilder</span><span style="color:#000;font-weight:bold">(</span>
+        <span style="color:#f57900">future:</span> <span style="color:#000">http</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#39;</span><span style="color:#4e9a06">$</span><span style="color:#000">SERVER_IP</span><span style="color:#4e9a06">/data</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#f57900">headers:</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">Authorization</span><span style="color:#4e9a06">&#34;</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+        <span style="color:#f57900">builder:</span> <span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">snapshot</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">&gt;</span>
+          <span style="color:#000">snapshot</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">hasData</span> <span style="color:#ce5c00;font-weight:bold">?</span>
+          <span style="color:#000">Column</span><span style="color:#000;font-weight:bold">(</span>
+            <span style="color:#f57900">children:</span> <span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#000">Widget</span><span style="color:#ce5c00;font-weight:bold">&gt;</span><span style="color:#000;font-weight:bold">[</span>
+              <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">${</span><span style="color:#000">payload</span><span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;</span><span style="color:#4e9a06">username</span><span style="color:#4e9a06">&#39;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#4e9a06">}</span><span style="color:#4e9a06">, here&#39;s the data:</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+              <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">snapshot</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">data</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#f57900">style:</span> <span style="color:#000">Theme</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">of</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">context</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">textTheme</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">display1</span><span style="color:#000;font-weight:bold">)</span>
+            <span style="color:#000;font-weight:bold">]</span><span style="color:#000;font-weight:bold">,</span>
+          <span style="color:#000;font-weight:bold">)</span>
+          <span style="color:#ce5c00;font-weight:bold">:</span>
+          <span style="color:#000">snapshot</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">hasError</span> <span style="color:#ce5c00;font-weight:bold">?</span> <span style="color:#000">Text</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">An error occurred</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#000">CircularProgressIndicator</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span>
+      <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+    <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">,</span>
+  <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span></code></pre></div>
+<p>The <code>HomePage</code> class definition is, therefore, the following:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=HomePage.dart"></script>
+
+<h2 id="creating-the-myapp-class">Creating the MyApp Class</h2>
+<p>The <code>MyApp</code> class is the class that gets run when the app starts. It needs to check whether it already has a JWT and, if it has one, it should check whether it is valid, whether it has expired and, based on that, decide whether to ask the user to log in or whether to show them the home page. We are going to need to create a method called <code>jwtOrEmpty()</code></p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-dart" data-lang="dart"><span style="color:#000">Future</span><span style="color:#ce5c00;font-weight:bold">&lt;</span><span style="color:#204a87;font-weight:bold">String</span><span style="color:#ce5c00;font-weight:bold">&gt;</span> <span style="color:#204a87;font-weight:bold">get</span> <span style="color:#000">jwtOrEmpty</span> <span style="color:#204a87;font-weight:bold">async</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#204a87;font-weight:bold">var</span> <span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">await</span> <span style="color:#000">storage</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">read</span><span style="color:#000;font-weight:bold">(</span><span style="color:#f57900">key:</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">jwt</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">=</span><span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#4e9a06">&#34;</span><span style="color:#4e9a06">&#34;</span><span style="color:#000;font-weight:bold">;</span>
+  <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span></code></pre></div>
+<p>That&rsquo;s because the <code>FutureBuilder</code>'s <code>snapshot.hasData</code> parameter that gets passed to the <code>builder</code> function would return <code>false</code> if it were to receive a <code>null</code> value, which would be the case if the JWT were non-existent. This is unwanted because we would have no way of distinguishing the case in which we are still waiting for the <code>Future</code> to return and the case in which there is no JWT. Having this second case return an empty string instead of <code>null</code> fixes the issue.</p>
+<p>All that&rsquo;s left to do is to create a <code>build()</code> method, which should return a <code>MaterialApp</code> (that&rsquo;s the whole point of the <code>MyApp</code> class) that, after getting the JWT and checking it, either shows the user the login page or the home page based on the criteria I described earlier.</p>
+<p>All of that ends up in the following class definition:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=MyApp.dart"></script>
+
+<h1 id="implementing-the-back-end-with-node">Implementing the Back-End with Node</h1>
+<p>You can find the code for this Node backend <a href="https://github.com/carzacc/jwt-tutorial-backend">on GitHub by clicking here</a>.</p>
+<p>The Node back-end is where most of it happens: we need to create rules for login, logout and some sort of data to access. We are going to store users in an SQLite database to keep things simple for this example.</p>
+<h2 id="choosing-how-to-sign-the-token">Choosing How to Sign the Token</h2>
+<p>The token can be signed using either a method based on public key cryptography (for example using RSA or ECDSA) or by relying on hashing the concatenation of the secret key and the message (called a <em>payload</em> in JWT terms) with any hashing algorithm (usually sha256). The latter concept has been expanded into a full standard for generation of a digital signature (called HMAC) that is protected against collisions and length extension attacks, about which you can find more information <a href="https://en.wikipedia.org/wiki/HMAC">on Wikipedia</a>.</p>
+<p>For this example, that’s what we will use: HMAC with SHA256. That’s because it’s easier for a quick example for a blog post because we have greater freedom with our choice of private key. When building a real app, you should obviously consider the advantages and disadvantages of this approach based on your needs and the requirements your apps needs to meet. For this post we’ll use a short and simple string as a key, that’s not how it’s supposed to be done: it should ideally be a generated pseudorandom (and particularly long) key, just like any RSA or ECDSA key generated with OpenSSL, otherwise you’re making it very easy for attackers to crack your private key and generate their own JWT tokens your back-end will think are genuine, allowing them to pretend they’re logged in as any user, completely breaking your website’s security.</p>
+<h3 id="safety-first">Safety First!</h3>
+<p>In other words, this is an example meant to be as easy to follow as possible and you must take the appropriate precautions when it comes to choosing or generating a private key. Since we’re talking about security precautions, you should obviously use TLS for communications between front-end and back-end in production. Also, salt the passwords before hashing them if you really want to play it safe.</p>
+<h2 id="building-the-back-end">Building the Back-End</h2>
+<p>These are the libraries we are going to use:</p>
+<ul>
+<li><a href="https://expressjs.com/">Express</a>, which is what we are going to use as a Web framework;</li>
+<li><a href="https://www.npmjs.com/package/jsonwebtoken"><em>jsonwebtoken</em></a>, which simplifies greatly the process of creating JSON Web Tokens;</li>
+<li><a href="https://www.npmjs.com/package/sqlite3">the <em>sqlite3</em> SQLite Node driver</a> to create and access the SQLite database where we are going to store our users&rsquo; data;</li>
+<li>Node&rsquo;s built-in <em>crypto</em> library to hash the password to store in the SQLite database.</li>
+</ul>
+<h3 id="using-the-jsonwebtoken-library">Using the jsonwebtoken Library</h3>
+<p>The <code>jsonwebtoken</code> NPM package is very, very easy to use. It provides us with three functions, once imported with <code>jwt = require(&quot;jsonwebtoken&quot;)</code>:</p>
+<ul>
+<li><code>jwt.sign(payload, key, options)</code>, which returns a JWT containing the <code>payload</code> and signed using the <code>key</code>, optionally you could also add a callback at the end of the argument list and it would be ran asynchronously, but we&rsquo;re not going to use that feature for our simple example, the default algorithm used for generating the signature is <code>RS256</code> (RSA signature with SHA256);</li>
+<li><code>jwt.verify(token, key)</code>, which returns the decoded payload if the JWT is valid, and throws an error if it isn&rsquo;t, it also optionally takes some options and a callback just like <code>jwt.sign()</code>, but we&rsquo;re going to provide neither of them;</li>
+<li><code>jwt.decode(token)</code>, which decodes the payload without verifying the validity, we&rsquo;re not going to use this one at all.</li>
+</ul>
+<p>For example, if your payload is <code>{username: &quot;myusername&quot;}</code> and the private key is stored in the variable <code>privKey</code> and you want to create a JWT using the provided RSA private key that is valid for two hours, you can run</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#204a87;font-weight:bold">let</span> <span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">sign</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">username</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;myusername&#34;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">privKey</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">expiresIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;2h&#34;</span><span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</code></pre></div>
+<p>and then, if <code>pubKey</code> is the corresponding RSA public key, you can run</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#204a87;font-weight:bold">let</span> <span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">verify</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">username</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;myusername&#34;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">pubKey</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</code></pre></div>
+<p>In our example we are going to use just one secret key (stored in a variable called <code>KEY</code>), so we are going to generate the JWT as an HMAC with SHA256 (<em>HS256</em>) and have it expire after 15 days, which means we are going to generate the JWT with:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#204a87;font-weight:bold">let</span> <span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">sign</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">{</span><span style="color:#000">username</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;myusername&#34;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">KEY</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">{</span><span style="color:#000">expiresIn</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;15d&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">algorithm</span><span style="color:#ce5c00;font-weight:bold">:</span> <span style="color:#4e9a06">&#34;HS256&#34;</span><span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</code></pre></div>
+<p>I recommend you look at the documentation for the package on the NPM page for a more complete list of options. I&rsquo;m not writing an API reference here, I&rsquo;m trying to make you understand how to implement this.</p>
+<h3 id="a-quick-introduction-to-the-sqlite3-node-sqlite-driver">A Quick Introduction to the sqlite3 Node SQLite Driver</h3>
+<p>The sqlite3 Node SQLite Driver doesn&rsquo;t come with too many bells and whistles. There are other packages that provide different interfaces, this is the most basic one and it&rsquo;s perfect for a very basic and simple example that really shouldn&rsquo;t require a huge <code>node_modules</code> directory or particularly complicated.</p>
+<p>After importing the library with <code>sqlite = require(&quot;sqlite3&quot;)</code>, you can initialize a connection to a database stored in a file called <em>filename.db</em> with:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#204a87;font-weight:bold">let</span> <span style="color:#000">db</span> <span style="color:#ce5c00;font-weight:bold">=</span> <span style="color:#204a87;font-weight:bold">new</span> <span style="color:#000">sqlite</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">Database</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;filename.db&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</code></pre></div>
+<p>The functions we are going to use are:</p>
+<ul>
+<li><code>db.get(query, function(err, row) {})</code>, which runs the <code>query</code> and passes to the provided callback the first row returned as the <code>row</code> argument and any errors as the <code>err</code> argument;</li>
+<li><code>db.run(query)</code>, which runs the given query, without returning any results, this is used for commands such as <code>CREATE</code> and <code>INSERT</code> and you can pass a callback to be called in case of errors.</li>
+</ul>
+<p>Two other functions exist called <code>db.all()</code> and <code>db.each()</code> which respectively pass all of the rows as an array to the callback and call the callback for each row returned, only passing one at a time. We would need to use such functions if we wanted, for example, to check whether a log-in attempt failed because the password was wrong, even though the given username exists in the database.</p>
+<h4 id="query-parameters">Query Parameters</h4>
+<p>The queries can contain parameters, which can optionally be passed as an array, so they can replace <code>?</code> characters found in the query string. This will sanitize the strings before substituting them, not making you vulnerable to SQL injection. For example, the following two calls to <code>db.each</code> are equivalent:</p>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#000">db</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">each</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;SELECT * FROM Users WHERE username=&#39;carmine&#39;&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">row</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">row</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</code></pre></div>
+<div class="highlight"><pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#000">db</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">each</span><span style="color:#000;font-weight:bold">(</span><span style="color:#4e9a06">&#34;SELECT * FROM Users WHERE username=?&#34;</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">[</span><span style="color:#4e9a06">&#39;carmine&#39;</span><span style="color:#000;font-weight:bold">]</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#204a87;font-weight:bold">function</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">err</span><span style="color:#000;font-weight:bold">,</span> <span style="color:#000">row</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+  <span style="color:#000">console</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000">log</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">row</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">}</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</code></pre></div>
+<h3 id="installing-dependencies">Installing Dependencies</h3>
+<p>As always, create a Node project with</p>
+<pre><code>$ npm init
+</code></pre><p>and install the packages I listed above with</p>
+<pre><code>$ npm install --save express jsonwebtoken sqlite3
+</code></pre><h3 id="initial-config">Initial Config</h3>
+<p>We are going to import all of the libraries into our code and set the secret key (a very unsafe one, but this is just an example) and initialize the database connection:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ab1f598a313806a02dc401d52a10df6b.js?file=initialConfig.js"></script>
+
+<h3 id="initializing-the-database">Initializing the Database</h3>
+<p>You can do this either directly using the SQLite or any other tool of your choice or by creating this Node.js file and running it:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/13453b285f265bfa3606f271d2601eb4.js"></script>
+
+<h3 id="implementing-sign-up">Implementing Sign-Up</h3>
+<p>Signing users up is simple and has nothing to do with how we manage authorization: we&rsquo;re not logging them in, which means we just need to check whether they have already signed up. If they haven&rsquo;t, we sign them up by adding them to our database. We are going to use the Express built-in urlencoded middleware to parse the body of the request and we&rsquo;re going to log everything to the server console:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ab1f598a313806a02dc401d52a10df6b.js?file=signup.js"></script>
+
+<p>Logging in is all about looking in the database for the user who is trying to log in, generating a JWT and returning it if we find it, and returning an error if we don&rsquo;t:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ab1f598a313806a02dc401d52a10df6b.js?file=login.js"></script>
+
+<p>Verifying the token is very easy with the Node library we are using, meaning the <code>/data</code> route is written very quickly and painlessly, remembering that a failure in verifying the JWT will result in an error being thrown:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ab1f598a313806a02dc401d52a10df6b.js?file=getdata.js"></script>
+
+<p>As usual, we take the port to run the server on from the environment variable <code>PORT</code> and, if that fails, we set it to 3000 and run the server:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ab1f598a313806a02dc401d52a10df6b.js?file=startserver.js"></script>
+
+
+        </div>
+      </div>
+      <div class="col-lg-8 mx-auto block shadow">
+        
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="py-4 bg-light border-top">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+        <a href="https://www.carmine.dev/"><img src="https://www.carmine.dev/img/logo.svg" class="img-fluid"
+            alt="Carmine Zaccagnino&#39;s Blog"></a>
+      </div>
+      <div class="col-lg-4 text-center mb-4 mb-lg-0">
+        <ul class="list-inline mb-0">
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+        <ul class="list-inline social-icon mb-0">
+          
+          <li class="list-inline-item"><a href="https://twitter.com/carminezacc"><i class="ti-twitter-alt"></i></a></li>
+          
+        </ul>
+      </div>
+      <div class="col-12 text-center mt-4">
+        <span></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+<!-- JS Plugins -->
+
+<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/search.js"></script>
+
+<!-- Main Script -->
+
+<script src="https://www.carmine.dev/js/script.min.js"></script>
+<!-- google analitycs -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-108378671-3', 'auto');
+  ga('send', 'pageview');
+</script></body>
+</html>
