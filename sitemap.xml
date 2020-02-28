@@ -13,7 +13,7 @@
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/</loc>
+    <loc>https://www.carmine.dev/categories/</loc>
     <lastmod>2020-02-18T16:16:00+01:00</lastmod>
   </url>
   
@@ -78,6 +78,11 @@
   </url>
   
   <url>
+    <loc>https://www.carmine.dev/</loc>
+    <lastmod>2019-12-09T22:48:23+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/articleselsewhere/</loc>
     <lastmod>2019-12-09T22:48:23+01:00</lastmod>
   </url>
@@ -133,6 +138,10 @@
   
   <url>
     <loc>https://www.carmine.dev/author/carmine-zaccagnino/</loc>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/networking/</loc>
   </url>
   
   <url>

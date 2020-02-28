@@ -6,7 +6,7 @@
     <description>Recent content on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Feb 2020 16:16:00 +0100</lastBuildDate>
+    <lastBuildDate>Mon, 09 Dec 2019 22:48:23 +0100</lastBuildDate>
     
 	<atom:link href="https://www.carmine.dev/index.xml" rel="self" type="application/rss+xml" />
     
@@ -90,7 +90,7 @@ The series of posts about advanced networking topics applied to Flutter apps con
       <pubDate>Wed, 17 Jul 2019 14:39:16 +0200</pubDate>
       
       <guid>https://www.carmine.dev/programmingflutter/</guid>
-      <description>Programming Flutter: Native, Cross-Platform Apps the Easy Way is the book I wrote about Flutter with the Pragmatic Bookshelf. You can find it on the official Pragmatic Bookshelf website.</description>
+      <description>Programming Flutter: Native, Cross-Platform Apps the Easy Way is the book I wrote about Flutter with the Pragmatic Bookshelf. You can find it and buy the eBook on the official Pragmatic Bookshelf website.</description>
     </item>
     
     <item>
@@ -109,6 +109,15 @@ The series of posts about advanced networking topics applied to Flutter apps con
       
       <guid>https://www.carmine.dev/author/carmine-zaccagnino/</guid>
       <description>My name is Carmine Zaccagnino and I write some code. In some rare occasions, I also write sentences in natural languages.</description>
+    </item>
+    
+    <item>
+      <title>Networking</title>
+      <link>https://www.carmine.dev/categories/networking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/networking/</guid>
+      <description></description>
     </item>
     
   </channel>
