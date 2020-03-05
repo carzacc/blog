@@ -12,6 +12,15 @@
     
     
     <item>
+      <title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (&#43; Node backend Implementation)</title>
+      <link>https://www.carmine.dev/posts/flutterwebsockets/</link>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterwebsockets/</guid>
+      <description>Hi everyone, in this post I&amp;rsquo;m going to show you how to use WebSockets in Flutter apps and write a Node backend to test the app.</description>
+    </item>
+    
+    <item>
       <title>Advanced Flutter Networking Part 2: User Authentication &#43; JWT Authorization With Flutter and Node</title>
       <link>https://www.carmine.dev/posts/jwtauth/</link>
       <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>

@@ -6,24 +6,15 @@
     <description>Recent content in Categories on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 18 Feb 2020 16:16:00 +0100</lastBuildDate>
+    <lastBuildDate>Thu, 05 Mar 2020 19:00:00 +0100</lastBuildDate>
     
 	<atom:link href="https://www.carmine.dev/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>authentication</title>
-      <link>https://www.carmine.dev/categories/authentication/</link>
-      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
-      
-      <guid>https://www.carmine.dev/categories/authentication/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>flutter</title>
       <link>https://www.carmine.dev/categories/flutter/</link>
-      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
       
       <guid>https://www.carmine.dev/categories/flutter/</guid>
       <description></description>
@@ -32,7 +23,7 @@
     <item>
       <title>networking</title>
       <link>https://www.carmine.dev/categories/networking/</link>
-      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
       
       <guid>https://www.carmine.dev/categories/networking/</guid>
       <description></description>
@@ -41,7 +32,7 @@
     <item>
       <title>Node.js</title>
       <link>https://www.carmine.dev/categories/node.js/</link>
-      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
       
       <guid>https://www.carmine.dev/categories/node.js/</guid>
       <description></description>
@@ -50,9 +41,27 @@
     <item>
       <title>tutorial</title>
       <link>https://www.carmine.dev/categories/tutorial/</link>
-      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
       
       <guid>https://www.carmine.dev/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WebSockets</title>
+      <link>https://www.carmine.dev/categories/websockets/</link>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/websockets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>authentication</title>
+      <link>https://www.carmine.dev/categories/authentication/</link>
+      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/authentication/</guid>
       <description></description>
     </item>
     

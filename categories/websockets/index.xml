@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>WebSockets on Carmine Zaccagnino&#39;s Blog</title>
+    <link>https://www.carmine.dev/categories/websockets/</link>
+    <description>Recent content in WebSockets on Carmine Zaccagnino&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 05 Mar 2020 19:00:00 +0100</lastBuildDate>
+    
+	<atom:link href="https://www.carmine.dev/categories/websockets/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (&#43; Node backend Implementation)</title>
+      <link>https://www.carmine.dev/posts/flutterwebsockets/</link>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterwebsockets/</guid>
+      <description>Hi everyone, in this post I&amp;rsquo;m going to show you how to use WebSockets in Flutter apps and write a Node backend to test the app.</description>
+    </item>
+    
+  </channel>
+</rss>
