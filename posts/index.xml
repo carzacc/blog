@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Carmine Zaccagnino&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 Mar 2020 19:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2020 15:00:00 +0100</lastBuildDate>
     
 	<atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Flutter Notifications Without Firebase</title>
+      <link>https://www.carmine.dev/posts/flutternotifications/</link>
+      <pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutternotifications/</guid>
+      <description>We are going to discuss how to display notifications using the flutter_local_notifications plugin.
+As always with these posts, you can be sure you&amp;rsquo;ve got all of the basic knowledge you need by reading my Flutter book, but not all of you like that way of learning, so I&amp;rsquo;ll list the topics which are considered prerequisites for this post.</description>
+    </item>
     
     <item>
       <title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (&#43; Node backend Implementation)</title>
@@ -82,6 +92,15 @@ The series of posts about advanced networking topics applied to Flutter apps con
       
       <guid>https://www.carmine.dev/posts/bashautomation/</guid>
       <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://www.carmine.dev/posts/firebasecloudmessaging/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/firebasecloudmessaging/</guid>
+      <description>For the Firebase Cloud Messaging part, it is also required that you have basic knowledge of Google Firebase in general and how to configure a Flutter app to use Firebase.</description>
     </item>
     
   </channel>
