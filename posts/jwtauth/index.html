@@ -25,14 +25,7 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-
-</head><body>
-<!-- preloader start -->
-<div class="preloader">
-  
-</div>
-<!-- preloader end -->
-<!-- navigation -->
+</head><body><!-- navigation -->
 <header class="fixed-top navigation">
   <div class="container">
     
@@ -79,6 +72,17 @@
             
           
         </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
         
       </div>
     </nav>
@@ -442,6 +446,7 @@ We are going to store the JWT using the <em>flutter_secure_storage</em> package,
 <p>As usual, we take the port to run the server on from the environment variable <code>PORT</code> and, if that fails, we set it to 3000 and run the server:</p>
 <script type="application/javascript" src="https://gist.github.com/carzacc/ab1f598a313806a02dc401d52a10df6b.js?file=startserver.js"></script>
 
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
 
         </div>
       </div>
@@ -485,6 +490,10 @@ We are going to store the JWT using the <em>flutter_secure_storage</em> package,
 
 
 
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
 
 
 <!-- JS Plugins -->

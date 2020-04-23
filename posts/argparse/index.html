@@ -25,14 +25,7 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-
-</head><body>
-<!-- preloader start -->
-<div class="preloader">
-  
-</div>
-<!-- preloader end -->
-<!-- navigation -->
+</head><body><!-- navigation -->
 <header class="fixed-top navigation">
   <div class="container">
     
@@ -79,6 +72,17 @@
             
           
         </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
         
       </div>
     </nav>
@@ -152,7 +156,7 @@ copy.set_defaults(func=actions.copy)
 <pre><code>args = parser.parse_args()
 
 args.func(args)
-</code></pre><!-- raw HTML omitted -->
+</code></pre><script src="https://gist.github.com/carzacc/e1ce37a34c8b0c5ded3e3203c728264b.js"></script>
 <h2 id="actionspy"><code>actions.py</code></h2>
 <p><code>argparse</code> passes its arguments to the functions as a single structure that contains the arguments passed by the user.</p>
 <p>For example, if we are passing an argument called <code>arg1</code> and another called <code>arg2</code>, an hypothetical <code>handle_call</code> function that prints the arguments as passed by <code>argparse</code> is</p>
@@ -171,10 +175,10 @@ args.func(args)
     image_processor = ImageProcessor(args.dir, args.save_dir, process=False)
     image_processor.process_dir()
 </code></pre><p>In the end, the <code>actions.py</code> file is</p>
-<!-- raw HTML omitted -->
+<script src="https://gist.github.com/carzacc/7e0f8be2541c701515a594154e0e6d44.js"></script>
 <h2 id="imageprocessorpy"><code>imageprocessor.py</code></h2>
 <p>We also need the <code>ImageProcessor</code> code which, as I said, is explained in the previous post and you can find here with some useful comments so that you can work out how it&rsquo;s put together without having to read that:</p>
-<!-- raw HTML omitted -->
+<script src="https://gist.github.com/carzacc/6bc3d60ebc7de597b5a66306687c308f.js"></script>
 <h1 id="using-the-tool">Using the Tool</h1>
 <p>If <code>python3</code> is the name of the command you use to run Python scripts (depends on your environment, it may be just <code>python</code>) you can use</p>
 <pre><code>python3 myclitool.py generate /path/to/input /path/to/output
@@ -196,6 +200,7 @@ args.func(args)
 <h1 id="wrapping-up-and-where-to-go-from-here">Wrapping Up and Where to Go From Here</h1>
 <p>We&rsquo;re done! We&rsquo;ve built a full CLI tool with usage strings, help commands and two subcommands each taking two arguments.</p>
 <p>The next step is to go back to Bash and take advantage of its great completion infrastructure to provide a completion script that works on Linux and macOS. No such feature is available in Windows&rsquo;s CMD. Even though there is PSReadline on Windows, I&rsquo;m not going to write about it because I have no experience with it, as is the case woth most of the Windows-specific programming interfaces and tools. As always, remember <a href="https://carmine.dev/programmingflutter/">to check out my Flutter book</a> and <a href="https://twitter.com/carminezacc">follow me on Twitter</a>.</p>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
 
         </div>
       </div>
@@ -239,6 +244,10 @@ args.func(args)
 
 
 
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
 
 
 <!-- JS Plugins -->

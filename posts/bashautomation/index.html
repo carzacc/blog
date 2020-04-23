@@ -25,14 +25,7 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-
-</head><body>
-<!-- preloader start -->
-<div class="preloader">
-  
-</div>
-<!-- preloader end -->
-<!-- navigation -->
+</head><body><!-- navigation -->
 <header class="fixed-top navigation">
   <div class="container">
     
@@ -79,6 +72,17 @@
             
           
         </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
         
       </div>
     </nav>
@@ -336,6 +340,7 @@ fi
 </code></pre><p>You can find more information about it online, and online you&rsquo;ll also find a lot more information on Bash than what it&rsquo;s made sense to include in this post.</p>
 <p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow <a href="https://carmine.dev/">my blog</a> to know when the next post (about making a full-featured CLI tool with Python) comes out. Also, if you&rsquo;re interested in mobile development, check out <a href="https://carmine.dev/programmingflutter">my book on Flutter</a>.</p>
 <p>Thanks to <a href="https://dev.to/moopet">Ben Sinclair on dev.to</a> for finding out I had accidentally left spaces around the assignment operator in the two <code>files=$(ls)</code> code snippets, that I should have added <code>./</code> before ${picture} so that there&rsquo;s no chance the directory name will be interpreted as an option if it starts with an hyphen and for noticing that you might have spaces in one of the directory names or in the name of one of the picture, which would have broken the script.</p>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
 
         </div>
       </div>
@@ -379,6 +384,10 @@ fi
 
 
 
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
 
 
 <!-- JS Plugins -->

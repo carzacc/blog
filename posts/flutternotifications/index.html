@@ -25,14 +25,7 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-
-</head><body>
-<!-- preloader start -->
-<div class="preloader">
-  
-</div>
-<!-- preloader end -->
-<!-- navigation -->
+</head><body><!-- navigation -->
 <header class="fixed-top navigation">
   <div class="container">
     
@@ -79,6 +72,17 @@
             
           
         </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
         
       </div>
     </nav>
@@ -193,6 +197,7 @@ notifications.initialize(initSettings);
 <p>One caveat is that, for example, the only way to be able to send notifications to closed apps on both Android and iOS is to use <a href="https://firebase.google.com/docs/cloud-messaging">Firebase Cloud Messaging</a>, which can send notifications directly to Android devices (what used to be called Cloud to Device Messaging and then Google Cloud Messaging) and uses the Apple Push Notification Service to send notifications to iOS devices.</p>
 <h1 id="onwards">Onwards</h1>
 <p>You can now <a href="https://carmine.dev/newsletter">subscribe to my newsletter</a> to get email updates about new posts and, as always you can <a href="https://twitter.com/carminezacc">follow me on Twitter</a> if you are active on there and want to be updated, and remember to <a href="https://pragprog.com/book/czflutr/programming-flutter">check out my Flutter book</a> in case you haven&rsquo;t yet.</p>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
 
         </div>
       </div>
@@ -236,6 +241,10 @@ notifications.initialize(initSettings);
 
 
 
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
 
 
 <!-- JS Plugins -->

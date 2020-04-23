@@ -25,14 +25,7 @@
   <!--Favicon-->
   <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-
-</head><body>
-<!-- preloader start -->
-<div class="preloader">
-  
-</div>
-<!-- preloader end -->
-<!-- navigation -->
+</head><body><!-- navigation -->
 <header class="fixed-top navigation">
   <div class="container">
     
@@ -79,6 +72,17 @@
             
           
         </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
         
       </div>
     </nav>
@@ -192,6 +196,7 @@ import 'package:image_picker/image_picker.dart';
 <h2 id="making-our-example-work">Making Our Example Work</h2>
 <p>To use the example code, start the server by running <code>node index.js</code>. Then, fire up the Flutter app on a phone/emulator, get your PC&rsquo;s local IP (if the phone is connected to the same local network or it&rsquo;s running on an emulator) to substitute to <code>&lt;server_ip&gt;</code> in <code>http://&lt;server_ip&gt;:3000/upload</code>, which is what you need to type into the <code>TextField</code> in the app. For example, if your PC&rsquo;s IP is <code>192.168.1.2</code>, you&rsquo;d type in <code>http://192.168.1.2:3000/upload</code>. After that, press the <code>+</code> icon, pick an image, and you&rsquo;ll see the Node script will print out a message like <code>Received image_picker&lt;gibberish&gt;.jpg</code>. By opening the <code>uploads</code> subdirectory in the directory where you have the back-end Node script, you&rsquo;ll find a file called <code>image_picker&lt;gibberish&gt;.jpg</code>.</p>
 <p>I hope you found this tutorial useful and I invite you to tell me what topic I should cover next.</p>
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
 
         </div>
       </div>
@@ -235,6 +240,10 @@ import 'package:image_picker/image_picker.dart';
 
 
 
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
 
 
 <!-- JS Plugins -->
