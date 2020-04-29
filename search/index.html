@@ -9,7 +9,7 @@
   <meta name="description" content="">
   
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.69.0" />
+  <meta name="generator" content="Hugo 0.69.2" />
 
   <!-- plugins -->
   
@@ -98,21 +98,28 @@
 
 <section class="section">
   <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto block shadow mb-5">
-        <h2>Search Result</h2>
-        <div class="mb-3"><span>by <a href="/author/"></a></span>,
-          <span>at 06 July 2019</span>, category :
-          
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h2>Search result for
+          <span class="text-primary">
+            <script>
+              var str = (window.location.search).substr(3);
+              var result = str.replace("+", " ");
+              document.write(result);
+            </script>
+          </span>
+        </h2>
+        <div class="block shadow">
+          <div id="search-results"></div>
+          <script id="search-result-template" type="text/x-js-template">
+            <div class="py-4 border-bottom" id="summary-${key}">
+              <h4><a href="${link}">${title}</a></h4>
+              <p>${snippet}</p>
+              ${ isset tags }<p>Tags: ${tags}</p>${ end }
+              ${ isset categories }<p>Categories: ${categories}</p>${ end }
+            </div>
+        </script>
         </div>
-        
-        <div class="content mb-5">
-          
-        </div>
-      </div>
-      <div class="col-lg-8 mx-auto block shadow">
-        
-        
       </div>
     </div>
   </div>

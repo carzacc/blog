@@ -68,6 +68,11 @@
   </url>
   
   <url>
+    <loc>https://www.carmine.dev/categories/security/</loc>
+    <lastmod>2020-02-18T16:16:00+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://www.carmine.dev/posts/multipartpost/</loc>
     <lastmod>2020-02-02T17:54:02+01:00</lastmod>
   </url>
@@ -153,13 +158,13 @@
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/search/</loc>
-    <lastmod>2019-07-06T15:27:17+06:00</lastmod>
+    <loc>https://www.carmine.dev/aboutme/</loc>
+    <lastmod>2019-07-04T14:39:16+02:00</lastmod>
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/aboutme/</loc>
-    <lastmod>2019-07-04T14:39:16+02:00</lastmod>
+    <loc>https://www.carmine.dev/search/</loc>
+    <lastmod>2019-07-04T15:27:17+06:00</lastmod>
   </url>
   
   <url>
