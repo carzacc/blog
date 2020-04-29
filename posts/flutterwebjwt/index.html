@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Securely Storing JWTs in (Flutter) Web Apps</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="">
+  
+  <meta name="author" content="Carmine Zaccagnino">
+  <meta name="generator" content="Hugo 0.69.2" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" integrity="" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+</head><body><!-- navigation -->
+<header class="fixed-top navigation">
+  <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="https://www.carmine.dev/img/logo.svg" alt="The Carmine Zaccagnino Blog"></a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+        <i class="ti-menu h3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
+          </li>
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">My Articles and Posts Elsewhere</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/newsletter">Subscribe to my newsletter</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/cookiedeclaration">Website Cookies Declaration</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
+            </li>
+            
+          
+        </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev//search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto block shadow mb-5">
+        <h2>Securely Storing JWTs in (Flutter) Web Apps</h2>
+        <div class="mb-3"><span>by <a href="/author/carmine-zaccagnino">Carmine zaccagnino</a></span>,
+          <span>at 29 April 2020</span>, category :
+          
+          <a href="/categories/networking">Networking</a>
+          
+          <a href="/categories/flutter">Flutter</a>
+          
+          <a href="/categories/node.js">Node.js</a>
+          
+          <a href="/categories/authentication">Authentication</a>
+          
+          <a href="/categories/security">Security</a>
+          
+          <a href="/categories/web">Web</a>
+          
+          <a href="/categories/tutorial">Tutorial</a>
+          
+        </div>
+        
+        <img src="https://www.carmine.dev/img/jwtweb.png" class="img-fluid w-100 mb-4" alt="Securely Storing JWTs in (Flutter) Web Apps">
+        
+        <div class="content mb-5">
+          <p>I recently wrote <a href="https://carmine.dev/posts/jwtauth/">a post about how to implement JWT Authorization in Flutter apps</a>. I only considered the use case of writing a mobile app, so I recommended the use of the <code>flutter_secure_storage</code> package to store the tokens.</p>
+<p>As it later emerged, some people wanted to use that tutorial as a guide for Flutter Web apps. <code>flutter_secure_storage</code> doesn&rsquo;t work for Web apps.</p>
+<p>This first post about this topic will simply look to address that, later I&rsquo;ll post a more general overview of what needs to be taken in consideration when writing cross-platform apps in Flutter, including a deeper dive into storage on the different platforms. This will be more of a hands-on tutorial like the ones I previously posted, whereas the other one will be more of an opinion/overview post that I hope will help understand the thinking that is required before trying to deploy on multiple platforms.</p>
+<p>For the sake of keeping each post focused, I&rsquo;ll keep this one more practical and focused on how to make that example work on the Web.</p>
+<h1 id="the-basic-compromising-simple-approach">The Basic, Compromising, Simple Approach</h1>
+<p>The simple solution to that problem that will work on every platform is to use the <code>shared_preferences</code> package, which uses <code>SharedPreferences</code> on Android, <code>NSUserDefaults</code> on iOS and <code>localStorage</code> on the Web.</p>
+<p>This is actually only one half of a solution, as using <code>localStorage</code> means that the value can be retrieved by any JS (or Dart code compiled to JS like Flutter Web code) on your page. This means you have to be extra careful with user input to avoid XSS attacks, and that comes into play especially if you have non-Flutter Web content on the same domain (which can access the same <code>localStorage</code>), which can access the same data.</p>
+<p>Also, you need to keep in mind that the user can actually very easily access the token through JavaScript, so if their end gets compromised in any way that token can be easily read.</p>
+<p>This should already give you an idea of the kind of issues you might have to deal with when writing cross-platform apps. Also, especially <code>NSUserDefaults</code> on iOS is not supposed to be used for sensitive information (nor is <code>SharedPreferences</code> actually), so you should use <code>flutter_secure_storage</code> on those platforms anyway, and at that point you can just use <code>dart:html</code> directly for the Web part and skip having <code>shared_preferences</code> as a dependency entirely.</p>
+<h1 id="the-better-approach">The Better Approach</h1>
+<p><code>flutter_secure_storage</code> on mobile should be your first and only choice. It uses the proper Keychain API on iOS and it encrypts the data, stores the encrypted data in <code>SharedPreferences</code> and the cryptographic key is stored in the Android KeyStore, which is a safe approach.</p>
+<p>On the Web though, you need to use a Web-based solution, so you need to think about our Flutter app as if it was any old boring HTML, CSS and JavaScript website.</p>
+<p>The place where tokens are stored in Web apps are <code>httpOnly</code> cookies, which are sent to the backend automatically along with each request, but aren&rsquo;t accessible by JavaScript.</p>
+<p>The issue with that is that <em>automatically</em> part. It makes you vulnerable to CSRF, which is an attack that sends requests to your server from one of your users clients when they visit a page that isn&rsquo;t yours. GET requests are particularly vulnerable because a GET request query is just a link that can be clicked by your users.</p>
+<p>This can be prevented by having another token (which shouldn&rsquo;t be the same token you use for authorization, obviously, but it can be generated based on that) that is stored in <code>localStorage</code> (so only your website&rsquo;s code can access it) and send that along with each request in a dedicated header.</p>
+<p>You still MUST NOT be vulnerable to XSS because, even though your token can&rsquo;t be read, an attacker can still send requests through your own page, take your CSRF token, and bypass your CSRF protection entirely, but at least the JWT isn&rsquo;t in their hands so they haven&rsquo;t permanently stolen your user&rsquo;s identity. Escape all user-provided data before ever doing anything with it both on the front-end if you have another website running and on the back-end when you put data in a database: many libraries to interact with databases have that feature built-in, you just need to use them properly instead of just concatenating strings. If you really have to use string concatenation because of your stack, remember to sanitize the input before doing anything with it.</p>
+<p>Now, let&rsquo;s get hands-on and see the code needed to make everything work!</p>
+<h1 id="putting-it-in-practice">Putting It In Practice</h1>
+<p>If you&rsquo;re new to my posts (and there will be a few of you), you might not be aware of <a href="https://carmine.dev/posts/jwtauth/">my earlier post</a> about JWT authentication with Flutter and Node (which supposed you were writing a mobile app), which I&rsquo;ll use as a starting point, and that you therefore should at least be aware of in case something confuses you. I won&rsquo;t be starting from scratch here.</p>
+<h2 id="the-node-side">The Node Side</h2>
+<p>Before we can build the app, we need to get the backend API straight. Remember, I won&rsquo;t explain the stuff I already covered in my previous post. The starting point is <a href="https://github.com/carzacc/jwt-tutorial-backend">this repository</a>. The code we&rsquo;re going to end up with is <a href="https://github.com/carzacc/jwt-tutorial-backend-web">in this repository</a>.</p>
+<p>The usual Node imports and the signup route don&rsquo;t require any changes:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ac22c56e71a4ba9dd9c60bf79756833a.js?file=index_imports.js"></script>
+
+<script type="application/javascript" src="https://gist.github.com/carzacc/ac22c56e71a4ba9dd9c60bf79756833a.js?file=index_signup.js"></script>
+
+<p>The login route, though, is where the <em>fun part</em> starts (you&rsquo;re reading this because you find this all fun, don&rsquo;t you?). The way I&rsquo;m going to do this is the following: I&rsquo;m going to generate two tokens: an <em>access</em> token and a an <em>anti-CSRF</em> token, and we&rsquo;re going to send the first as a cookie and the second in the response body. I&rsquo;m not setting the <code>Secure</code> flag because this code isn&rsquo;t meant for production, but that should be set in production code given that your app would run with TLS in a production environment:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ac22c56e71a4ba9dd9c60bf79756833a.js?file=index_login.js"></script>
+
+<p>The data route needs to get both values, one in the cookies and one as a header in order to work:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ac22c56e71a4ba9dd9c60bf79756833a.js?file=index_data.js"></script>
+
+<p>and here is the entire <code>index.js</code>:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/ac22c56e71a4ba9dd9c60bf79756833a.js?file=index.js"></script>
+
+<h2 id="the-flutter-side">The Flutter Side</h2>
+<p>On the Flutter side, our starting point will be <a href="https://github.com/carzacc/jwt-tutorial-flutter">the code in this repository</a> and we&rsquo;re going to end up with <a href="https://github.com/carzacc/jwt_tutorial_flutter_web">the code in this repository</a>.</p>
+<p>The approach is going to be the following, in order to make it as obvious as possible we&rsquo;re actually building a Web app: the JWT is going to be in the cookies, so it&rsquo;s beyond our control, whereas we&rsquo;re going to store the anti-CSRF token in the <code>localStorage</code> directly using <code>dart:html</code>.</p>
+<p>This means that we are going to add to our imports <code>import 'dart:html' show window;</code> and take out the <code>flutter_secure_storage</code> dependency given that we are not using it:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/3796cffa3aac72dd3dbe17d33c91e846.js?file=main_imports_runapp.dart"></script>
+
+<p><code>MyApp</code> is, as always, where we decide whether we need to show the data page or the login page. In order to change as little as possible from the original, I switched the <code>home</code> from a <code>FutureBuilder</code> to a <code>Builder</code> (we don&rsquo;t need <code>Future</code>s in the case of HTML <code>localStorage</code>) and moving from calling a <code>jwtOrEmpty</code> getter to generating our very own <code>csrfTokenOrEmpty</code>. The rest stays the same: if it&rsquo;s expired, the access token has expired too, so we need the user to log in again, if we don&rsquo;t have one we need to show the user the login page:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/3796cffa3aac72dd3dbe17d33c91e846.js?file=main_myapp.dart"></script>
+
+<p>The <code>LoginPage</code> gets changes in the callback to log in, as that needs to store the JWT to local storage too.</p>
+<p><code>window.localStorage</code> can be accessed just like any <code>Map</code> like you see in the following snippet we&rsquo;re going to use in the login page:</p>
+<pre><code>var username = _usernameController.text;
+var password = _passwordController.text;
+var jwt = await attemptLogIn(username, password);
+if(jwt != null) {
+  window.localStorage[&quot;csrf&quot;] = jwt;
+  Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) =&gt; HomePage.fromBase64(jwt)
+  )
+);
+</code></pre><p>I kept the variable names as they were for maximum comparability with the previous post.</p>
+<p>here&rsquo;s the entire <code>LoginPage</code>:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/3796cffa3aac72dd3dbe17d33c91e846.js?file=main_login.dart"></script>
+
+<p>The data (home) page is going to be the simplest one, as all that needs to change is the name of the header at which we send the anti-CSRF token, given that the access token is sent along with the request as a cookie automatically and the rest it taken care of by the backend:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/3796cffa3aac72dd3dbe17d33c91e846.js?file=main_datapage.dart"></script>
+
+<p>Here&rsquo;s the full <code>main.dart</code> for that:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/3796cffa3aac72dd3dbe17d33c91e846.js?file=main.dart"></script>
+
+<p>In order to make that Flutter app look and behave nicer on bigger screens and browsers in general, you might want to check out <a href="https://www.smashingmagazine.com/2020/04/responsive-web-desktop-development-flutter/">the tutorial on responsive and Web development with Flutter I wrote for Smashing Magazine</a>.</p>
+<h1 id="onwards-your-next-steps">Onwards: Your Next Steps</h1>
+<p>You might have found this post useful, and perhaps you&rsquo;d like to see more Flutter content from me. What you can do is:</p>
+<ul>
+<li><a href="https://twitter.com/carminezacc">follow me on Twitter @carminezacc</a>;</li>
+<li><a href="https://carmine.dev/newsletter/">subscribe to my newsletter</a></li>
+<li>check out the rest of this blog;</li>
+<li>check out <a href="https://pragprog.com/book/czflutr/programming-flutter">my book</a>, for which paperback copies are available in many places, including Amazon (when and if they deliver given the current pandemic).</li>
+</ul>
+
+        </div>
+      </div>
+      <div class="col-lg-8 mx-auto block shadow">
+        
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="py-4 bg-light border-top">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+        <a href="https://www.carmine.dev/"><img src="https://www.carmine.dev/img/logo.svg" class="img-fluid"
+            alt="The Carmine Zaccagnino Blog"></a>
+      </div>
+      <div class="col-lg-4 text-center mb-4 mb-lg-0">
+        <ul class="list-inline mb-0">
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+        <ul class="list-inline social-icon mb-0">
+          
+          <li class="list-inline-item"><a href="https://twitter.com/carminezacc"><i class="ti-twitter-alt"></i></a></li>
+          
+        </ul>
+      </div>
+      <div class="col-12 text-center mt-4">
+        <span></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
+
+
+<!-- JS Plugins -->
+
+<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/search.js"></script>
+
+<!-- Main Script -->
+
+<script src="https://www.carmine.dev/js/script.min.js"></script>
+<!-- google analitycs -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'UA-108378671-3', 'auto');
+  ga('send', 'pageview');
+</script></body>
+</html>
