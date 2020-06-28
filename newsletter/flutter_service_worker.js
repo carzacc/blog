@@ -8,7 +8,7 @@ const RESOURCES = {
 "assets/LICENSE": "0f4487efbb5c74897dcfd5fcc207c0c3",
 "index.html": "a0624c0216cc44d72b1e3be8b11cab1f",
 "/": "a0624c0216cc44d72b1e3be8b11cab1f",
-"main.dart.js": "1757d509db8264fa9c960c0ddb35bbfb",
+"main.dart.js": "7d9b0c36f3f92421e2e3b105389a33a5",
 "main.dart.js.deps": "041b0da08ac15d237cae89ad98ec16b3"
 };
 
