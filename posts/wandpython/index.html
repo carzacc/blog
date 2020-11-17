@@ -9,7 +9,7 @@
   <meta name="description" content="">
   
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.72.0" />
+  <meta name="generator" content="Hugo 0.78.1" />
 
   <!-- plugins -->
   
@@ -313,7 +313,7 @@ for area in areas:
 <pre><code>save_dir = [dir for dir in os.scandir(f&quot;{argv[2]}/..&quot;) if dir.name == os.path.split(argv[2])[1] and dir.is_dir()][0]]
 </code></pre><p>Scans the second argument (the output directory)<code>s parent directory and, if the entity the user gave us a path to actually exists, we'll assign it to the </code>save_dir<code>variable. This is inside a</code>try<code>-</code>catch` block that informs the user of the error and terminates execution if the second argument points to a non-existent directory, given that it would trigger an exception.</p>
 <p><code>os.path.split(argv[2])[1]</code> is used to access the substring of <code>argv[2]</code> after the last <code>/</code> character. In other words, it is used to access the output directory&rsquo;s name, without the path leading to it.</p>
-<p>&lsquo;f&rdquo;{argv[2]}/..&quot;&rsquo;  is called an <em>f-string</em> and is how string interpolation is done from Python 3
+<p>&lsquo;f&quot;{argv[2]}/..&quot;&rsquo;  is called an <em>f-string</em> and is how string interpolation is done from Python 3
 6 onwards: it is the string made up of the value of <code>argv[2]</code> followed by the <code>/..</code> characters. For example, if the value of <code>argv[2]</code> were <em>path/to/dir</em>, the value of that f-string would be <em>path/to/dir/..</em>, which is the same as <em>path/to</em>, which is the path to directory where we should be able to find a directory called <code>dir</code> if we list the contents of that directory.</p>
 <p><code>os.path.abspath(save_dir))</code> returns the absolute path to the <code>save_dir</code>.</p>
 <h2 id="writing-the-process-method">Writing the process() Method</h2>

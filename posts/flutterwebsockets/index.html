@@ -9,7 +9,7 @@
   <meta name="description" content="">
   
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.72.0" />
+  <meta name="generator" content="Hugo 0.78.1" />
 
   <!-- plugins -->
   
@@ -138,7 +138,7 @@
 <p>A connection can be opened by creating an object of class <code>WebSocketChannel</code>, and you can connect to a WebSocket server by using the <code>WebSocketChannel.connect</code> contructor: <code>channel = WebSocketChannel.connect(URI);</code> where <code>URI</code> is an <code>Uri</code>, that you could get from a <code>String</code> containing an URL (something like <code>ws://myserver.mydomain.com:3000</code>) by using <code>Uri.parse(URL)</code>.</p>
 <h3 id="sending-and-receiving-data">Sending and Receiving Data</h3>
 <p>The <code>WebSocketChannel.stream</code> is used to listen for messages. As the name implies, it&rsquo;s a <code>Stream</code>, which is exactly the best data type for incoming data from a WebSocket. It returns any new messages coming from the WebSocket as soon as they are received.</p>
-<p>The <code>WebSocketChannel.sink</code> is used to send messages. As the name implies, it&rsquo;s a <code>StreamSink</code>. If you&rsquo;ve read my book or have worked with the Firebase Cloud Firestore before, this is used in a similar way to the <code>Firestore</code>'s <code>CollectionReference</code> object: <code>WebSocketChannel.sink.add(data)</code> sends data through the WebSocket.</p>
+<p>The <code>WebSocketChannel.sink</code> is used to send messages. As the name implies, it&rsquo;s a <code>StreamSink</code>. If you&rsquo;ve read my book or have worked with the Firebase Cloud Firestore before, this is used in a similar way to the <code>Firestore</code>&rsquo;s <code>CollectionReference</code> object: <code>WebSocketChannel.sink.add(data)</code> sends data through the WebSocket.</p>
 <h3 id="closing-the-connection">Closing the Connection</h3>
 <p><code>channel.sink.close(statusCode);</code></p>
 <pre><code>  @override

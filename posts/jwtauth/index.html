@@ -9,7 +9,7 @@
   <meta name="description" content="">
   
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.72.0" />
+  <meta name="generator" content="Hugo 0.78.1" />
 
   <!-- plugins -->
   
@@ -369,7 +369,7 @@ We are going to store the JWT using the <em>flutter_secure_storage</em> package,
   <span style="color:#204a87;font-weight:bold">if</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000">jwt</span> <span style="color:#ce5c00;font-weight:bold">==</span> <span style="color:#204a87;font-weight:bold">null</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#4e9a06">&#34;&#34;</span><span style="color:#000;font-weight:bold">;</span>
   <span style="color:#204a87;font-weight:bold">return</span> <span style="color:#000">jwt</span><span style="color:#000;font-weight:bold">;</span>
 <span style="color:#000;font-weight:bold">}</span></code></pre></div>
-<p>That&rsquo;s because the <code>FutureBuilder</code>'s <code>snapshot.hasData</code> parameter that gets passed to the <code>builder</code> function would return <code>false</code> if it were to receive a <code>null</code> value, which would be the case if the JWT were non-existent. This is unwanted because we would have no way of distinguishing the case in which we are still waiting for the <code>Future</code> to return and the case in which there is no JWT. Having this second case return an empty string instead of <code>null</code> fixes the issue.</p>
+<p>That&rsquo;s because the <code>FutureBuilder</code>&rsquo;s <code>snapshot.hasData</code> parameter that gets passed to the <code>builder</code> function would return <code>false</code> if it were to receive a <code>null</code> value, which would be the case if the JWT were non-existent. This is unwanted because we would have no way of distinguishing the case in which we are still waiting for the <code>Future</code> to return and the case in which there is no JWT. Having this second case return an empty string instead of <code>null</code> fixes the issue.</p>
 <p>All that&rsquo;s left to do is to create a <code>build()</code> method, which should return a <code>MaterialApp</code> (that&rsquo;s the whole point of the <code>MyApp</code> class) that, after getting the JWT and checking it, either shows the user the login page or the home page based on the criteria I described earlier.</p>
 <p>All of that ends up in the following class definition:</p>
 <script type="application/javascript" src="https://gist.github.com/carzacc/4d53b9664c575c36681d9a535872f926.js?file=MyApp.dart"></script>
@@ -387,7 +387,7 @@ We are going to store the JWT using the <em>flutter_secure_storage</em> package,
 <ul>
 <li><a href="https://expressjs.com/">Express</a>, which is what we are going to use as a Web framework;</li>
 <li><a href="https://www.npmjs.com/package/jsonwebtoken"><em>jsonwebtoken</em></a>, which simplifies greatly the process of creating JSON Web Tokens;</li>
-<li><a href="https://www.npmjs.com/package/sqlite3">the <em>sqlite3</em> SQLite Node driver</a> to create and access the SQLite database where we are going to store our users&rsquo; data;</li>
+<li><a href="https://www.npmjs.com/package/sqlite3">the <em>sqlite3</em> SQLite Node driver</a> to create and access the SQLite database where we are going to store our users' data;</li>
 <li>Node&rsquo;s built-in <em>crypto</em> library to hash the password to store in the SQLite database.</li>
 </ul>
 <h3 id="using-the-jsonwebtoken-library">Using the jsonwebtoken Library</h3>

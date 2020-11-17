@@ -3,22 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://www.carmine.dev/categories/authentication/</loc>
-    <lastmod>2020-04-29T11:00:00+02:00</lastmod>
+    <loc>https://www.carmine.dev/categories/</loc>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.carmine.dev/categories/</loc>
-    <lastmod>2020-04-29T11:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.carmine.dev/categories/</loc>
-    <lastmod>2020-04-29T11:00:00+02:00</lastmod>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://www.carmine.dev/categories/flutter/</loc>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/posts/</loc>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/</loc>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/posts/flutterweb/</loc>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/web/</loc>
+    <lastmod>2020-11-17T22:30:00+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.carmine.dev/categories/authentication/</loc>
     <lastmod>2020-04-29T11:00:00+02:00</lastmod>
   </url>
   
@@ -33,11 +53,6 @@
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/posts/</loc>
-    <lastmod>2020-04-29T11:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.carmine.dev/posts/flutterwebjwt/</loc>
     <lastmod>2020-04-29T11:00:00+02:00</lastmod>
   </url>
@@ -48,17 +63,7 @@
   </url>
   
   <url>
-    <loc>https://www.carmine.dev/</loc>
-    <lastmod>2020-04-29T11:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://www.carmine.dev/categories/tutorial/</loc>
-    <lastmod>2020-04-29T11:00:00+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://www.carmine.dev/categories/web/</loc>
     <lastmod>2020-04-29T11:00:00+02:00</lastmod>
   </url>
   

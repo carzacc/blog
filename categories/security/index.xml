@@ -6,11 +6,7 @@
     <description>Recent content in security on The Carmine Zaccagnino Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2020 11:00:00 +0200</lastBuildDate>
-    
-	<atom:link href="https://www.carmine.dev/categories/security/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 29 Apr 2020 11:00:00 +0200</lastBuildDate><atom:link href="https://www.carmine.dev/categories/security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Securely Storing JWTs in (Flutter) Web Apps</title>
       <link>https://www.carmine.dev/posts/flutterwebjwt/</link>

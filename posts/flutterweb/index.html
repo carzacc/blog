@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us"><head>
   <meta charset="utf-8">
-  <title>Cookie Declaration</title>
+  <title>The Current State of Flutter for the Web</title>
 
   <!-- mobile responsive meta -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -100,15 +100,47 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 mx-auto block shadow mb-5">
-        <h2>Cookie Declaration</h2>
+        <h2>The Current State of Flutter for the Web</h2>
         <div class="mb-3"><span>by <a href="/author/carmine-zaccagnino">Carmine zaccagnino</a></span>,
-          <span>at 09 December 2019</span>, category :
+          <span>at 17 November 2020</span>, category :
+          
+          <a href="/categories/flutter">Flutter</a>
+          
+          <a href="/categories/web">Web</a>
           
         </div>
         
         <div class="content mb-5">
-          <script id="CookieDeclaration" src="https://consent.cookiebot.com/1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7/cd.js" type="text/javascript" async></script>
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
+          <p><img src="/img/flutterweb.png" alt=""></p>
+<p>Long time no see! It&rsquo;s been a while since I&rsquo;ve last posted something on my blog, and that&rsquo;s been for several reasons, with the bottom line being that I&rsquo;ve run out of ideas and haven&rsquo;t really had the time to sit down and think about great blog post ideas.</p>
+<p>I&rsquo;m coming back with a post that&rsquo;s going to be a little shallower than usual, but that I find to be important nonetheless.</p>
+<p>If you don&rsquo;t follow me on Twitter, you might have missed <a href="https://www.smashingmagazine.com/author/carmine-zaccagnino/">the two articles I&rsquo;ve written for Smashing Magazine on Flutter for Web and desktop.</a></p>
+<p>Those were introductions and tutorials which didn&rsquo;t mention the current state of Flutter for the Web much, and this post is here to give an overview of just that.</p>
+<p>It&rsquo;s split in two parts, each answering a question:</p>
+<ul>
+<li>How hard is it to make it work?</li>
+<li>How well does it work?</li>
+</ul>
+<h1 id="how-hard-is-it-to-make-it-work">How hard is it to make it work?</h1>
+<p>This section is going to overlap with the first of my Smashing Magazine articles, but just a little bit.</p>
+<p>First of all, Flutter Web development is not available on the stable channel, and this means you need to switch to the <em>beta</em> channel. In addition to that, you need to run the</p>
+<pre><code>$ flutter config --enable-web
+</code></pre><p>command to enable Web development, but you probably already knew all of that. Still, I can&rsquo;t really take anything for granted when I&rsquo;m writing to the whole of the Internet, and I&rsquo;m already making it hard enough to understand what I&rsquo;m talking about to people who don&rsquo;t even know what the heck Flutter is, and if that&rsquo;s you I know a book you should read. Ask me about that, or maybe just take a look at my Twitter or this blog.</p>
+<p>Anyway, after you&rsquo;ve done that the Web browser will become a device Flutter will try to use to debug and you will be able to run <code>flutter build web</code> to get a bundle delivered to the <code>build</code> folder containing what the browser needs to show your beautiful Web app to your users, in particular your Dart code will be compiled to JS and the <code>index.html</code> file will be built based on the <code>index.html</code> in the <code>web</code> directory, which is the Web equivalent of the <code>android</code> and <code>ios</code> directories: you can modify it to change the app name and favicon, for example.</p>
+<p>One thing you might not know is that Flutter for the Web has another build target: a WASM target using Skia running on WebGL.</p>
+<h1 id="how-well-does-it-work">How well does it work?</h1>
+<p>That build target is as experimental as it gets, and it currently causes some very severe rendering issues on some clients that means it&rsquo;s completely not fit for a production app that&rsquo;s meant to be used on devices that you don&rsquo;t have complete control over.</p>
+<p>On the other hand, the Skia target is the one that will usually cause fewer issues overall with the app and will give a more predictable, mobile-like behaviour on the devices it works well on.</p>
+<p>Just use the JS target if you need to support any device.</p>
+<p>Talking about how well the app works, I also have to mention that the initial loading time can be quite slow, and you may find it unacceptable, so check it out with something simpler before you invest too much time into a project.</p>
+<p>Also, <code>TextField</code>s sometimes don&rsquo;t get in focus again right away when clicking on them after they go out of focus.</p>
+<p>There are some general usability tradeoffs that need to be kept in mind, especially when running the Web app on desktop devices. You won&rsquo;t get a scrollbar from the browser because Flutter handles scrolling itself, so you need to create a scrollbar yourself, perhaps aided by something like the <a href="https://pub.dev/packages/draggable_scrollbar">draggable_scrollbar package on Pub</a>.</p>
+<p>Another one is that text isn&rsquo;t even selectable by default. You can use <code>SelectableText</code> instead of <code>Text</code> to fix that, but the users still won&rsquo;t be able to copy the text so it&rsquo;s not going to cut it for a blog or other text-rich websites.</p>
+<p>An easily fixable drawback is the lack of routing. Even named routes don&rsquo;t really cut it if you show content from a database on different pages: everything is still passed under the hood and not through the URL. That&rsquo;s very easily fixable using the <a href="https://pub.dev/packages/fluro">fluro package</a>.</p>
+<p>In general, you&rsquo;ll have to think about other differences  between mobile apps and websites, for example clicking and dragging has the same effect as tapping and dragging on a mobile device, and Flutter doesn&rsquo;t allow you to handle scrollwheel scrolling events differently than dragging events.</p>
+<p>Also, if you use cookies, remember to use the <code>BrowserClient</code> and to set <a href="https://pub.dev/documentation/http/latest/browser_client/BrowserClient/withCredentials.html">the <code>withCredentials</code> option</a> to <code>true</code>, otherwise they won&rsquo;t be stored for subsequent requests.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Flutter can be used successfully to build Web apps, but it&rsquo;s still got a few drawbacks. It&rsquo;s up to you to decide whether or not it&rsquo;s a good fit for your next project but, whatever you decide, remember that Flutter is still in very quick development and the situation may get better at any point.</p>
 
         </div>
       </div>

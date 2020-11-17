@@ -6,10 +6,15 @@
     <description>Recent content in Posts on The Carmine Zaccagnino Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Apr 2020 11:00:00 +0200</lastBuildDate>
-    
-	<atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Tue, 17 Nov 2020 22:30:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Current State of Flutter for the Web</title>
+      <link>https://www.carmine.dev/posts/flutterweb/</link>
+      <pubDate>Tue, 17 Nov 2020 22:30:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterweb/</guid>
+      <description>Long time no see! It&amp;rsquo;s been a while since I&amp;rsquo;ve last posted something on my blog, and that&amp;rsquo;s been for several reasons, with the bottom line being that I&amp;rsquo;ve run out of ideas and haven&amp;rsquo;t really had the time to sit down and think about great blog post ideas.</description>
+    </item>
     
     <item>
       <title>Securely Storing JWTs in (Flutter) Web Apps</title>
