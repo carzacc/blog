@@ -6,7 +6,17 @@
     <description>Recent content in Posts on The Carmine Zaccagnino Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 17 Nov 2020 22:30:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Feb 2021 18:00:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>One year of Programming Flutter, DevTalk and a 35% discount on the book!</title>
+      <link>https://www.carmine.dev/posts/oneyearbook/</link>
+      <pubDate>Tue, 23 Feb 2021 18:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/oneyearbook/</guid>
+      <description>It&amp;rsquo;s been a year since the Pragmatic Programmers published Programming Flutter, my Flutter book.
+There have been many people saying great things about it, and many more asking me to guide them through the Flutter journey they started by reading my book.</description>
+    </item>
+    
     <item>
       <title>The Current State of Flutter for the Web</title>
       <link>https://www.carmine.dev/posts/flutterweb/</link>
