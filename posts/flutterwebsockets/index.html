@@ -1,297 +1,194 @@
-<!DOCTYPE html>
-<html lang="en-us"><head>
-  <meta charset="utf-8">
-  <title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (&#43; Node backend Implementation)</title>
-
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="">
-  
-  <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.80.0" />
-
-  <!-- plugins -->
-  
-  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
-  
-  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
-  
-
-  <!-- Main Stylesheet -->
-  
-  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" integrity="" media="screen">
-
-  <!--Favicon-->
-  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-</head><body><!-- navigation -->
+<!doctype html><html lang=en-us><head>
+<meta charset=utf-8>
+<title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (+ Node backend Implementation)</title>
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name=description content>
+<meta name=author content="Carmine Zaccagnino">
+<meta name=generator content="Hugo 0.88.1">
+<link rel=stylesheet href=https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css>
+<link rel=stylesheet href=https://www.carmine.dev/plugins/themify-icons/themify-icons.css>
+<link rel=stylesheet href=https://www.carmine.dev/scss/style.min.css media=screen>
+<link rel="shortcut icon" href=https://www.carmine.dev/images/favicon.png type=image/x-icon>
+<link rel=icon href=https://www.carmine.dev/images/favicon.png type=image/x-icon>
+</head><body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript>
 <header class="fixed-top navigation">
-  <div class="container">
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
-      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="https://www.carmine.dev/img/logo.svg" alt="The Carmine Zaccagnino Blog"></a>
-      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
-        <i class="ti-menu h3"></i>
-      </button>
-
-      <div class="collapse navbar-collapse text-center" id="navigation">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
-          </li>
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">Articles I&#39;ve Published Elsewhere</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/newsletter">Subscribe to my newsletter</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/cookiedeclaration">Website Cookies Declaration</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
-            </li>
-            
-          
-        </ul>
-        
-        <!-- search -->
-        <div class="search">
-          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
-          <div class="search-wrapper">
-            <form action="https://www.carmine.dev//search" class="h-100">
-              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
-            </form>
-            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
-          </div>
-        </div>
-        
-      </div>
-    </nav>
-  </div>
-</header>
-<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
-
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto block shadow mb-5">
-        <h2>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (+ Node backend Implementation)</h2>
-        <div class="mb-3"><span>by <a href="/author/carmine-zaccagnino">Carmine zaccagnino</a></span>,
-          <span>at 05 March 2020</span>, category :
-          
-          <a href="/categories/flutter">Flutter</a>
-          
-          <a href="/categories/networking">Networking</a>
-          
-          <a href="/categories/tutorial">Tutorial</a>
-          
-          <a href="/categories/node.js">Node.js</a>
-          
-          <a href="/categories/websockets">Web sockets</a>
-          
-        </div>
-        
-        <div class="content mb-5">
-          <p><img src="/img/websocketstut.png" alt=""></p>
+<div class=container>
+<nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+<a class=navbar-brand href=https://www.carmine.dev/><img class=img-fluid src=/img/logo.svg alt="The Carmine Zaccagnino Blog"></a>
+<button class="navbar-toggler border-0" type=button data-toggle=collapse data-target=#navigation>
+<i class="ti-menu h3"></i>
+</button>
+<div class="collapse navbar-collapse text-center" id=navigation>
+<ul class="navbar-nav ml-auto">
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/> Home </a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/articleselsewhere>Articles I've Published Elsewhere</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/programmingflutter>Programming Flutter</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=http://www.carminezacc.com>The Rest of My Stuff</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/cookiedeclaration>Website Cookies Declaration</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/aboutme>What's This?</a>
+</li>
+</ul>
+<div class=search>
+<button id=searchOpen class=search-btn><i class=ti-search></i></button>
+<div class=search-wrapper>
+<form action=https://www.carmine.dev/search class=h-100>
+<input class="search-box px-4" id=search-query name=s type=search placeholder="Type & Hit Enter...">
+</form>
+<button id=searchClose class=search-close><i class="ti-close text-dark"></i></button>
+</div>
+</div>
+</div>
+</nav>
+</div>
+</header> <div class="py-5 d-none d-lg-block"></div>
+<section class=section>
+<div class=container>
+<div class=row>
+<div class="col-lg-8 mx-auto block shadow mb-5">
+<h2>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (+ Node backend Implementation)</h2>
+<div class="mb-3 post-meta">
+<a href=/author/carmine-zaccagnino>Carmine Zaccagnino</a>,
+Mar 5, 2020,
+<a href=/categories/flutter>Flutter</a>
+<a href=/categories/networking>Networking</a>
+<a href=/categories/tutorial>Tutorial</a>
+<a href=/categories/node.js>Node.js</a>
+<a href=/categories/websockets>WebSockets</a>
+</div>
+<div class="content mb-5">
+<p><img src=/img/websocketstut.png alt></p>
 <p>Hi everyone, in this post I&rsquo;m going to show you how to use WebSockets in Flutter apps and write a Node backend to test the app.</p>
-<p>In this post we’re not going to worry about authentication/authorization, as that was the focus <a href="https://carmine.dev/posts/jwtauth/">of the previous post in the series</a>. As always, this is meant for people with a decent understanding of the basics of Flutter. I&rsquo;ve <a href="https://pragprog.com/book/czflutr/programming-flutter">written a book about Flutter</a> that will get you up to speed reasonably quickly and with ease but, in case you really need to do this now and either don&rsquo;t like learning from the book or don&rsquo;t want to read the whole thing, here&rsquo;s the concepts I&rsquo;m going to suppose you know how to use in order to follow this post:</p>
+<p>In this post we’re not going to worry about authentication/authorization, as that was the focus <a href=https://carmine.dev/posts/jwtauth/>of the previous post in the series</a>. As always, this is meant for people with a decent understanding of the basics of Flutter. I&rsquo;ve <a href=https://pragprog.com/book/czflutr/programming-flutter>written a book about Flutter</a> that will get you up to speed reasonably quickly and with ease but, in case you really need to do this now and either don&rsquo;t like learning from the book or don&rsquo;t want to read the whole thing, here&rsquo;s the concepts I&rsquo;m going to suppose you know how to use in order to follow this post:</p>
 <ul>
 <li>basic structure of a Flutter app (<code>MaterialApp</code>, <code>Scaffold</code>, <code>Column</code>, definition of custom widgets etc.);</li>
 <li>getting input from the user using a <code>TextField</code> and managing it with a <code>TextEditingController</code>;</li>
 <li>basic navigation using <code>Navigator.push</code>;</li>
 <li>asynchronous programming with <code>Stream</code>s and the usage of the <code>StreamBuilder</code>.</li>
 </ul>
-<h2 id="websocket-and-socketio">WebSocket and Socket.io</h2>
+<h2 id=websocket-and-socketio>WebSocket and Socket.io</h2>
 <p>This post is about WebSockets. It won&rsquo;t be about Socket.IO, which might be the focus of another post. WebSocket is a protocol (just like HTTP) and there are some packages and libraries to use it directly, but a very popular alternative to doing that is using Socket.io, which is a library that may or may not use WebSocket as its communication protocol, given that it has its own real-time communication engine that is used in case there is no way to establish a WebSocket-based connection.</p>
-<p>The way Socket.io does it is rather the other way around, using its own engine to initiate the connection, <em>upgrading</em> to WebSocket if it&rsquo;s supported. The main difference you would notice in the example in a  tutorial is that Socket.io supports server broadcasting by default, meaning you don&rsquo;t have to manually iterate over the connected clients to send the message to each, as that is a feature of Socket.io itself.</p>
-<h2 id="what-were-going-to-build">What We&rsquo;re Going to Build</h2>
-<p>A very common application for WebSockets is building a chat app. That&rsquo;s a very good example but, in my view, it&rsquo;s not a great example for a blog post, unless what one wants to teach is how to build a chat app and not how to  use WebSockets. I used the example of a chat app in my book to show how to use Firebase, but that was to show as many aspects of Flutter and Firebase as possible in one example, and it is a cool example.</p>
+<p>The way Socket.io does it is rather the other way around, using its own engine to initiate the connection, <em>upgrading</em> to WebSocket if it&rsquo;s supported. The main difference you would notice in the example in a tutorial is that Socket.io supports server broadcasting by default, meaning you don&rsquo;t have to manually iterate over the connected clients to send the message to each, as that is a feature of Socket.io itself.</p>
+<h2 id=what-were-going-to-build>What We&rsquo;re Going to Build</h2>
+<p>A very common application for WebSockets is building a chat app. That&rsquo;s a very good example but, in my view, it&rsquo;s not a great example for a blog post, unless what one wants to teach is how to build a chat app and not how to use WebSockets. I used the example of a chat app in my book to show how to use Firebase, but that was to show as many aspects of Flutter and Firebase as possible in one example, and it is a cool example.</p>
 <p>What I&rsquo;m going to do in this post, though, is show you everything you need to know in order to build a real time app, leaving the rest to you and avoid showing how to interact with a specific database, how to build a very specific complex user interface: the example is simply going to be an app showing the latest message sent by an user as an announcement to every connected user.</p>
-<h2 id="websockets-in-flutter">WebSockets in Flutter</h2>
+<h2 id=websockets-in-flutter>WebSockets in Flutter</h2>
 <p>The <code>web_socket_channel</code> Dart WebSocket package is Google-developed and very easy to use. That&rsquo;s what we&rsquo;re going to use in this post.</p>
-<h3 id="opening-a-connection">Opening a Connection</h3>
+<h3 id=opening-a-connection>Opening a Connection</h3>
 <p>A connection can be opened by creating an object of class <code>WebSocketChannel</code>, and you can connect to a WebSocket server by using the <code>WebSocketChannel.connect</code> contructor: <code>channel = WebSocketChannel.connect(URI);</code> where <code>URI</code> is an <code>Uri</code>, that you could get from a <code>String</code> containing an URL (something like <code>ws://myserver.mydomain.com:3000</code>) by using <code>Uri.parse(URL)</code>.</p>
-<h3 id="sending-and-receiving-data">Sending and Receiving Data</h3>
+<h3 id=sending-and-receiving-data>Sending and Receiving Data</h3>
 <p>The <code>WebSocketChannel.stream</code> is used to listen for messages. As the name implies, it&rsquo;s a <code>Stream</code>, which is exactly the best data type for incoming data from a WebSocket. It returns any new messages coming from the WebSocket as soon as they are received.</p>
 <p>The <code>WebSocketChannel.sink</code> is used to send messages. As the name implies, it&rsquo;s a <code>StreamSink</code>. If you&rsquo;ve read my book or have worked with the Firebase Cloud Firestore before, this is used in a similar way to the <code>Firestore</code>&rsquo;s <code>CollectionReference</code> object: <code>WebSocketChannel.sink.add(data)</code> sends data through the WebSocket.</p>
-<h3 id="closing-the-connection">Closing the Connection</h3>
+<h3 id=closing-the-connection>Closing the Connection</h3>
 <p><code>channel.sink.close(statusCode);</code></p>
-<pre><code>  @override
+<pre tabindex=0><code>  @override
   void dispose() {
     super.dispose();
     channel.sink.close(statusCodes.goingAway);
   }
-</code></pre><h2 id="building-an-example-app">Building an Example App</h2>
-<p>You can find the complete source code for this app <a href="https://github.com/carzacc/websockets_flutter">in this GitHub repository</a>.</p>
+</code></pre><h2 id=building-an-example-app>Building an Example App</h2>
+<p>You can find the complete source code for this app <a href=https://github.com/carzacc/websockets_flutter>in this GitHub repository</a>.</p>
 <p>Let&rsquo;s start with the <code>pubspec.yaml</code>, which needs to install the <code>web_socket_channel</code> package:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=pubspec.yaml"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=pubspec.yaml"></script>
 <p>In <code>lib/main.dart</code> we&rsquo;re going to import <code>package:web_socket_channel/web_socket_channel.dart</code> to use the <code>WebSocketChannel</code>, then we set the server IP and port, and then start an app that has as its home page a class called <code>FauxLoginPage</code>:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=base.dart"></script>
-
-<h3 id="the-fauxloginpage">The FauxLoginPage</h3>
+<script type=application/javascript src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=base.dart"></script>
+<h3 id=the-fauxloginpage>The FauxLoginPage</h3>
 <p>The <code>FauxLoginPage</code> is going to be, as the name implies, a <em>fake</em> login page: it&rsquo;s not going to be a proper login page for the user to authenticate, but just a page for the user to set an username. As I wrote above, we&rsquo;re not going to worry about authentication because that was the focus of the previous post. If you know how to use <code>TextField</code>s (and especially if you&rsquo;re familiar with the Firebase chat app example in my book, which has a login page that works a bit like this one but actually authenticates the user) this is all going to be self-explanatory and simple:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=fauxloginpage.dart"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=fauxloginpage.dart"></script>
 <p>The <code>AnnouncementPage</code> is going to simply be a <code>StatelessWidget</code>: we&rsquo;re going to let a <code>StreamBuilder</code> take care of the changes in values returned by the <code>Stream</code> of data from the WebSocket. Below the text coming from the WebSocket, we&rsquo;re going to have a <code>TextField</code> that allows the user to send a message. We convert the data to a string so that it could technically be anything, and be shown to the user <em>as is</em>, to make debugging easier:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=homepage.dart"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=homepage.dart"></script>
 <p>The entire <code>main.dart</code> is going to be the following, then:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=main.dart"></script>
-
-<h2 id="building-the-backend-for-the-app">Building the Backend for the App</h2>
-<p>We&rsquo;re going to build the backend for the app with Node.js and the <a href="https://www.npmjs.com/package/ws"><code>ws</code> npm package</a>.</p>
-<h3 id="the-ws-package">The ws Package</h3>
-<p>There&rsquo;s a very popular and easy-to-use WebSocket client/server <a href="https://www.npmjs.com/package/ws">package for Node called simply <em>ws</em></a>, so you can install it using</p>
-<pre><code>$ npm install ws
+<script type=application/javascript src="https://gist.github.com/carzacc/ad6c0b8a2b04788423b51d0ab729287f.js?file=main.dart"></script>
+<h2 id=building-the-backend-for-the-app>Building the Backend for the App</h2>
+<p>We&rsquo;re going to build the backend for the app with Node.js and the <a href=https://www.npmjs.com/package/ws><code>ws</code> npm package</a>.</p>
+<h3 id=the-ws-package>The ws Package</h3>
+<p>There&rsquo;s a very popular and easy-to-use WebSocket client/server <a href=https://www.npmjs.com/package/ws>package for Node called simply <em>ws</em></a>, so you can install it using</p>
+<pre tabindex=0><code>$ npm install ws
 </code></pre><p>You can start a WebSocket server that listens to a given port with the following code:</p>
-<pre><code>var server = new WebSocket.Server(
+<pre tabindex=0><code>var server = new WebSocket.Server(
   {
     port: port,
   }
 );
 </code></pre><p>you can wait for a connection and define a callback to be ran when a client connects with the following code:</p>
-<pre><code>server.on('connection', function connection(client) {
+<pre tabindex=0><code>server.on('connection', function connection(client) {
 	// code to execute when a client connects
 });
 </code></pre><p>This gives us a <code>client</code> object we can use to send messages to the connected WebSocket client using <code>client.send()</code>:</p>
-<pre><code>client.send(msg);
+<pre tabindex=0><code>client.send(msg);
 </code></pre><p>We can also listen for messages sent by the client over the WebSocket and run a function when that happens:</p>
-<pre><code>client.on('message', function incoming(message) {
+<pre tabindex=0><code>client.on('message', function incoming(message) {
 	// code to execute when a message is received
 });
 </code></pre><p>An useful member of the <code>server</code> object is <code>server.clients</code>, which is an array of the connected clients. This means we can send a message to each connected client with the following:</p>
-<pre><code>for(var cl of server.clients) {
+<pre tabindex=0><code>for(var cl of server.clients) {
   cl.send(message);
 }
-</code></pre><h3 id="implementing-the-backend">Implementing the Backend</h3>
-<p>You can find source code for the backend at <a href="https://github.com/carzacc/websocketsbackend">this GitHub repository</a>.</p>
+</code></pre><h3 id=implementing-the-backend>Implementing the Backend</h3>
+<p>You can find source code for the backend at <a href=https://github.com/carzacc/websocketsbackend>this GitHub repository</a>.</p>
 <p>The first thing we need is to import the <em>ws</em> package:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=imports.js"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=imports.js"></script>
 <p>Then set a port and start the WebSocket server:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=startserver.js"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=startserver.js"></script>
 <p>let&rsquo;s also define a default message to send to the client the first time:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=letmsg.js"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=letmsg.js"></script>
 <p>When a client connects for the first time, we send them that message so the client has something to display to the user when they connect:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=connection.js"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=connection.js"></script>
 <p>Now, let&rsquo;s handle the reception of a message:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=onmessage.js"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=onmessage.js"></script>
 <p>What we should do is broadcast the received message to all connected clients:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=broadcast.js"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=broadcast.js"></script>
 <p>If we also log to console each received message the final <code>index.js</code> is the following:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=index.js"></script>
-
-<p>As always, if you enjoyed this post, consider <a href="https://twitter.com/carminezacc">following me on Twitter @carminezacc</a>.</p>
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
-
-        </div>
-      </div>
-      <div class="col-lg-8 mx-auto block shadow">
-        
-        
-      </div>
-    </div>
-  </div>
+<script type=application/javascript src="https://gist.github.com/carzacc/430d50943715dfbde2bd2082992af9a3.js?file=index.js"></script>
+<p>As always, if you enjoyed this post, consider <a href=https://twitter.com/carminezacc>following me on Twitter @carminezacc</a>.</p>
+</div>
+<div class="mb-3 post-meta">
+</div>
+</div>
+<div class="col-lg-8 mx-auto block shadow">
+</div>
+</div>
+</div>
 </section>
-
-
 <footer class="py-4 bg-light border-top">
-  <div class="container">
-    <div class="row justify-content-between align-items-center">
-      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
-        <a href="https://www.carmine.dev/"><img src="https://www.carmine.dev/img/logo.svg" class="img-fluid"
-            alt="The Carmine Zaccagnino Blog"></a>
-      </div>
-      <div class="col-lg-4 text-center mb-4 mb-lg-0">
-        <ul class="list-inline mb-0">
-          
-          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a>
-          </li>
-          
-        </ul>
-      </div>
-      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
-        <ul class="list-inline social-icon mb-0">
-          
-          <li class="list-inline-item"><a href="https://twitter.com/carminezacc"><i class="ti-twitter-alt"></i></a></li>
-          
-        </ul>
-      </div>
-      <div class="col-12 text-center mt-4">
-        <span></span>
-      </div>
-    </div>
-  </div>
+<div class=container>
+<div class="row justify-content-between align-items-center">
+<div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+<a href=https://www.carmine.dev/ class="d-block pb-3"><img src=/img/logo.svg class=img-fluid alt="The Carmine Zaccagnino Blog"></a>
+</div>
+<div class="col-lg-4 text-center mb-4 mb-lg-0">
+<ul class="list-inline mb-0">
+<li class=list-inline-item><a class="text-dark d-block p-2" href=mailto:carmine@carminezacc.com>P.IVA (Italian VATIN): 02118220769</a></li>
+<li class=list-inline-item><a class="text-dark d-block p-2" href=mailto:carmine@carminezacc.com>Send me an email at carmine@carminezacc.com</a></li>
+</ul>
+</div>
+<div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+<ul class="list-inline social-icon mb-0">
+</ul>
+</div>
+</div>
+<div class="text-center mt-4">
+<span></span>
+</div>
+</div>
 </footer>
-
-
-
-
-<script>
-  var indexURL = "https://www.carmine.dev/index.json"
-</script>
-
-
-<!-- JS Plugins -->
-
-<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
-
-<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
-
-<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
-
-<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
-
-<script src="https://www.carmine.dev/plugins/search/search.js"></script>
-
-<!-- Main Script -->
-
-<script src="https://www.carmine.dev/js/script.min.js"></script>
-<!-- google analitycs -->
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  ga('create', 'UA-108378671-3', 'auto');
-  ga('send', 'pageview');
-</script></body>
+<script>var indexURL="https://www.carmine.dev/index.json"</script>
+<script src=https://www.carmine.dev/plugins/jQuery/jquery.min.js></script>
+<script src=https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js></script>
+<script src=https://www.carmine.dev/plugins/search/fuse.min.js></script>
+<script src=https://www.carmine.dev/plugins/search/mark.js></script>
+<script src=https://www.carmine.dev/plugins/search/search.js></script>
+<script src=https://www.carmine.dev/js/script.min.js></script>
+</body>
 </html>

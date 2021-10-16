@@ -1,162 +1,112 @@
-<!DOCTYPE html>
-<html lang="en-us"><head>
-  <meta charset="utf-8">
-  <title>Flutter Notifications Without Firebase</title>
-
-  <!-- mobile responsive meta -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="">
-  
-  <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.80.0" />
-
-  <!-- plugins -->
-  
-  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
-  
-  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
-  
-
-  <!-- Main Stylesheet -->
-  
-  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" integrity="" media="screen">
-
-  <!--Favicon-->
-  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
-</head><body><!-- navigation -->
+<!doctype html><html lang=en-us><head>
+<meta charset=utf-8>
+<title>Flutter Notifications Without Firebase</title>
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name=description content>
+<meta name=author content="Carmine Zaccagnino">
+<meta name=generator content="Hugo 0.88.1">
+<link rel=stylesheet href=https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css>
+<link rel=stylesheet href=https://www.carmine.dev/plugins/themify-icons/themify-icons.css>
+<link rel=stylesheet href=https://www.carmine.dev/scss/style.min.css media=screen>
+<link rel="shortcut icon" href=https://www.carmine.dev/images/favicon.png type=image/x-icon>
+<link rel=icon href=https://www.carmine.dev/images/favicon.png type=image/x-icon>
+</head><body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript>
 <header class="fixed-top navigation">
-  <div class="container">
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
-      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="https://www.carmine.dev/img/logo.svg" alt="The Carmine Zaccagnino Blog"></a>
-      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
-        <i class="ti-menu h3"></i>
-      </button>
-
-      <div class="collapse navbar-collapse text-center" id="navigation">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
-          </li>
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">Articles I&#39;ve Published Elsewhere</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/newsletter">Subscribe to my newsletter</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/cookiedeclaration">Website Cookies Declaration</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
-            </li>
-            
-          
-        </ul>
-        
-        <!-- search -->
-        <div class="search">
-          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
-          <div class="search-wrapper">
-            <form action="https://www.carmine.dev//search" class="h-100">
-              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
-            </form>
-            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
-          </div>
-        </div>
-        
-      </div>
-    </nav>
-  </div>
-</header>
-<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
-
-<section class="section">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-8 mx-auto block shadow mb-5">
-        <h2>Flutter Notifications Without Firebase</h2>
-        <div class="mb-3"><span>by <a href="/author/carmine-zaccagnino">Carmine zaccagnino</a></span>,
-          <span>at 28 March 2020</span>, category :
-          
-          <a href="/categories/flutter">Flutter</a>
-          
-          <a href="/categories/networking">Networking</a>
-          
-          <a href="/categories/tutorial">Tutorial</a>
-          
-          <a href="/categories/node.js">Node.js</a>
-          
-          <a href="/categories/websockets">Web sockets</a>
-          
-          <a href="/categories/notifications">Notifications</a>
-          
-        </div>
-        
-        <div class="content mb-5">
-          <p><img src="/img/notificationstut.png" alt=""></p>
+<div class=container>
+<nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+<a class=navbar-brand href=https://www.carmine.dev/><img class=img-fluid src=/img/logo.svg alt="The Carmine Zaccagnino Blog"></a>
+<button class="navbar-toggler border-0" type=button data-toggle=collapse data-target=#navigation>
+<i class="ti-menu h3"></i>
+</button>
+<div class="collapse navbar-collapse text-center" id=navigation>
+<ul class="navbar-nav ml-auto">
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/> Home </a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/articleselsewhere>Articles I've Published Elsewhere</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/programmingflutter>Programming Flutter</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=http://www.carminezacc.com>The Rest of My Stuff</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/cookiedeclaration>Website Cookies Declaration</a>
+</li>
+<li class=nav-item>
+<a class=nav-link href=https://www.carmine.dev/aboutme>What's This?</a>
+</li>
+</ul>
+<div class=search>
+<button id=searchOpen class=search-btn><i class=ti-search></i></button>
+<div class=search-wrapper>
+<form action=https://www.carmine.dev/search class=h-100>
+<input class="search-box px-4" id=search-query name=s type=search placeholder="Type & Hit Enter...">
+</form>
+<button id=searchClose class=search-close><i class="ti-close text-dark"></i></button>
+</div>
+</div>
+</div>
+</nav>
+</div>
+</header> <div class="py-5 d-none d-lg-block"></div>
+<section class=section>
+<div class=container>
+<div class=row>
+<div class="col-lg-8 mx-auto block shadow mb-5">
+<h2>Flutter Notifications Without Firebase</h2>
+<div class="mb-3 post-meta">
+<a href=/author/carmine-zaccagnino>Carmine Zaccagnino</a>,
+Mar 28, 2020,
+<a href=/categories/flutter>Flutter</a>
+<a href=/categories/networking>Networking</a>
+<a href=/categories/tutorial>Tutorial</a>
+<a href=/categories/node.js>Node.js</a>
+<a href=/categories/websockets>WebSockets</a>
+<a href=/categories/notifications>Notifications</a>
+</div>
+<div class="content mb-5">
+<p><img src=/img/notificationstut.png alt></p>
 <p>We are going to discuss how to display notifications using the <code>flutter_local_notifications</code> plugin.</p>
-<p>As always with these posts, you can be sure you&rsquo;ve got all of the basic knowledge you need by reading <a href="https://pragprog.com/book/czflutr/programming-flutter">my Flutter book</a>, but not all of you like that way of learning, so I&rsquo;ll list the topics which are considered prerequisites for this post.</p>
+<p>As always with these posts, you can be sure you&rsquo;ve got all of the basic knowledge you need by reading <a href=https://pragprog.com/book/czflutr/programming-flutter>my Flutter book</a>, but not all of you like that way of learning, so I&rsquo;ll list the topics which are considered prerequisites for this post.</p>
 <p>To be able to easily follow this post, you need to know the following:</p>
 <ul>
 <li>basics of Flutter app development, including knowledge of basic Material Design widgets, but also UI composition and basic state management;</li>
 <li>asynchronous programming with <code>Stream</code>s and listening to them (<code>StreamSubscription</code>);</li>
 </ul>
-<p>The backend for our app will be <a href="https://carmine.dev/posts/flutterwebsockets/">the one we wrote for the previous post in the series</a>. The app itself will be based on that, so I highly recommend you read the last part of that post if you want to understand how we&rsquo;ve got topics a fully working example app at the end of this post. One way or another, <a href="https://github.com/carzacc/flutter_notifications_example">here&rsquo;s the GitHub repository with the example Flutter code</a> and, for your convenience, <a href="https://github.com/carzacc/websocketsbackend">here&rsquo;s the repo for the Node.js backend code</a>.</p>
-<h1 id="the-flutter_local_notifications-package">The flutter_local_notifications Package</h1>
-<p>In Flutter apps, you can show notifications to the user while the app is running using <a href="https://pub.dev/packages/flutter_local_notifications">the <code>flutter_local_notifications</code> package</a>. It is fairly easy to use.</p>
-<h2 id="initializing-the-plugin">Initializing the Plugin</h2>
+<p>The backend for our app will be <a href=https://carmine.dev/posts/flutterwebsockets/>the one we wrote for the previous post in the series</a>. The app itself will be based on that, so I highly recommend you read the last part of that post if you want to understand how we&rsquo;ve got topics a fully working example app at the end of this post. One way or another, <a href=https://github.com/carzacc/flutter_notifications_example>here&rsquo;s the GitHub repository with the example Flutter code</a> and, for your convenience, <a href=https://github.com/carzacc/websocketsbackend>here&rsquo;s the repo for the Node.js backend code</a>.</p>
+<h1 id=the-flutter_local_notifications-package>The flutter_local_notifications Package</h1>
+<p>In Flutter apps, you can show notifications to the user while the app is running using <a href=https://pub.dev/packages/flutter_local_notifications>the <code>flutter_local_notifications</code> package</a>. It is fairly easy to use.</p>
+<h2 id=initializing-the-plugin>Initializing the Plugin</h2>
 <p>Before being able to use the plugin, you need to initialize it. This requires two different configuration steps: Android configuration and iOS configuration. Even though this is platform-specific, this is all done in Dart code. More specifically, plugin initialization works the following way:</p>
-<pre><code>FlutterLocalNotificationsPlugin notifications = FlutterLocalNotificationsPlugin();
+<pre tabindex=0><code>FlutterLocalNotificationsPlugin notifications = FlutterLocalNotificationsPlugin();
 AndroidInitializationSettings androidInit = /* ... */;
 IOSInitializationSettings iOSInit = /* ... */;
 var initSettings = InitializationSettings(androidInit, iOSInit);
 notifications.initialize(initSettings);
 </code></pre><p>Now we are going to focus on <code>AndroidInitializationSettings</code> and <code>IOSInitializationSettings</code>.</p>
-<h2 id="android-initialization-settings">Android Initialization Settings</h2>
-<p>Android configuration requires the creation of a drawable asset to use as the app icon displayed in the notification. To do that in Android Studio, get to the <code>android/app/src/main/res/drawable</code> directory in the left <em>Project</em> panel, right-click, and select New-&gt;Vector Asset. This will guide you through the creation of a drawable vector asset.</p>
+<h2 id=android-initialization-settings>Android Initialization Settings</h2>
+<p>Android configuration requires the creation of a drawable asset to use as the app icon displayed in the notification. To do that in Android Studio, get to the <code>android/app/src/main/res/drawable</code> directory in the left <em>Project</em> panel, right-click, and select New->Vector Asset. This will guide you through the creation of a drawable vector asset.</p>
 <p>Take note of its name because, in order to initialize the <code>flutter_notifications</code> package, you need an <code>AndroidInitializationSettings</code> object, which is created in the following way:</p>
-<pre><code>var androidInit = AndroidInitializationSettings('name_of_the_drawable');
-</code></pre><h2 id="ios-initialization-settings">iOS Initialization Settings</h2>
-<p>The configuration for iOS is at the same time simpler and harder: there is no required argument, but there are a bunch of optional ones, which are fine to be left to default values and that you can find on the <a href="https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/IOSInitializationSettings-class.html">official API reference for the package</a>. By default, it will ask the user to give permission to the app to show notifications when the plugin is initialized.</p>
+<pre tabindex=0><code>var androidInit = AndroidInitializationSettings('name_of_the_drawable');
+</code></pre><h2 id=ios-initialization-settings>iOS Initialization Settings</h2>
+<p>The configuration for iOS is at the same time simpler and harder: there is no required argument, but there are a bunch of optional ones, which are fine to be left to default values and that you can find on the <a href=https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/IOSInitializationSettings-class.html>official API reference for the package</a>. By default, it will ask the user to give permission to the app to show notifications when the plugin is initialized.</p>
 <p>This means you can get a simple <code>IOSInitializationSettings</code> with default settings with</p>
-<pre><code>var iOSInit = IOSInitializationSettings();
-</code></pre><h2 id="showing-notifications">Showing Notifications</h2>
+<pre tabindex=0><code>var iOSInit = IOSInitializationSettings();
+</code></pre><h2 id=showing-notifications>Showing Notifications</h2>
 <p>The notifications can be shown with <code>plugin.show(id, title, body, NotificationDetails);</code>.</p>
 <p><code>title</code> and <code>body</code> are self-explanatory, <code>id</code> can just be set to 0.</p>
-<p><code>NotificationDetails</code> is constructed with <code>NotificationDetails(AndroidNotificationDetails android, IOSNotificationDetails iOS)</code>. The required (positonal) arguments for the <code>AndroidNotificationDetails</code> constructor are <code>AndroidNotificationDetails(String channelId, String channelName, String channelDescription)</code>, whereas the <code>IOSNotificationDetails</code> constructor has no required parameters. Both take many optional named arguments, which I won&rsquo;t cover here (also because I can&rsquo;t be sure they will stay the same for long and we won&rsquo;t use them in this tutorial), but that you should check out on the official API reference for the plugin (<a href="https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/IOSNotificationDetails-class.html">click here to see the options for iOS</a> and <a href="https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/AndroidNotificationDetails-class.html">here for those for Android</a>).</p>
+<p><code>NotificationDetails</code> is constructed with <code>NotificationDetails(AndroidNotificationDetails android, IOSNotificationDetails iOS)</code>. The required (positonal) arguments for the <code>AndroidNotificationDetails</code> constructor are <code>AndroidNotificationDetails(String channelId, String channelName, String channelDescription)</code>, whereas the <code>IOSNotificationDetails</code> constructor has no required parameters. Both take many optional named arguments, which I won&rsquo;t cover here (also because I can&rsquo;t be sure they will stay the same for long and we won&rsquo;t use them in this tutorial), but that you should check out on the official API reference for the plugin (<a href=https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/IOSNotificationDetails-class.html>click here to see the options for iOS</a> and <a href=https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/AndroidNotificationDetails-class.html>here for those for Android</a>).</p>
 <p>The <code>AndroidNotificationDetails</code> constructor requires all of the arguments Android requires to show notifications. More specifically, Android Oreo (8.0, API level 26) and successive releases allows users to have different settings for different notification channels originating from the same app. The <code>channelId</code> can be any integer, you use the same number for notifications to be sent on the same channel and you use different numbers for different channels. <code>channelName</code> and <code>channelDescription</code> are names the user will use to differentiate your app&rsquo;s channels, so they should be descriptive of the purpose of each notification channel if you plan to use multiple channels (e.g. a social networking app could have a channel for follow requests, one for direct messages received, one for likes to posts, etc.).</p>
 <p>Here&rsquo;s what the app-level notification settings look like:</p>
-<p><img src="/img/notificationsettingsapp.png" alt=""></p>
+<p><img src=/img/notificationsettingsapp.png alt></p>
 <p>and here&rsquo;s what the channel-specific settings look like:</p>
-<p><img src="/img/notificationsettingschannel.png" alt=""></p>
+<p><img src=/img/notificationsettingschannel.png alt></p>
 <p>Here&rsquo;s an example, where <code>notifications</code> is the <code>FlutterLocalNotificationsPlugin</code> object:</p>
-<pre><code>void showNotification(String title, String body) {
+<pre tabindex=0><code>void showNotification(String title, String body) {
   notifications.show(0, title, body, NotificationDetails(
   	AndroidNotificationDetails(
   	  &quot;my_app_channel_id_0&quot;,
@@ -166,122 +116,73 @@ notifications.initialize(initSettings);
   	IOSNotificationDetails()
   ));
 }
-</code></pre><h1 id="using-it-in-the-app">Using It In The App</h1>
-<p>This second part of the post is going to be about using the plugin in an app, more specifically changing <a href="https://www.carmine.dev/posts/flutterwebsockets/">the app we built in the previous post</a> to also display notifications to the user. If you don&rsquo;t want to read that but still want the code we are starting from, <a href="https://github.com/carzacc/websockets_flutter">here&rsquo;s the GitHub repo of the previous post&rsquo;s app</a>, whereas <a href="https://github.com/carzacc/flutter_notifications_example">this is the one for the app we&rsquo;ll build in this post</a>.</p>
-<h2 id="importing">Importing</h2>
+</code></pre><h1 id=using-it-in-the-app>Using It In The App</h1>
+<p>This second part of the post is going to be about using the plugin in an app, more specifically changing <a href=https://www.carmine.dev/posts/flutterwebsockets/>the app we built in the previous post</a> to also display notifications to the user. If you don&rsquo;t want to read that but still want the code we are starting from, <a href=https://github.com/carzacc/websockets_flutter>here&rsquo;s the GitHub repo of the previous post&rsquo;s app</a>, whereas <a href=https://github.com/carzacc/flutter_notifications_example>this is the one for the app we&rsquo;ll build in this post</a>.</p>
+<h2 id=importing>Importing</h2>
 <p>First of all, add <code>flutter_local_notifications</code> to the <code>dependencies</code> in <code>pubspec.yaml</code>:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=pubspec.yaml"></script>
-
-<p>and import it at the start of <code>main.dart</code>. You&rsquo;ll  notice we are also importing the status codes for the WebSocket library, which we&rsquo;ll need when we close the connection to the server in the <code>dispose()</code> method of the <code>State</code> of the <code>AnnouncementPage</code>:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=imports.dart"></script>
-
-<h2 id="summary-of-the-changes">Summary of The Changes</h2>
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=pubspec.yaml"></script>
+<p>and import it at the start of <code>main.dart</code>. You&rsquo;ll notice we are also importing the status codes for the WebSocket library, which we&rsquo;ll need when we close the connection to the server in the <code>dispose()</code> method of the <code>State</code> of the <code>AnnouncementPage</code>:</p>
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=imports.dart"></script>
+<h2 id=summary-of-the-changes>Summary of The Changes</h2>
 <p>The <code>AnnouncementPage</code> becomes a <code>StatefulWidget</code>, we don&rsquo;t use a <code>StreamBuilder</code>, instead we wait for new data, change what&rsquo;s displayed and also show a notifications. here&rsquo;s the entire <code>AnnouncementPage</code> and <code>AnnouncementPageState</code> that we&rsquo;ll analyze in more detail in the next section of the post:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=AnnouncementPage.dart"></script>
-
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=AnnouncementPage.dart"></script>
 <p>One of the changes you need to keep in mind is that we now have a <code>text</code> <code>String</code> variable that we will update as we get data from the server, and that <code>text</code> is what&rsquo;s going to be displayed on the user&rsquo;s screen.</p>
-<h2 id="using-the-plugin">Using the Plugin</h2>
+<h2 id=using-the-plugin>Using the Plugin</h2>
 <p>The <code>flutter_local_notifications</code> package has to be initialized. This can be done in multiple places. You could to do it in <code>main</code> and have a global variable to be able to access the notifications plugin from anhywhere within the app without having to use <code>InheritedWidget</code>s or the <code>Provider</code>. In our case, though, we don&rsquo;t really need that, as there really is only one widget that&rsquo;s going to cause notifications to be displayed, which is our app&rsquo;s <code>AnnouncementPage</code>. What we need to do is define a <code>StreamSubscription</code> that listens for changes in the stream received from the <code>WebSocket</code> and, if there are any, both updates the <code>AnnouncementPage</code> to show the new announcement (by calling <code>initState</code> and setting the <code>text</code> variable) and displays a notification.</p>
 <p>All of this is done in the <code>initState</code> method:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=initState.dart"></script>
-
-<h2 id="the-new-build-method">The New <code>build</code> Method</h2>
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=initState.dart"></script>
+<h2 id=the-new-build-method>The New <code>build</code> Method</h2>
 <p>The <code>build</code> method now simply needs to display the <code>text</code> we already get using the <code>StreamSubscription</code>, without requiring the use of a <code>StreamBuilder</code>. If the connection hasn&rsquo;t been established yet, which would mean <code>text</code> is still <code>null</code>, we display a <code>CircularProgressIndicator</code> as we did when we used a <code>StreamBuilder</code> and we had no data yet. Given that the nickname is now defined inside the <code>AnnouncementPage</code> <code>StatefulWidget</code> definition, we need to access it using the <code>this.nickname</code> syntax in the <code>onPressed</code> callback for the <code>FloatingActionButton</code> that sends announcements.</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=build.dart"></script>
-
-<h2 id="the-dispose-method">The <code>dispose</code> Method</h2>
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=build.dart"></script>
+<h2 id=the-dispose-method>The <code>dispose</code> Method</h2>
 <p>The <code>dispose()</code> method needs to close the <code>WebSocket</code>, letting the server know it&rsquo;s being closed and freeing resources on both ends of the connection, and <code>cancel</code>s the <code>StreamSubscription</code> because it&rsquo;s not necessary anymore to listen for new announcements.</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=dispose.dart"></script>
-
-<h2 id="wrapping-it-up">Wrapping It Up</h2>
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=dispose.dart"></script>
+<h2 id=wrapping-it-up>Wrapping It Up</h2>
 <p>That&rsquo;s it! The app now sends notifications when it gets new announcements (including when it&rsquo;s the one generating them, but for this app this is intended)!</p>
 <p>The entire <code>main.dart</code> is going to be the following:</p>
-<script type="application/javascript" src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=main.dart"></script>
-
-<h1 id="receiving-notifications-in-the-background">Receiving Notifications in The Background</h1>
+<script type=application/javascript src="https://gist.github.com/carzacc/c4069c40444194cbbed80b2834f4e3ea.js?file=main.dart"></script>
+<h1 id=receiving-notifications-in-the-background>Receiving Notifications in The Background</h1>
 <p>People have complained that I focused on Firebase too much in my book, so I&rsquo;m trying to compensate here on my blog by focusing on more traditional backend implementations and ways to do things.</p>
-<p>One caveat is that, for example, the only way to be able to send notifications to closed apps on both Android and iOS is to use <a href="https://firebase.google.com/docs/cloud-messaging">Firebase Cloud Messaging</a>, which can send notifications directly to Android devices (what used to be called Cloud to Device Messaging and then Google Cloud Messaging) and uses the Apple Push Notification Service to send notifications to iOS devices.</p>
-<h1 id="onwards">Onwards</h1>
-<p>You can now <a href="https://carmine.dev/newsletter">subscribe to my newsletter</a> to get email updates about new posts and, as always you can <a href="https://twitter.com/carminezacc">follow me on Twitter</a> if you are active on there and want to be updated, and remember to <a href="https://pragprog.com/book/czflutr/programming-flutter">check out my Flutter book</a> in case you haven&rsquo;t yet.</p>
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
-
-        </div>
-      </div>
-      <div class="col-lg-8 mx-auto block shadow">
-        
-        
-      </div>
-    </div>
-  </div>
+<p>One caveat is that, for example, the only way to be able to send notifications to closed apps on both Android and iOS is to use <a href=https://firebase.google.com/docs/cloud-messaging>Firebase Cloud Messaging</a>, which can send notifications directly to Android devices (what used to be called Cloud to Device Messaging and then Google Cloud Messaging) and uses the Apple Push Notification Service to send notifications to iOS devices.</p>
+<h1 id=onwards>Onwards</h1>
+<p>You can now <a href=https://carmine.dev/newsletter>subscribe to my newsletter</a> to get email updates about new posts and, as always you can <a href=https://twitter.com/carminezacc>follow me on Twitter</a> if you are active on there and want to be updated, and remember to <a href=https://pragprog.com/book/czflutr/programming-flutter>check out my Flutter book</a> in case you haven&rsquo;t yet.</p>
+</div>
+<div class="mb-3 post-meta">
+</div>
+</div>
+<div class="col-lg-8 mx-auto block shadow">
+</div>
+</div>
+</div>
 </section>
-
-
 <footer class="py-4 bg-light border-top">
-  <div class="container">
-    <div class="row justify-content-between align-items-center">
-      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
-        <a href="https://www.carmine.dev/"><img src="https://www.carmine.dev/img/logo.svg" class="img-fluid"
-            alt="The Carmine Zaccagnino Blog"></a>
-      </div>
-      <div class="col-lg-4 text-center mb-4 mb-lg-0">
-        <ul class="list-inline mb-0">
-          
-          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a>
-          </li>
-          
-        </ul>
-      </div>
-      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
-        <ul class="list-inline social-icon mb-0">
-          
-          <li class="list-inline-item"><a href="https://twitter.com/carminezacc"><i class="ti-twitter-alt"></i></a></li>
-          
-        </ul>
-      </div>
-      <div class="col-12 text-center mt-4">
-        <span></span>
-      </div>
-    </div>
-  </div>
+<div class=container>
+<div class="row justify-content-between align-items-center">
+<div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+<a href=https://www.carmine.dev/ class="d-block pb-3"><img src=/img/logo.svg class=img-fluid alt="The Carmine Zaccagnino Blog"></a>
+</div>
+<div class="col-lg-4 text-center mb-4 mb-lg-0">
+<ul class="list-inline mb-0">
+<li class=list-inline-item><a class="text-dark d-block p-2" href=mailto:carmine@carminezacc.com>P.IVA (Italian VATIN): 02118220769</a></li>
+<li class=list-inline-item><a class="text-dark d-block p-2" href=mailto:carmine@carminezacc.com>Send me an email at carmine@carminezacc.com</a></li>
+</ul>
+</div>
+<div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+<ul class="list-inline social-icon mb-0">
+</ul>
+</div>
+</div>
+<div class="text-center mt-4">
+<span></span>
+</div>
+</div>
 </footer>
-
-
-
-
-<script>
-  var indexURL = "https://www.carmine.dev/index.json"
-</script>
-
-
-<!-- JS Plugins -->
-
-<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
-
-<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
-
-<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
-
-<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
-
-<script src="https://www.carmine.dev/plugins/search/search.js"></script>
-
-<!-- Main Script -->
-
-<script src="https://www.carmine.dev/js/script.min.js"></script>
-<!-- google analitycs -->
-<script>
-  (function (i, s, o, g, r, a, m) {
-    i['GoogleAnalyticsObject'] = r;
-    i[r] = i[r] || function () {
-      (i[r].q = i[r].q || []).push(arguments)
-    }, i[r].l = 1 * new Date();
-    a = s.createElement(o),
-      m = s.getElementsByTagName(o)[0];
-    a.async = 1;
-    a.src = g;
-    m.parentNode.insertBefore(a, m)
-  })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-  ga('create', 'UA-108378671-3', 'auto');
-  ga('send', 'pageview');
-</script></body>
+<script>var indexURL="https://www.carmine.dev/index.json"</script>
+<script src=https://www.carmine.dev/plugins/jQuery/jquery.min.js></script>
+<script src=https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js></script>
+<script src=https://www.carmine.dev/plugins/search/fuse.min.js></script>
+<script src=https://www.carmine.dev/plugins/search/mark.js></script>
+<script src=https://www.carmine.dev/plugins/search/search.js></script>
+<script src=https://www.carmine.dev/js/script.min.js></script>
+</body>
 </html>
