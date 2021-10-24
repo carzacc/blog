@@ -1,3 +1,85 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tutorial on The Carmine Zaccagnino Blog</title><link>https://www.carmine.dev/categories/tutorial/</link><description>Recent content in tutorial on The Carmine Zaccagnino Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 29 Apr 2020 11:00:00 +0200</lastBuildDate><atom:link href="https://www.carmine.dev/categories/tutorial/index.xml" rel="self" type="application/rss+xml"/><item><title>Securely Storing JWTs in (Flutter) Web Apps</title><link>https://www.carmine.dev/posts/flutterwebjwt/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/posts/flutterwebjwt/</guid><description>I recently wrote a post about how to implement JWT Authorization in Flutter apps. I only considered the use case of writing a mobile app, so I recommended the use of the flutter_secure_storage package to store the tokens.</description></item><item><title>Flutter Notifications Without Firebase</title><link>https://www.carmine.dev/posts/flutternotifications/</link><pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate><guid>https://www.carmine.dev/posts/flutternotifications/</guid><description>We are going to discuss how to display notifications using the flutter_local_notifications plugin.
-As always with these posts, you can be sure you&amp;rsquo;ve got all of the basic knowledge you need by reading my Flutter book, but not all of you like that way of learning, so I&amp;rsquo;ll list the topics which are considered prerequisites for this post.</description></item><item><title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (+ Node backend Implementation)</title><link>https://www.carmine.dev/posts/flutterwebsockets/</link><pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate><guid>https://www.carmine.dev/posts/flutterwebsockets/</guid><description>Hi everyone, in this post I&amp;rsquo;m going to show you how to use WebSockets in Flutter apps and write a Node backend to test the app.</description></item><item><title>Advanced Flutter Networking Part 2: User Authentication + JWT Authorization With Flutter and Node</title><link>https://www.carmine.dev/posts/jwtauth/</link><pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate><guid>https://www.carmine.dev/posts/jwtauth/</guid><description>Photo by James Sutton on Unsplash
-The series of posts about advanced networking topics applied to Flutter apps continues. As always, this is meant for people who already have a good understanding of Flutter and know how to use Flutter widgets and the basics of the http library.</description></item><item><title>Advanced Flutter Networking Part 1: Uploading a File to a REST API from Flutter Using a Multi-Part (form-data) POST Request</title><link>https://www.carmine.dev/posts/multipartpost/</link><pubDate>Sun, 02 Feb 2020 17:54:02 +0100</pubDate><guid>https://www.carmine.dev/posts/multipartpost/</guid><description>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</description></item><item><title>Building a Full-Featured Python CLI Tool With argparse</title><link>https://www.carmine.dev/posts/argparse/</link><pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate><guid>https://www.carmine.dev/posts/argparse/</guid><description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages. The first one was an introduction to the hypothetical problem of having to take images divided into subfolders and dump all of them in one folder while altering their name and adding text over them to know what folder they came from (hypotheticall revealing the location where the pictures were taken) to solve and a first simple solution using Bash and ImageMagick.</description></item><item><title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title><link>https://www.carmine.dev/posts/wandpython/</link><pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate><guid>https://www.carmine.dev/posts/wandpython/</guid><description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description></item><item><title>Bash scripting for everyday actions</title><link>https://www.carmine.dev/posts/bashautomation/</link><pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate><guid>https://www.carmine.dev/posts/bashautomation/</guid><description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tutorial on The Carmine Zaccagnino Blog</title>
+    <link>https://www.carmine.dev/categories/tutorial/</link>
+    <description>Recent content in tutorial on The Carmine Zaccagnino Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 29 Apr 2020 11:00:00 +0200</lastBuildDate><atom:link href="https://www.carmine.dev/categories/tutorial/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Securely Storing JWTs in (Flutter) Web Apps</title>
+      <link>https://www.carmine.dev/posts/flutterwebjwt/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterwebjwt/</guid>
+      <description>I recently wrote a post about how to implement JWT Authorization in Flutter apps. I only considered the use case of writing a mobile app, so I recommended the use of the flutter_secure_storage package to store the tokens.</description>
+    </item>
+    
+    <item>
+      <title>Flutter Notifications Without Firebase</title>
+      <link>https://www.carmine.dev/posts/flutternotifications/</link>
+      <pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutternotifications/</guid>
+      <description>We are going to discuss how to display notifications using the flutter_local_notifications plugin.
+As always with these posts, you can be sure you&amp;rsquo;ve got all of the basic knowledge you need by reading my Flutter book, but not all of you like that way of learning, so I&amp;rsquo;ll list the topics which are considered prerequisites for this post.</description>
+    </item>
+    
+    <item>
+      <title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (&#43; Node backend Implementation)</title>
+      <link>https://www.carmine.dev/posts/flutterwebsockets/</link>
+      <pubDate>Thu, 05 Mar 2020 19:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterwebsockets/</guid>
+      <description>Hi everyone, in this post I&amp;rsquo;m going to show you how to use WebSockets in Flutter apps and write a Node backend to test the app.</description>
+    </item>
+    
+    <item>
+      <title>Advanced Flutter Networking Part 2: User Authentication &#43; JWT Authorization With Flutter and Node</title>
+      <link>https://www.carmine.dev/posts/jwtauth/</link>
+      <pubDate>Tue, 18 Feb 2020 16:16:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/jwtauth/</guid>
+      <description>Photo by James Sutton on Unsplash
+The series of posts about advanced networking topics applied to Flutter apps continues. As always, this is meant for people who already have a good understanding of Flutter and know how to use Flutter widgets and the basics of the http library.</description>
+    </item>
+    
+    <item>
+      <title>Advanced Flutter Networking Part 1: Uploading a File to a REST API from Flutter Using a Multi-Part (form-data) POST Request</title>
+      <link>https://www.carmine.dev/posts/multipartpost/</link>
+      <pubDate>Sun, 02 Feb 2020 17:54:02 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/multipartpost/</guid>
+      <description>My Flutter book is pretty light on advanced HTTP networking topics, focusing instead on giving a more well-rounded approach that, when it comes to networking, explains how to use the http networking package for basic requests, shows an example of an app that makes GET requests, and then goes a bit more specific with Firebase.</description>
+    </item>
+    
+    <item>
+      <title>Building a Full-Featured Python CLI Tool With argparse</title>
+      <link>https://www.carmine.dev/posts/argparse/</link>
+      <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/argparse/</guid>
+      <description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages. The first one was an introduction to the hypothetical problem of having to take images divided into subfolders and dump all of them in one folder while altering their name and adding text over them to know what folder they came from (hypotheticall revealing the location where the pictures were taken) to solve and a first simple solution using Bash and ImageMagick.</description>
+    </item>
+    
+    <item>
+      <title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title>
+      <link>https://www.carmine.dev/posts/wandpython/</link>
+      <pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/wandpython/</guid>
+      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description>
+    </item>
+    
+    <item>
+      <title>Bash scripting for everyday actions</title>
+      <link>https://www.carmine.dev/posts/bashautomation/</link>
+      <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/bashautomation/</guid>
+      <description>This article is the first in a series of posts about automating everyday actions. We’ll start with Bash shell scripting, which allows you to write scripts to automate dull, repetitive tasks.</description>
+    </item>
+    
+  </channel>
+</rss>

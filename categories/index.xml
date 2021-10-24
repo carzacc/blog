@@ -1,1 +1,191 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Categories on The Carmine Zaccagnino Blog</title><link>https://www.carmine.dev/categories/</link><description>Recent content in Categories on The Carmine Zaccagnino Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 17 Mar 2021 12:00:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/index.xml" rel="self" type="application/rss+xml"/><item><title>desktop</title><link>https://www.carmine.dev/categories/desktop/</link><pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/desktop/</guid><description/></item><item><title>flutter</title><link>https://www.carmine.dev/categories/flutter/</link><pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/flutter/</guid><description/></item><item><title>flutter 2</title><link>https://www.carmine.dev/categories/flutter-2/</link><pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/flutter-2/</guid><description/></item><item><title>web</title><link>https://www.carmine.dev/categories/web/</link><pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/web/</guid><description/></item><item><title>book</title><link>https://www.carmine.dev/categories/book/</link><pubDate>Tue, 23 Feb 2021 18:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/book/</guid><description/></item><item><title>programming flutter</title><link>https://www.carmine.dev/categories/programming-flutter/</link><pubDate>Tue, 23 Feb 2021 18:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/programming-flutter/</guid><description/></item><item><title>authentication</title><link>https://www.carmine.dev/categories/authentication/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/categories/authentication/</guid><description/></item><item><title>networking</title><link>https://www.carmine.dev/categories/networking/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/categories/networking/</guid><description/></item><item><title>Node.js</title><link>https://www.carmine.dev/categories/node.js/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/categories/node.js/</guid><description/></item><item><title>security</title><link>https://www.carmine.dev/categories/security/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/categories/security/</guid><description/></item><item><title>tutorial</title><link>https://www.carmine.dev/categories/tutorial/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/categories/tutorial/</guid><description/></item><item><title>notifications</title><link>https://www.carmine.dev/categories/notifications/</link><pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/notifications/</guid><description/></item><item><title>WebSockets</title><link>https://www.carmine.dev/categories/websockets/</link><pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate><guid>https://www.carmine.dev/categories/websockets/</guid><description/></item><item><title>linux</title><link>https://www.carmine.dev/categories/linux/</link><pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate><guid>https://www.carmine.dev/categories/linux/</guid><description/></item><item><title>opinion</title><link>https://www.carmine.dev/categories/opinion/</link><pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate><guid>https://www.carmine.dev/categories/opinion/</guid><description/></item><item><title>screen</title><link>https://www.carmine.dev/categories/screen/</link><pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate><guid>https://www.carmine.dev/categories/screen/</guid><description/></item><item><title>tmux</title><link>https://www.carmine.dev/categories/tmux/</link><pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate><guid>https://www.carmine.dev/categories/tmux/</guid><description/></item><item><title>python</title><link>https://www.carmine.dev/categories/python/</link><pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate><guid>https://www.carmine.dev/categories/python/</guid><description/></item><item><title>scripting</title><link>https://www.carmine.dev/categories/scripting/</link><pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate><guid>https://www.carmine.dev/categories/scripting/</guid><description/></item><item><title>bash</title><link>https://www.carmine.dev/categories/bash/</link><pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate><guid>https://www.carmine.dev/categories/bash/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on The Carmine Zaccagnino Blog</title>
+    <link>https://www.carmine.dev/categories/</link>
+    <description>Recent content in Categories on The Carmine Zaccagnino Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 17 Mar 2021 12:00:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>desktop</title>
+      <link>https://www.carmine.dev/categories/desktop/</link>
+      <pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/desktop/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flutter</title>
+      <link>https://www.carmine.dev/categories/flutter/</link>
+      <pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/flutter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>flutter 2</title>
+      <link>https://www.carmine.dev/categories/flutter-2/</link>
+      <pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/flutter-2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>web</title>
+      <link>https://www.carmine.dev/categories/web/</link>
+      <pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>book</title>
+      <link>https://www.carmine.dev/categories/book/</link>
+      <pubDate>Tue, 23 Feb 2021 18:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/book/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>programming flutter</title>
+      <link>https://www.carmine.dev/categories/programming-flutter/</link>
+      <pubDate>Tue, 23 Feb 2021 18:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/programming-flutter/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>authentication</title>
+      <link>https://www.carmine.dev/categories/authentication/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/authentication/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>networking</title>
+      <link>https://www.carmine.dev/categories/networking/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/networking/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Node.js</title>
+      <link>https://www.carmine.dev/categories/node.js/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/node.js/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>security</title>
+      <link>https://www.carmine.dev/categories/security/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tutorial</title>
+      <link>https://www.carmine.dev/categories/tutorial/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/tutorial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>notifications</title>
+      <link>https://www.carmine.dev/categories/notifications/</link>
+      <pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/notifications/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>WebSockets</title>
+      <link>https://www.carmine.dev/categories/websockets/</link>
+      <pubDate>Sat, 28 Mar 2020 15:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/websockets/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>linux</title>
+      <link>https://www.carmine.dev/categories/linux/</link>
+      <pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>opinion</title>
+      <link>https://www.carmine.dev/categories/opinion/</link>
+      <pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/opinion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>screen</title>
+      <link>https://www.carmine.dev/categories/screen/</link>
+      <pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/screen/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tmux</title>
+      <link>https://www.carmine.dev/categories/tmux/</link>
+      <pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/tmux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://www.carmine.dev/categories/python/</link>
+      <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/python/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>scripting</title>
+      <link>https://www.carmine.dev/categories/scripting/</link>
+      <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/scripting/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>bash</title>
+      <link>https://www.carmine.dev/categories/bash/</link>
+      <pubDate>Wed, 18 Sep 2019 01:14:20 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/categories/bash/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

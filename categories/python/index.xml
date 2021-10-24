@@ -1,1 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>python on The Carmine Zaccagnino Blog</title><link>https://www.carmine.dev/categories/python/</link><description>Recent content in python on The Carmine Zaccagnino Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 18 Nov 2019 17:33:52 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Building a Full-Featured Python CLI Tool With argparse</title><link>https://www.carmine.dev/posts/argparse/</link><pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate><guid>https://www.carmine.dev/posts/argparse/</guid><description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages. The first one was an introduction to the hypothetical problem of having to take images divided into subfolders and dump all of them in one folder while altering their name and adding text over them to know what folder they came from (hypotheticall revealing the location where the pictures were taken) to solve and a first simple solution using Bash and ImageMagick.</description></item><item><title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title><link>https://www.carmine.dev/posts/wandpython/</link><pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate><guid>https://www.carmine.dev/posts/wandpython/</guid><description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on The Carmine Zaccagnino Blog</title>
+    <link>https://www.carmine.dev/categories/python/</link>
+    <description>Recent content in python on The Carmine Zaccagnino Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 18 Nov 2019 17:33:52 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building a Full-Featured Python CLI Tool With argparse</title>
+      <link>https://www.carmine.dev/posts/argparse/</link>
+      <pubDate>Mon, 18 Nov 2019 17:33:52 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/argparse/</guid>
+      <description>This post is the third out of four in a series of posts about automating everyday tasks using scripting languages. The first one was an introduction to the hypothetical problem of having to take images divided into subfolders and dump all of them in one folder while altering their name and adding text over them to know what folder they came from (hypotheticall revealing the location where the pictures were taken) to solve and a first simple solution using Bash and ImageMagick.</description>
+    </item>
+    
+    <item>
+      <title>Basic Python Scripting to Automate Everyday Tasks: Add Text to Images Using ImageMagick and Wand</title>
+      <link>https://www.carmine.dev/posts/wandpython/</link>
+      <pubDate>Fri, 25 Oct 2019 19:12:21 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/wandpython/</guid>
+      <description>In the previous post we saw how to use Bash to build a simple script that copies some pictures organized into subfolders into a single folder while renaming them and adding some text on them to make it possible for you to know where it was taken based on the folder the pictures were in.</description>
+    </item>
+    
+  </channel>
+</rss>

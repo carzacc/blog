@@ -1,1 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>tmux on The Carmine Zaccagnino Blog</title><link>https://www.carmine.dev/categories/tmux/</link><description>Recent content in tmux on The Carmine Zaccagnino Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 21:44:50 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/tmux/index.xml" rel="self" type="application/rss+xml"/><item><title>The Early Adopter Conundrum and Reacting to Comments</title><link>https://www.carmine.dev/posts/earlyadopter/</link><pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate><guid>https://www.carmine.dev/posts/earlyadopter/</guid><description>When you love new stuff but don&amp;rsquo;t really want to lose old stuff you write this kind of stuff. It&amp;rsquo;s about tech stuff that&amp;rsquo;s old and tech stuff that&amp;rsquo;s new.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tmux on The Carmine Zaccagnino Blog</title>
+    <link>https://www.carmine.dev/categories/tmux/</link>
+    <description>Recent content in tmux on The Carmine Zaccagnino Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 01 Jan 2020 21:44:50 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/tmux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Early Adopter Conundrum and Reacting to Comments</title>
+      <link>https://www.carmine.dev/posts/earlyadopter/</link>
+      <pubDate>Wed, 01 Jan 2020 21:44:50 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/earlyadopter/</guid>
+      <description>When you love new stuff but don&amp;rsquo;t really want to lose old stuff you write this kind of stuff. It&amp;rsquo;s about tech stuff that&amp;rsquo;s old and tech stuff that&amp;rsquo;s new.</description>
+    </item>
+    
+  </channel>
+</rss>

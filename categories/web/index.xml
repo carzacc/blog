@@ -1,1 +1,56 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>web on The Carmine Zaccagnino Blog</title><link>https://www.carmine.dev/categories/web/</link><description>Recent content in web on The Carmine Zaccagnino Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 17 Mar 2021 12:00:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/web/index.xml" rel="self" type="application/rss+xml"/><item><title>What’s New In Flutter 2? on Smashing Magazine</title><link>https://www.carmine.dev/posts/flutter2smashing/</link><pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/posts/flutter2smashing/</guid><description>Read this article of mine on Smashing Magazine&amp;rsquo;s Website, I have many more on Smashing and elsewhere, check them out in the &amp;ldquo;Articles I&amp;rsquo;ve Published Elsewhere&amp;rdquo; section of my blog.</description></item><item><title>The Current State of Flutter for the Web</title><link>https://www.carmine.dev/posts/flutterweb/</link><pubDate>Tue, 17 Nov 2020 22:30:00 +0100</pubDate><guid>https://www.carmine.dev/posts/flutterweb/</guid><description>Long time no see! It&amp;rsquo;s been a while since I&amp;rsquo;ve last posted something on my blog, and that&amp;rsquo;s been for several reasons, with the bottom line being that I&amp;rsquo;ve run out of ideas and haven&amp;rsquo;t really had the time to sit down and think about great blog post ideas.</description></item><item><title>Solving Common Cross-Platform Issues When Working With Flutter on Smashing Magazine</title><link>https://www.carmine.dev/posts/crossplatformfluttersmashing/</link><pubDate>Thu, 18 Jun 2020 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/posts/crossplatformfluttersmashing/</guid><description>Read this article of mine on Smashing Magazine&amp;rsquo;s Website, I have many more on Smashing&amp;rsquo;s site and elsewhere, check them out in the &amp;ldquo;Articles I&amp;rsquo;ve Published Elsewhere&amp;rdquo; section of my blog.</description></item><item><title>Securely Storing JWTs in (Flutter) Web Apps</title><link>https://www.carmine.dev/posts/flutterwebjwt/</link><pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate><guid>https://www.carmine.dev/posts/flutterwebjwt/</guid><description>I recently wrote a post about how to implement JWT Authorization in Flutter apps. I only considered the use case of writing a mobile app, so I recommended the use of the flutter_secure_storage package to store the tokens.</description></item><item><title>Responsive Web And Desktop Development With Flutter</title><link>https://www.carmine.dev/posts/responsivefluttersmashing/</link><pubDate>Wed, 22 Apr 2020 12:00:00 +0100</pubDate><guid>https://www.carmine.dev/posts/responsivefluttersmashing/</guid><description>Read this article of mine on Smashing Magazine&amp;rsquo;s Website, I have many more on Smashing&amp;rsquo;s site and elsewhere, check them out in the &amp;ldquo;Articles I&amp;rsquo;ve Published Elsewhere&amp;rdquo; section of my blog.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web on The Carmine Zaccagnino Blog</title>
+    <link>https://www.carmine.dev/categories/web/</link>
+    <description>Recent content in web on The Carmine Zaccagnino Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 17 Mar 2021 12:00:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>What’s New In Flutter 2? on Smashing Magazine</title>
+      <link>https://www.carmine.dev/posts/flutter2smashing/</link>
+      <pubDate>Wed, 17 Mar 2021 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutter2smashing/</guid>
+      <description>Read this article of mine on Smashing Magazine&amp;rsquo;s Website, I have many more on Smashing and elsewhere, check them out in the &amp;ldquo;Articles I&amp;rsquo;ve Published Elsewhere&amp;rdquo; section of my blog.</description>
+    </item>
+    
+    <item>
+      <title>The Current State of Flutter for the Web</title>
+      <link>https://www.carmine.dev/posts/flutterweb/</link>
+      <pubDate>Tue, 17 Nov 2020 22:30:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterweb/</guid>
+      <description>Long time no see! It&amp;rsquo;s been a while since I&amp;rsquo;ve last posted something on my blog, and that&amp;rsquo;s been for several reasons, with the bottom line being that I&amp;rsquo;ve run out of ideas and haven&amp;rsquo;t really had the time to sit down and think about great blog post ideas.</description>
+    </item>
+    
+    <item>
+      <title>Solving Common Cross-Platform Issues When Working With Flutter on Smashing Magazine</title>
+      <link>https://www.carmine.dev/posts/crossplatformfluttersmashing/</link>
+      <pubDate>Thu, 18 Jun 2020 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/crossplatformfluttersmashing/</guid>
+      <description>Read this article of mine on Smashing Magazine&amp;rsquo;s Website, I have many more on Smashing&amp;rsquo;s site and elsewhere, check them out in the &amp;ldquo;Articles I&amp;rsquo;ve Published Elsewhere&amp;rdquo; section of my blog.</description>
+    </item>
+    
+    <item>
+      <title>Securely Storing JWTs in (Flutter) Web Apps</title>
+      <link>https://www.carmine.dev/posts/flutterwebjwt/</link>
+      <pubDate>Wed, 29 Apr 2020 11:00:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/flutterwebjwt/</guid>
+      <description>I recently wrote a post about how to implement JWT Authorization in Flutter apps. I only considered the use case of writing a mobile app, so I recommended the use of the flutter_secure_storage package to store the tokens.</description>
+    </item>
+    
+    <item>
+      <title>Responsive Web And Desktop Development With Flutter</title>
+      <link>https://www.carmine.dev/posts/responsivefluttersmashing/</link>
+      <pubDate>Wed, 22 Apr 2020 12:00:00 +0100</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/responsivefluttersmashing/</guid>
+      <description>Read this article of mine on Smashing Magazine&amp;rsquo;s Website, I have many more on Smashing&amp;rsquo;s site and elsewhere, check them out in the &amp;ldquo;Articles I&amp;rsquo;ve Published Elsewhere&amp;rdquo; section of my blog.</description>
+    </item>
+    
+  </channel>
+</rss>
