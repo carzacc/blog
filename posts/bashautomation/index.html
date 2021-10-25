@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us"><head>
+  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
+
   <meta charset="utf-8">
   <title>Bash scripting for everyday actions</title>
 
@@ -29,6 +31,23 @@
 
   
   
+  <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'UA-108378671-3');
+  </script>
+  
   
 
 </head><body>
@@ -36,6 +55,7 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- navigation -->
 <header class="fixed-top navigation">
+
   <div class="container">
     
     <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
@@ -349,7 +369,6 @@ fi
 </code></pre><p>You can find more information about it online, and online you&rsquo;ll also find a lot more information on Bash than what it&rsquo;s made sense to include in this post.</p>
 <p>Stay in touch with me <a href="https://twitter.com/carminezacc">on Twitter @carminezacc</a> or follow <a href="https://carmine.dev/">my blog</a> to know when the next post (about making a full-featured CLI tool with Python) comes out. Also, if you&rsquo;re interested in mobile development, check out <a href="https://carmine.dev/programmingflutter">my book on Flutter</a>.</p>
 <p>Thanks to <a href="https://dev.to/moopet">Ben Sinclair on dev.to</a> for finding out I had accidentally left spaces around the assignment operator in the two <code>files=$(ls)</code> code snippets, that I should have added <code>./</code> before ${picture} so that there&rsquo;s no chance the directory name will be interpreted as an option if it starts with an hyphen and for noticing that you might have spaces in one of the directory names or in the name of one of the picture, which would have broken the script.</p>
-<!-- raw HTML omitted -->
 
         </div>
         <div class="mb-3 post-meta">
