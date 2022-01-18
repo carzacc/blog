@@ -12,7 +12,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <!-- plugins -->
   
@@ -148,9 +148,9 @@
 <p>This little section is going to focus on one thing: creating a function that, given a file path and an URL, is able to send that file to that URL with that multipart POST request.</p>
 <p>The next section is going to focus on how to build an app that lets the user insert the URL to which to send the request, pick an image and send it to the server, getting back the status of the request.</p>
 <p>This means we&rsquo;re not going to worry about dependencies in this section. All you need to know for this section is that we&rsquo;ve got this at the top of our <code>main.dart</code>:</p>
-<pre tabindex="0"><code>import 'package:http/http.dart' as http;
+<pre><code>import 'package:http/http.dart' as http;
 </code></pre><p>This allows us to <em>create</em> (not send) a multipart POST request using</p>
-<pre tabindex="0"><code>var req = http.MultipartRequest('POST', Uri.parse(url));
+<pre><code>var req = http.MultipartRequest('POST', Uri.parse(url));
 </code></pre><p>This <code>req</code> object has a member <code>Map</code> called <code>fields</code> for textual values and a <code>List</code> called <code>files</code> to which you can add <code>MultipartFiles</code>.</p>
 <h3 id="the-multipartfile">The MultipartFile</h3>
 <p>The most important element of this whole thing is the <code>MultipartFile</code>. It can be constructed in a few ways:</p>
@@ -180,13 +180,13 @@
 
 <h3 id="adding-regular-text-fields">Adding Regular Text Fields</h3>
 <p>You could add regular text fields to a Multipart POST requests simply by adding, after settomg initialized the <code>MultipartRequest</code> object, an item in the <code>fields</code> member <code>Map</code>:</p>
-<pre tabindex="0"><code>var request = http.MultipartRequest('POST', Uri.parse(url));
+<pre><code>var request = http.MultipartRequest('POST', Uri.parse(url));
 request.fields['key'] = 'value';
 </code></pre><h2 id="building-an-app-around-that">Building an App Around That</h2>
 <p>Now, to see it in action, let&rsquo;s write an app that allows the user to insert an URL, pick an image, and then upload the image to the server at that URL. We&rsquo;ll write the very simple back-end code required to accept files this way in Node after we&rsquo;re done with the app. Feel free to skip ahead if you&rsquo;re more interested in that.</p>
 <p>Let&rsquo;s start, as we must, with an evaluation of the dependencies and the <code>pubspec.yaml</code> file. We&rsquo;ll use two packages from Dart Pub: the <code>image_picker</code> Flutter package that will handle the image selection dialog for us, about which <a href="https://medium.com/@carminezaccagnino/taking-and-or-using-pictures-in-flutter-apps-using-the-image-picker-package-b8e366654a0">I wrote a tutorial on Medium a year ago (not part of the metered paywall in case you&rsquo;re wondering)</a> and the <a href="https://pub.dev/packages/http">Dart <code>http</code> package</a> that provides the networking features we need.</p>
 <p>Add both the dependencies in <code>pubspec.yaml</code> (check the GitHub repo I linked at the start of the post if you don&rsquo;t know how to do that) and import them both into the <code>lib/main.dart</code> file along with the usual Flutter Material Design API:</p>
-<pre tabindex="0"><code>import 'package:flutter/material.dart';
+<pre><code>import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 </code></pre><h3 id="the-start-page">The Start Page</h3>
@@ -205,10 +205,10 @@ import 'package:image_picker/image_picker.dart';
 <p>For this section, the tools we&rsquo;re going to use are Node, Express and Multer. There&rsquo;s not going to be much code involved, this is a fairly simple affair.</p>
 <p>First of all, install Node and NPM according to the instructions for your operating system on <a href="https://nodejs.org/en/">Node’s official website</a>.</p>
 <p>After that, create a directory, run the command</p>
-<pre tabindex="0"><code>$ npm init
+<pre><code>$ npm init
 </code></pre><p>and fill out to your preference the choices given to you (the default values are fine in case of doubt)</p>
 <p>and then</p>
-<pre tabindex="0"><code>$ npm --save install express multer
+<pre><code>$ npm --save install express multer
 </code></pre><p>Create a file called <code>index.js</code> with the following content:</p>
 <script type="application/javascript" src="https://gist.github.com/carzacc/22cfe51227660d02aa6cf3e44d4e3555.js"></script>
 

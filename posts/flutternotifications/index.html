@@ -12,7 +12,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <!-- plugins -->
   
@@ -155,7 +155,7 @@
 <p>In Flutter apps, you can show notifications to the user while the app is running using <a href="https://pub.dev/packages/flutter_local_notifications">the <code>flutter_local_notifications</code> package</a>. It is fairly easy to use.</p>
 <h2 id="initializing-the-plugin">Initializing the Plugin</h2>
 <p>Before being able to use the plugin, you need to initialize it. This requires two different configuration steps: Android configuration and iOS configuration. Even though this is platform-specific, this is all done in Dart code. More specifically, plugin initialization works the following way:</p>
-<pre tabindex="0"><code>FlutterLocalNotificationsPlugin notifications = FlutterLocalNotificationsPlugin();
+<pre><code>FlutterLocalNotificationsPlugin notifications = FlutterLocalNotificationsPlugin();
 AndroidInitializationSettings androidInit = /* ... */;
 IOSInitializationSettings iOSInit = /* ... */;
 var initSettings = InitializationSettings(androidInit, iOSInit);
@@ -164,11 +164,11 @@ notifications.initialize(initSettings);
 <h2 id="android-initialization-settings">Android Initialization Settings</h2>
 <p>Android configuration requires the creation of a drawable asset to use as the app icon displayed in the notification. To do that in Android Studio, get to the <code>android/app/src/main/res/drawable</code> directory in the left <em>Project</em> panel, right-click, and select New-&gt;Vector Asset. This will guide you through the creation of a drawable vector asset.</p>
 <p>Take note of its name because, in order to initialize the <code>flutter_notifications</code> package, you need an <code>AndroidInitializationSettings</code> object, which is created in the following way:</p>
-<pre tabindex="0"><code>var androidInit = AndroidInitializationSettings('name_of_the_drawable');
+<pre><code>var androidInit = AndroidInitializationSettings('name_of_the_drawable');
 </code></pre><h2 id="ios-initialization-settings">iOS Initialization Settings</h2>
 <p>The configuration for iOS is at the same time simpler and harder: there is no required argument, but there are a bunch of optional ones, which are fine to be left to default values and that you can find on the <a href="https://pub.dev/documentation/flutter_local_notifications/latest/flutter_local_notifications/IOSInitializationSettings-class.html">official API reference for the package</a>. By default, it will ask the user to give permission to the app to show notifications when the plugin is initialized.</p>
 <p>This means you can get a simple <code>IOSInitializationSettings</code> with default settings with</p>
-<pre tabindex="0"><code>var iOSInit = IOSInitializationSettings();
+<pre><code>var iOSInit = IOSInitializationSettings();
 </code></pre><h2 id="showing-notifications">Showing Notifications</h2>
 <p>The notifications can be shown with <code>plugin.show(id, title, body, NotificationDetails);</code>.</p>
 <p><code>title</code> and <code>body</code> are self-explanatory, <code>id</code> can just be set to 0.</p>
@@ -179,7 +179,7 @@ notifications.initialize(initSettings);
 <p>and here&rsquo;s what the channel-specific settings look like:</p>
 <p><img src="/img/notificationsettingschannel.png" alt=""></p>
 <p>Here&rsquo;s an example, where <code>notifications</code> is the <code>FlutterLocalNotificationsPlugin</code> object:</p>
-<pre tabindex="0"><code>void showNotification(String title, String body) {
+<pre><code>void showNotification(String title, String body) {
   notifications.show(0, title, body, NotificationDetails(
   	AndroidNotificationDetails(
   	  &quot;my_app_channel_id_0&quot;,

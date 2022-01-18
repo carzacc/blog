@@ -12,7 +12,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <!-- plugins -->
   
@@ -141,7 +141,7 @@
 <p>In the previous post I imagined a problem someone could have that could be really easily solved by using computers for what they’re best at: performing repetitive, predictable tasks fast and without requiring the user to do anything while the software does what it’s designed to do.</p>
 <p>The issue was the organization of pictures from the collection of a tourist who, upon coming back from a trip to Italy, is eager to show to friends and relatives the pictures taken of the many great sights Italy has to offer. To do that, they all need to be in one folder so that they can be shown in sequence easily but they also need to be recognizable both for their filename and for some text shown on them so that the tourist doesn’t necessarily have to remember where each picture was taken.</p>
 <p>We have a directory tree that looks like this:</p>
-<pre tabindex="0"><code>italy_pics/
+<pre><code>italy_pics/
 ├── Center
 │   ├── Assisi
 │   ├── Florence
@@ -179,13 +179,13 @@
 <h1 id="an-introduction-to-the-wand-python-package">An Introduction to the Wand Python Package</h1>
 <p>After you’ve installed ImageMagick and Wand, we can bypass the usage of the <code>convert</code> which, in a Python script, would require spawning a subprocess and that is something most people don’t really want to do unless strictly necessary: using a library, when it exists, is almost always a better choice.</p>
 <p>We’re going to use two classes from the <code>wand</code> package: the <code>Image</code> from <code>wand.image</code> and <code>Drawing</code> from <code>wand.drawing</code>, and import them into our code by putting the following at the start of our Python script:</p>
-<pre tabindex="0"><code>from wand.image import Image
+<pre><code>from wand.image import Image
 from wand.drawing import Drawing
 </code></pre><p>If you have written Python packages in the past you’d know the <code>wand.image</code> and <code>wand.drawing</code> names are due to the internal structure of the package, whereas <code>Image</code> and <code>Drawing</code> are the names of the classes we’re importing.</p>
 <p>The two classes, when used together, allow us to load images, draw on them, and then save them.</p>
 <h2 id="getting-an-image-object">Getting an Image Object</h2>
 <p>The <code>Image</code> class is meant to be used in a <code>with</code> block like this</p>
-<pre tabindex="0"><code>with Image(filename=filename) as image:
+<pre><code>with Image(filename=filename) as image:
     # do something with the image, which exists here
     # as long as you keep indenting the code
 # the image doesn’t exist here
@@ -195,25 +195,25 @@ from wand.drawing import Drawing
 <h2 id="the-drawing-class">The Drawing Class</h2>
 <p>Before getting into the details of the <code>Drawing</code> class, let&rsquo;s remind ourselves of how we annotated text over images using the <code>convert</code> command-line tool.</p>
 <p>The command is used like this:</p>
-<pre tabindex="0"><code>convert input.png -fill &quot;textcolor&quot; -pointsize textsize -gravity WhereTheTextWillBe -annotate +offsetHorizontal+offsetVertical &quot;watermark text&quot; output.png
+<pre><code>convert input.png -fill &quot;textcolor&quot; -pointsize textsize -gravity WhereTheTextWillBe -annotate +offsetHorizontal+offsetVertical &quot;watermark text&quot; output.png
 </code></pre><p>More specifically, we gave the following arguments to that command in the Bash script:</p>
-<pre tabindex="0"><code>convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermarktext}&quot; &quot;${saveto}&quot;
+<pre><code>convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermarktext}&quot; &quot;${saveto}&quot;
 </code></pre><p>and ${variable_name} is how a variable’s value is inserted into a string in Bash.</p>
 <p>The <code>-fill</code>, <code>-pointsize</code> and <code>-gravity</code> arguments tell <code>convert</code> some of the attributes of the thing we want to draw: what color to fill it with, what size font to use and where to put the new object compared to the original image, while <code>-annotate</code> tells <code>convert</code> what to do: annotate some text over the image offset by 30 pixels horizontally and 30 pixels vertically. the first argument and the last argument are simply the picture we’re drawing the text on and the path where to save the edited image.</p>
 <p>The way we do that in Python using Wand is by initializing a new <code>Drawing</code> object</p>
-<pre tabindex="0"><code>draw = Drawing()
+<pre><code>draw = Drawing()
 </code></pre><p>setting its <code>fill_color</code> property to a string:</p>
-<pre tabindex="0"><code>draw.fill_color = &quot;white&quot;
+<pre><code>draw.fill_color = &quot;white&quot;
 </code></pre><p>setting the <code>font_size</code>:</p>
-<pre tabindex="0"><code>draw.font_size = 90
+<pre><code>draw.font_size = 90
 </code></pre><p>and the annotation’s gravity with a string similar to the one we used for the <code>convert</code> CLI command:</p>
-<pre tabindex="0"><code>draw.gravity = &quot;south_east&quot;
+<pre><code>draw.gravity = &quot;south_east&quot;
 </code></pre><p>At last, draw the annotation on an <code>Image</code> object:</p>
-<pre tabindex="0"><code>draw.draw(image)
+<pre><code>draw.draw(image)
 </code></pre><p>And save the edited image:</p>
-<pre tabindex="0"><code>image.save(filename=f'{saveto}')
+<pre><code>image.save(filename=f'{saveto}')
 </code></pre><p>Wrapping up, the equivalent to the command we saw above in Python using Wand is</p>
-<pre tabindex="0"><code> with Image(filename=picture) as image:
+<pre><code> with Image(filename=picture) as image:
      draw = Drawing()
 
      draw.fill_color = &quot;white&quot;
@@ -226,25 +226,25 @@ from wand.drawing import Drawing
 <h1 id="handling-files-and-directories-in-python">Handling Files and Directories in Python</h1>
 <p>The Python standard library contains a module that  can be used, among other things, to browse files and directories and to change the current directory (the paths passed to the <code>Image</code> constructor and to <code>Image.save()</code> can also be relative paths).</p>
 <p>That module can be imported adding</p>
-<pre tabindex="0"><code>import os
+<pre><code>import os
 </code></pre><p>below the lines</p>
-<pre tabindex="0"><code>from wand.image import Image
+<pre><code>from wand.image import Image
 from wand.drawing import Drawing
 </code></pre><p>The most important functions we&rsquo;re going to use from the <code>os</code> module are these three:</p>
 <p><code>os.chdir</code>, which changes the current working directory to the path you pass to it (which can be relative or absolute, just like the <code>cd</code> shell command;
 <code>os.listdir</code>, which returns a list of the names of the files and directories in the current directory;
 <code>os.scandir</code>, which returns a list of files and directories, each of which is an <code>os.DirEntry</code>, which is a type of data that stores, along with the file/directory name, other attributes such as the full path or information on whether it’s a directory or a file.</p>
 <p>If we had stuck with the Bash script&rsquo;s behavior and only had to look for directories in the starting directory, we could have used</p>
-<pre tabindex="0"><code>os.scandir(“.”)
+<pre><code>os.scandir(“.”)
 </code></pre><p>and then only keep its results in a list if they are directories.</p>
 <p>We now want the user to be able to specify any directory as an argument and look there for pictures given that we considered only looking in the current working directory a limitation of the Bash script.</p>
 <p>We&rsquo;re simply going to take arguments from the <code>argv</code> interface you might have used in C (or in Python) and use the first argument as the directory from which to take the unedited, structured, pictures and the second one as the output folder where to store the edited pictures.</p>
 <h1 id="command-line-arguments-and-argv">Command-line Arguments and argv</h1>
 <p>When you run a command like <code>cd</code> on a command-line interface, you need to specify an argument: what directory to change the working directory to.</p>
 <p>As you know, these arguments are specified after the command name in the following way:</p>
-<pre tabindex="0"><code>commandname argument1 argument2 argument3 ...
+<pre><code>commandname argument1 argument2 argument3 ...
 </code></pre><p>When writing Python scripts, these arguments are accessible by using the <code>sys.argv</code> list:</p>
-<pre tabindex="0"><code>from sys import argv
+<pre><code>from sys import argv
 
 # argv[0] = commandname
 # argv[1] = argument1
@@ -253,25 +253,25 @@ from wand.drawing import Drawing
 # ...
 </code></pre><p>Regardless of whether you run your script as an executable or by using the <code>python</code> command, argv[0] will always be your script&rsquo;s file name.</p>
 <p>This means that, if we want the first argument to be where to take the images from, we need to write</p>
-<pre tabindex="0"><code>os.scandir(argv[1])
+<pre><code>os.scandir(argv[1])
 </code></pre><p>You can check if an <code>os.DirEntry</code> object points to a directory by checking the value returned by its <code>is_dir()</code> method. We’re going to use a list comprehension to do that in a very tidy and compact way:</p>
-<pre tabindex="0"><code>areas = [file for file in os.scandir(argv[1]) if file.is_dir()]
+<pre><code>areas = [file for file in os.scandir(argv[1]) if file.is_dir()]
 </code></pre><p>For each area:</p>
-<pre tabindex="0"><code>for area in areas:
+<pre><code>for area in areas:
 </code></pre><p>We’re going to move into the directory corresponding to the area:</p>
-<pre tabindex="0"><code>os.chdir(area)
+<pre><code>os.chdir(area)
 </code></pre><p>and get a list of the city folders in the current directory:</p>
-<pre tabindex="0"><code>cities = [file for file in os.scandir(&quot;.&quot;) if file.is_dir()]
+<pre><code>cities = [file for file in os.scandir(&quot;.&quot;) if file.is_dir()]
 </code></pre><p>and look for pictures inside each of those directories</p>
-<pre tabindex="0"><code>for city in cities:
+<pre><code>for city in cities:
     os.chdir(city)
     pics = [file for file in os.scandir(&quot;.&quot;) if file.is_file()]
     # deal with the pictures
     os.chdir(“..”)
 </code></pre><p>and go back to the parent directory for each area:</p>
-<pre tabindex="0"><code>os.chdir(os.pardir)
+<pre><code>os.chdir(os.pardir)
 </code></pre><p>All in all, until now, we have written the following:</p>
-<pre tabindex="0"><code>areas = [file for file in os.scandir(argv[1]) if file.is_dir()]
+<pre><code>areas = [file for file in os.scandir(argv[1]) if file.is_dir()]
 
 for area in areas:
     os.chdir(area)
@@ -288,13 +288,13 @@ for area in areas:
 <p>Having that as a global variable is not what we’re going to do because this is a chance to go over OOP in Python and because implementing everything in a class improves code reusability and will be useful in the next post when we build upon the tool we build in this post.</p>
 <h2 id="creating-an-imageprocessor-class">Creating an ImageProcessor Class</h2>
 <p>First of all, here&rsquo;s how you define a class and a member variable:</p>
-<pre tabindex="0"><code>class ImageProcessor:
+<pre><code>class ImageProcessor:
 
    i = 0
 </code></pre><p>We are going to call the function we built in the previous chapter, which takes the paths from <code>argv</code>, traverses the directory tree and runs another function on each picture <code>process_argv</code>.</p>
 <p>Python methods (if they&rsquo;re not supposed to be static) take the object they are ran on as an argument called <code>self</code>, which is used a lot like <code>this</code> within classes in JavaScript: <code>self.i</code> is the syntax used to access the <code>i</code> member variable, whereas <code>self.process(args)</code> is the syntax used to call the <code>process()</code> method with the <code>args</code> arguments.</p>
 <p>The final version of the function we built in the previous paragraph, along with a few <code>try</code>-<code>catch</code> blocks to make sure the user input is something we can work with and a call to the yet-to-be-defined <code>process()</code> function and a few lines that deal with the output directory I&rsquo;ll explain after it, is the following:</p>
-<pre tabindex="0"><code>class ImageProcessor:
+<pre><code>class ImageProcessor:
 
    i = 0
 
@@ -333,7 +333,7 @@ for area in areas:
            os.chdir(os.pardir)
 
 </code></pre><p>The line</p>
-<pre tabindex="0"><code>save_dir = [dir for dir in os.scandir(f&quot;{argv[2]}/..&quot;) if dir.name == os.path.split(argv[2])[1] and dir.is_dir()][0]]
+<pre><code>save_dir = [dir for dir in os.scandir(f&quot;{argv[2]}/..&quot;) if dir.name == os.path.split(argv[2])[1] and dir.is_dir()][0]]
 </code></pre><p>Scans the second argument (the output directory)<code>s parent directory and, if the entity the user gave us a path to actually exists, we'll assign it to the </code>save_dir<code>variable. This is inside a</code>try<code>-</code>catch` block that informs the user of the error and terminates execution if the second argument points to a non-existent directory, given that it would trigger an exception.</p>
 <p><code>os.path.split(argv[2])[1]</code> is used to access the substring of <code>argv[2]</code> after the last <code>/</code> character. In other words, it is used to access the output directory&rsquo;s name, without the path leading to it.</p>
 <p>&lsquo;f&quot;{argv[2]}/..&quot;&rsquo;  is called an <em>f-string</em> and is how string interpolation is done from Python 3
@@ -341,17 +341,17 @@ for area in areas:
 <p><code>os.path.abspath(save_dir))</code> returns the absolute path to the <code>save_dir</code>.</p>
 <h2 id="writing-the-process-method">Writing the process() Method</h2>
 <p>First of all, let&rsquo;s declare the arguments with type annotations, making sure we establish what is needed to make this functiom work:</p>
-<pre tabindex="0"><code>def process(self, area: os.DirEntry, city: os.DirEntry, pic: os.DirEntry, save_dir: str):
+<pre><code>def process(self, area: os.DirEntry, city: os.DirEntry, pic: os.DirEntry, save_dir: str):
 </code></pre><p>We have already seen how to process images, we just need to make it work with these arguments.</p>
 <p>The first thing to consider is that the <code>process_argv</code> will already change the working directory to the directory in which the image to process is located, so we only need to pass the filename to the <code>Image</code> constructor to get the right image:</p>
-<pre tabindex="0"><code>filename = pic.name
+<pre><code>filename = pic.name
 </code></pre><p>To avoid messing up, before we change the working directory, let&rsquo;s save the absolute path to the current directory to a variable so that we can go back to it after we&rsquo;re done with our processing:</p>
-<pre tabindex="0"><code>return_dir = os.path.abspath(os.curdir)
+<pre><code>return_dir = os.path.abspath(os.curdir)
 </code></pre><p>The last piece of data we need to extract from the argument is the image&rsquo;s extension, which we can get with <code>os.path.splitext()</code>:</p>
-<pre tabindex="0"><code>(name, extension) = os.path.splitext(filename)
+<pre><code>(name, extension) = os.path.splitext(filename)
 </code></pre><p>Here we&rsquo;re unpacking a <em>tuple</em>, which is a pair of values returned by the called function, each of which we can each assign to a variable.</p>
 <p>The rest of the process function is what we saw at the start of the post when we examined how to use Wand to replace the <code>convert</code> command:</p>
-<pre tabindex="0"><code>with Image(filename=filename) as image:
+<pre><code>with Image(filename=filename) as image:
            text = f'{city.name}({area.name})'
            draw = Drawing()
            draw.fill_color = &quot;white&quot;
@@ -364,7 +364,7 @@ for area in areas:
        self.i=self.i+1
        os.chdir(return_dir)
 </code></pre><p>The entire <code>process()</code> function, with a few explanatory comments, ends up being the following:</p>
-<pre tabindex="0"><code>   def process(self, area: os.DirEntry, city: os.DirEntry, pic: os.DirEntry, save_dir: str):
+<pre><code>   def process(self, area: os.DirEntry, city: os.DirEntry, pic: os.DirEntry, save_dir: str):
        # os.DirEntry.name is the picture's filename
        filename = pic.name
 
@@ -398,7 +398,7 @@ for area in areas:
 </code></pre><h1 id="wrapping-up">Wrapping Up</h1>
 <p>If you liked this post, <a href="https://twitter.com/carminezacc">follow me on Twitter (handle @carminezacc)</a> and check out <a href="https://pragprog.com/book/czflutr/programming-flutter">my Flutter book</a> or <a href="https://www.carmine.dev">my blog at carmine.dev</a>.</p>
 <p>The entire Python script, including the call to <code>process_argv()</code>, ends up being the following:</p>
-<pre tabindex="0"><code>from wand.image import Image
+<pre><code>from wand.image import Image
 from wand.drawing import Drawing
 import os
 from sys import argv

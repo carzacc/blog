@@ -12,7 +12,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <!-- plugins -->
   
@@ -192,7 +192,7 @@
 
 <p>The <code>LoginPage</code> gets changes in the callback to log in, as that needs to store the JWT to local storage too.</p>
 <p><code>window.localStorage</code> can be accessed just like any <code>Map</code> like you see in the following snippet we&rsquo;re going to use in the login page:</p>
-<pre tabindex="0"><code>var username = _usernameController.text;
+<pre><code>var username = _usernameController.text;
 var password = _passwordController.text;
 var jwt = await attemptLogIn(username, password);
 if(jwt != null) {

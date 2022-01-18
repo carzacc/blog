@@ -12,7 +12,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.88.1" />
+  <meta name="generator" content="Hugo 0.80.0" />
 
   <!-- plugins -->
   
@@ -162,45 +162,45 @@
 <h4 id="how-to-use-argparse">How to Use <code>argparse</code></h4>
 <p>The first element in the chain of objects used to configure <code>argparse</code> to do what we want is the <code>ArgumentParser</code>, which is the top level object all other objects should report to.</p>
 <p>It is initialized with something like:</p>
-<pre tabindex="0"><code>parser = argparse.ArgumentParser(
+<pre><code>parser = argparse.ArgumentParser(
   description=&quot;Improve the way you look at your picture collection with this simple CLI tool&quot;
 )
 </code></pre><p>Further down the chain we&rsquo;re going to have subparsers, the pre-requisite for which is an object you can generate like this:</p>
-<pre tabindex="0"><code>subparsers = parser.add_subparsers()
+<pre><code>subparsers = parser.add_subparsers()
 </code></pre><p>and that you can then use to add subparsers that will be linked to the original <code>parser</code>, optionally with an help text that will be used if the user requests usage information:</p>
-<pre tabindex="0"><code>generate = subparser.add_parser(
+<pre><code>generate = subparser.add_parser(
   &quot;generate&quot;, help=&quot;Generate the pictures&quot;
 )
 </code></pre><p>Arguments are very easy to add, we&rsquo;ll see how we get them and how to use them later, and the help text is there for the same purpose as all other help text, as a way to give more information to the user when they request usage information:</p>
-<pre tabindex="0"><code>generate.add_argument(&quot;dir&quot;, type=str, help=&quot;The directory where the tree of input picture starts&quot;)
+<pre><code>generate.add_argument(&quot;dir&quot;, type=str, help=&quot;The directory where the tree of input picture starts&quot;)
 generate.add_argument(&quot;save_dir&quot;, type=str, help=&quot;The directory where to save the output pictures&quot;)
 </code></pre><p>Now we need to define a function to process the directories, which we&rsquo;ll talk about when we come to the <code>action.py</code> file. Meanwhile, let&rsquo;s say we&rsquo;ll call it <code>process_dir</code> and let&rsquo;s set it as the function to be called when the user calls the <code>generate</code> command:</p>
-<pre tabindex="0"><code>generate.set_defaults(func=actions.process_dir)
+<pre><code>generate.set_defaults(func=actions.process_dir)
 </code></pre><p>Let&rsquo;s do the same things we did for <code>generate</code> with <code>copy</code>:</p>
-<pre tabindex="0"><code>copy = subparser.add_parser(&quot;copy&quot;, help=&quot;Copy the pictures to the output path without adding text&quot;)
+<pre><code>copy = subparser.add_parser(&quot;copy&quot;, help=&quot;Copy the pictures to the output path without adding text&quot;)
 copy.add_argument(&quot;dir&quot;, type=str, help=&quot;The directory where the tree of input picture starts&quot;)
 copy.add_argument(&quot;save_dir&quot;, type=str, help=&quot;The directory where to save the output pictures&quot;)
 copy.set_defaults(func=actions.copy)
 </code></pre><p>The last two lines we need to add to <code>myclitool.py</code> are those that actually parse the arguments the user actually provided and call the corresponding function with  the corresponding arguments:</p>
-<pre tabindex="0"><code>args = parser.parse_args()
+<pre><code>args = parser.parse_args()
 
 args.func(args)
 </code></pre><!-- raw HTML omitted -->
 <h2 id="actionspy"><code>actions.py</code></h2>
 <p><code>argparse</code> passes its arguments to the functions as a single structure that contains the arguments passed by the user.</p>
 <p>For example, if we are passing an argument called <code>arg1</code> and another called <code>arg2</code>, an hypothetical <code>handle_call</code> function that prints the arguments as passed by <code>argparse</code> is</p>
-<pre tabindex="0"><code>def handle_call(args):
+<pre><code>def handle_call(args):
   print(args.arg1) # prints arg1
   print(args.arg2) # prints arg2
 </code></pre><h3 id="handling-the-generate-command">Handling the generate Command</h3>
 <p>The function to handle the <code>generate</code> CLI subcommand is going to be called <code>process_dir</code> to further underline the fact it&rsquo;s the one meant to process the pictures and not just copy them.</p>
 <p>Given that we are getting arguments called <code>dir</code> and <code>save_dir</code></p>
-<pre tabindex="0"><code>def process_dir(args):
+<pre><code>def process_dir(args):
     image_processor = ImageProcessor(args.dir, args.save_dir)
     image_processor.process_dir()
 </code></pre><h3 id="handling-the-copy-command">Handling the copy Command</h3>
 <p>The difference between these two functions is very subtle because of the way we implemented the <code>ImageProcessor</code>&rsquo;s constructor, which takes an optional boolean value that tells the <code>process</code> method whether or not it&rsquo;s supposed to process the images.</p>
-<pre tabindex="0"><code>def copy(args):
+<pre><code>def copy(args):
     image_processor = ImageProcessor(args.dir, args.save_dir, process=False)
     image_processor.process_dir()
 </code></pre><p>In the end, the <code>actions.py</code> file is</p>
@@ -210,21 +210,21 @@ args.func(args)
 <!-- raw HTML omitted -->
 <h1 id="using-the-tool">Using the Tool</h1>
 <p>If <code>python3</code> is the name of the command you use to run Python scripts (depends on your environment, it may be just <code>python</code>) you can use</p>
-<pre tabindex="0"><code>python3 myclitool.py generate /path/to/input /path/to/output
+<pre><code>python3 myclitool.py generate /path/to/input /path/to/output
 </code></pre><p>to run the <code>generate</code> command and have <code>/path/to/input</code> as the input path and <code>/path/to/output</code> as the output path.</p>
 <p>The <code>copy</code> subcommand can be used in the same way.</p>
 <p>You can see usage information by running</p>
-<pre tabindex="0"><code>python3 myclitool.py -h
+<pre><code>python3 myclitool.py -h
 </code></pre><p>and you can have help text specific to the <code>generate</code> command with</p>
-<pre tabindex="0"><code>python3 myclitool.py generate -h
+<pre><code>python3 myclitool.py generate -h
 </code></pre><p>The same applies to <code>copy</code> obviously.</p>
 <h2 id="making-the-script-executable">Making the Script Executable</h2>
 <p>As with any script ran by a scripting language, it can be made executable on Linux/macOS/Unix with</p>
-<pre tabindex="0"><code>chmod +x myclitool.py
+<pre><code>chmod +x myclitool.py
 </code></pre><p>and, after adding the shebang line</p>
-<pre tabindex="0"><code>#!/usr/bin/env python3
+<pre><code>#!/usr/bin/env python3
 </code></pre><p>to the top of the file, you can execute it with</p>
-<pre tabindex="0"><code>./myclitool.py {command} [arguments]
+<pre><code>./myclitool.py {command} [arguments]
 </code></pre><p>On Windows you need to use <a href="https://www.python.org/dev/peps/pep-0397/">the Python Launcher for Windows</a>.</p>
 <h1 id="wrapping-up-and-where-to-go-from-here">Wrapping Up and Where to Go From Here</h1>
 <p>We&rsquo;re done! We&rsquo;ve built a full CLI tool with usage strings, help commands and two subcommands each taking two arguments.</p>
