@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Creating a Kubernetes Cluster with Fedora CoreOS 36</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description"
+    content="">
+    
+    
+  <meta name="author" content="Carmine Zaccagnino">
+  <meta name="generator" content="Hugo 0.93.3" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+
+  
+  
+  
+
+</head><body>
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- navigation -->
+<header class="fixed-top navigation">
+
+  <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="/img/logo.svg" alt="The Carmine Zaccagnino Blog"></a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+        <i class="ti-menu h3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
+          </li>
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">Articles I&#39;ve Published Elsewhere</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
+            </li>
+            
+          
+        </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev/search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto block shadow mb-5">
+        <h2>Creating a Kubernetes Cluster with Fedora CoreOS 36</h2>
+        <div class="mb-3 post-meta">
+          <a href="/author/carmine-zaccagnino">Carmine Zaccagnino</a>,
+          Jul 2, 2022, 
+          <a href="/categories/kubernetes">Kubernetes</a>
+          
+          <a href="/categories/linux">Linux</a>
+          
+          <a href="/categories/devops">Devops</a>
+          
+        </div>
+        
+        <div class="content mb-5">
+          <p><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--mB8GRJ8a--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/510pxfnvcre4s060v6mp.jpg" alt=""></p>
+<p>In this post I&rsquo;m going to explain how to create a Kubernetes 1.24 cluster on Fedora CoreOS 36 nodes.</p>
+<p>I will assume that, if you&rsquo;re reading this, you already know that Fedora CoreOS is a great choice as a Kubernetes node OS because of both the ease of maintenance provided by RPM-OSTree and Zincati and the really easy way to automate provisioning of new nodes thanks to the use of Butane and Ignition.</p>
+<p>I believe it is necessary to write a tutorial on this because existing tutorials on this topic are somewhat outdated and, in my opinion, fail to address some aspects, even though they&rsquo;re really good in many ways (<a href="https://www.matthiaspreu.com/posts/fedora-coreos-kubernetes-basic-setup/">the one linked here is very good in my opinion for example</a>).</p>
+<p>In particular, I&rsquo;m going to show a multi-node cluster that keeps the taint on the control plane and, to give an example that can be directly replicated, I&rsquo;ll provide scripts that aid in creating virtual machines for the nodes using <code>libvirt</code>. You can, of course, apply just Ignition scripts and node configuration steps to your environment if that&rsquo;s what you&rsquo;re looking to get from this tutorial.</p>
+<h2 id="preliminary-considerations-about-container-runtimes-and-selinux">Preliminary considerations about container runtimes and SELinux</h2>
+<p>The aforementioned existing tutorial on creating Kubernetes clusters with Fedora CoreOS chooses to use CRI-O instead of the preinstalled containerd runtime. I believe this choice merits some further attention, even though I agree that it&rsquo;s the correct choice.</p>
+<p>CRI-O&rsquo;s strengths are in added features, particularly the integration with SELinux (but that is disabled in that tutorial) and the fact it&rsquo;s the same runtime used by OpenShift, <a href="https://www.researchgate.net/publication/341483813_Performance_Evaluation_of_Container_Runtimes">but it is slower than containerd, even if marginally, as the linked paper shows</a>, so one could be tempted to just stick with containerd.</p>
+<p>My experience with the exact setup that will be shown in this tutorial, even if one disables SELinux by overriding <code>/etc/selinux/config</code> in the Ignition file, is that the choice to use containerd results in a really unstable and unusable cluster, and that&rsquo;s why I&rsquo;ll be showing steps to install and enable CRI-O instead in this tutorial.</p>
+<p>I <em>will not</em> be disabling SELinux, on the other hand. That&rsquo;s because, in the current state and for what I&rsquo;ve seen, there&rsquo;s no need for that and I&rsquo;ll gladly take the increased security, even if it means having to troubleshoot the few instances in which it gets overzealous, and doing that with <code>setroubleshootd</code> (that can be installed on Fedora CoreOS using <code>rpm-ostree</code> as part of the <code>setroubleshoot</code> package) it&rsquo;s not hard at all.</p>
+<h1 id="creating-a-virtualized-kubernetes-cluster-using-fedora-coreos-vms">Creating a virtualized Kubernetes cluster using Fedora CoreOS VMs</h1>
+<p>For the full example, we are going to create a three-node cluster with one control plane and two workers, which is the least demanding sensible (even though it misses out on HA) virtualized setup that even a mid-range laptop could run, as long as it runs a (ideally RedHat-based) Linux distribution with <code>podman</code>, <code>libvirt</code> and <code>virt-install</code>.</p>
+<p>Another prerequisite is an extracted qcow2 image of Fedora CoreOS, which can be downloaded as an XZ archive from <a href="https://getfedora.org/en/coreos/download?tab=metal_virtualized&amp;stream=stable&amp;arch=x86_64">the Fedora CoreOS official website</a>, or retrieved by <code>coreos-installer</code>.</p>
+<p>The steps have been tested on x86 systems with Fedora Workstation 36 and Red Hat Enterprise Linux 9 as the host operating system.</p>
+<h2 id="create-an-ignition-script">Create an Ignition script</h2>
+<p>To inizialize the VM, a JSON Ignition script is used, which can be derived from the following <code>fcos.bu</code> YAML file using Butane:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/8bdfbddcedd9b1f891f4f1645628e497.js?file=fcos.bu.yml"></script>
+
+<p>Before doing that, generate an SSH key pair using <code>ssh-keygen</code> or locate an existing one you&rsquo;d like to use for the VMs we&rsquo;re about to create and replace <code>&lt;PASTE YOUR SSH PUBLIC KEY HERE&gt;</code> in <code>fcos.bu</code> with the public key content, all on one line.</p>
+<p>Use the <code>butane</code> OCI container to generate the Ignition file by running</p>
+<pre tabindex="0"><code>podman run --interactive --rm \
+quay.io/coreos/butane:release \
+--pretty --strict &lt; fcos.bu &gt; fcos.ign
+</code></pre><p>Take note of the path of the generated <code>fcos.ign</code> file, and set it as the value assigned to the <code>IGN_CONFIG</code> variable in the following file, which I&rsquo;ll refer to as <code>start_fcos.sh</code> from now on:</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/8bdfbddcedd9b1f891f4f1645628e497.js?file=start_fcos.sh"></script>
+
+<p>In that file, also change the <code>IMAGE</code> variable to the path to the downloaded QCOW2 Fedora CoreOS image (e.g. <code>$HOME/Downloads/fedora-coreos-36.20220505.3.2-qemu.x86_64.qcow2</code>).</p>
+<p>In three different terminals or tmux panes or windows run <code>./start_fcos.sh 1</code>, <code>./start_fcos.sh 2</code> and <code>./start_fcos.sh 3</code> to create three nodes called <code>node1</code>, <code>node2</code> and <code>node3</code>. The Virtual Machine Manager (<code>virt-manager</code>) GUI tool can be used to manage these three VMs after the initial setup.</p>
+<p>Look for lines like</p>
+<pre tabindex="0"><code>Fedora CoreOS 36.20220505.3.2
+Kernel 5.17.5-300.fc36.x86_64 on an x86_64 (ttyS0)
+SSH host key: SHA256:70h+0L1lAfXChOpmBH1odArSLRCMJY2v9sOM45XThyM (ECDSA)
+SSH host key: SHA256:M3Tcq1tebp+uFKAXqo6kD+PWIzzz03ndwreIEhFR5IQ (ED25519)
+SSH host key: SHA256:EnywjztiwTBK9nLy47wj/gaus3wgAflI11j2ckXE0QM (RSA)
+enp1s0: 192.168.122.146 fe80::cc38:c8c:7c38:c0fc
+</code></pre><p>in the three terminals and add the IP addresses to <code>/etc/hosts</code> on the host system like in this example:</p>
+<pre tabindex="0"><code>192.168.122.146 node1
+192.168.122.96 node2
+192.168.122.87 node3
+</code></pre><p>to then be able to more easily access the nodes from the host PC.</p>
+<p>Log in via SSH as the core user on the three nodes (for example in three panes in another <code>tmux</code> window) using <code>ssh core@node1</code>, <code>ssh core@node2</code> and <code>ssh core@node3</code>.</p>
+<p>Set the hostname on each node to <code>node1</code>, <code>node2</code> and <code>node3</code> by creating the <code>/etc/hostname</code> file on each as root, for example like this in the first node (run the two commands one by one or it won&rsquo;t work):</p>
+<pre tabindex="0"><code>sudo -i # become root
+echo &#34;node1&#34; &gt; /etc/hostname # set the hostname
+</code></pre><p>On the first node (which will be the cluster&rsquo;s control plane) install CRI-O and the required tools to create and manage the cluster with:</p>
+<pre tabindex="0"><code>sudo rpm-ostree install kubelet kubeadm kubectl cri-o
+</code></pre><p>On the other nodes, only the CRI-O runtime, kubelet and kubeadm are needed, and they can be installed with:</p>
+<pre tabindex="0"><code>sudo rpm-ostree install kubelet kubeadm cri-o
+</code></pre><p>reboot using <code>sudo systemctl reboot</code> to apply the hostname change and the updates (Fedora CoreOS uses OSTree which only updates system files on reboot to ensure atomic updates).</p>
+<p>After the reboot, log in to all the nodes again and start CRI-O and kubelet using</p>
+<pre tabindex="0"><code>sudo systemctl enable --now crio kubelet
+</code></pre><p>Create a <code>clusterconfig.yml</code> on the control plane just like the following (using <code>vi</code> in the SSH console for example):</p>
+<script type="application/javascript" src="https://gist.github.com/carzacc/8bdfbddcedd9b1f891f4f1645628e497.js?file=clusterconfig.yml"></script>
+
+<p>and then run:</p>
+<pre tabindex="0"><code>kubeadm init ––config clusterconfig.yml
+</code></pre><p>to initialize the cluster.</p>
+<p>After it&rsquo;s done, configure <code>kubectl</code> on the control plane by running the suggested commands:</p>
+<pre tabindex="0"><code>mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre><p>The <code>~/.kube/config</code> file can be copied to the host system as well to be able to run <code>kubectl</code> commands on the host directly instead of logging in to the control plane via SSH.</p>
+<p>Set up Pod networking with <code>kube-router</code>, which is on the simpler side of CNI plugins without missing out on important features, by running:</p>
+<pre tabindex="0"><code>kubectl apply -f \
+https://raw.githubusercontent.com/cloudnativelabs/kube-router/master/daemonset/kubeadm-kuberouter.yaml
+</code></pre><p>Add the other nodes (<code>node2</code> and <code>node3</code> in our example) as workers to the cluster by running on each (as root, therefore with <code>sudo</code>) the <code>kubeadm join</code> command shown at the end of the <code>kubeadm init</code> output. If it was lost, you can run:</p>
+<pre tabindex="0"><code>kubeadm token create –-print-join-command
+</code></pre><p>to have kubeadm generate a new token and get a new join command.</p>
+<p>If all was done correctly, the cluster should be ready for action. Confirm this by running <code>kubectl get nodes</code> and verifying that all three nodes are shown as <em>Ready</em>.</p>
+<p>You can create a test deployment of three NGINX instances with:</p>
+<pre tabindex="0"><code>kubectl create deployment test --image nginx --replicas 3
+</code></pre><p>and a Service to be able to access it externally (in a file called <code>testsvc.yml</code>, for example):</p>
+<pre tabindex="0"><code>apiVersion: v1
+kind: Service
+metadata:
+  name: testsvc
+spec:
+  type: NodePort
+  selector:
+    app: test
+  ports:
+    - port: 80
+      nodePort: 30001
+</code></pre><p>that can be added to the cluster with <code>kubectl create -f testsvc.yml</code> and that allows us to test that everything works correctly by navigating to <code>node1:30001</code> with a browser or cURL and verifying we get the NGINX welcome page.</p>
+<h1 id="next-steps">Next steps</h1>
+<p>I have a few containers and Kubernetes example files of varying complexity in a <a href="https://github.com/carzacc/thesis-files">GitHub repository (github.com/carzacc/thesis-files)</a>, maybe you&rsquo;ll find something of interest there to complement reading the official Kubernetes documentation.</p>
+<p>In particular, <a href="https://github.com/carzacc/thesis-files/tree/main/3/morra">in the README for directory <code>3/morra</code></a> I show an example deployment of a REST API that interacts with a Redis store and a MySQL cluster. For production applications, remember to use namespaces and create accounts that follow the principle of least privilege.</p>
+<p>In the past, I&rsquo;ve been very happy to write tutorials after having a topic requested or suggested in an email. In those cases, they were Flutter tutorial ideas. The same could happen with Kubernetes as well, so <a href="mailto:carmine@carminezacc.com">feel free to write to me at carmine@carminezacc.com to ask anything</a>.</p>
+
+        </div>
+        <div class="mb-3 post-meta">
+          
+        </div>
+      </div>
+      <div class="col-lg-8 mx-auto block shadow">
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+<footer class="py-4 bg-light border-top">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+        <a href="https://www.carmine.dev/" class="d-block pb-3"><img src="/img/logo.svg" class="img-fluid" alt="The Carmine Zaccagnino Blog"></a>
+      </div>
+      <div class="col-lg-4 text-center mb-4 mb-lg-0">
+        <ul class="list-inline mb-0">
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a></li>
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">VATIN (Partita IVA): IT02118220769</a></li>
+          
+        </ul>
+      </div>
+      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+        <ul class="list-inline social-icon mb-0">
+          
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <span></span>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
+
+
+<!-- JS Plugins -->
+
+<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/search.js"></script>
+
+
+<!-- Main Script -->
+
+<script src="https://www.carmine.dev/js/script.min.js"></script>
+
+
+
+
+</body>
+
+</html>

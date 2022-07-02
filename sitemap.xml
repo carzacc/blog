@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.carmine.dev/categories/</loc>
-    <lastmod>2021-03-17T12:00:00+01:00</lastmod>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
   </url><url>
     <loc>https://www.carmine.dev/categories/</loc>
-    <lastmod>2021-03-17T12:00:00+01:00</lastmod>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.carmine.dev/posts/kubernetesclusterfcos/</loc>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.carmine.dev/categories/devops/</loc>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.carmine.dev/categories/kubernetes/</loc>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.carmine.dev/categories/linux/</loc>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.carmine.dev/posts/</loc>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://www.carmine.dev/</loc>
+    <lastmod>2022-07-02T10:30:00+02:00</lastmod>
   </url><url>
     <loc>https://www.carmine.dev/categories/desktop/</loc>
     <lastmod>2021-03-17T12:00:00+01:00</lastmod>
@@ -15,12 +33,6 @@
     <lastmod>2021-03-17T12:00:00+01:00</lastmod>
   </url><url>
     <loc>https://www.carmine.dev/categories/flutter-2/</loc>
-    <lastmod>2021-03-17T12:00:00+01:00</lastmod>
-  </url><url>
-    <loc>https://www.carmine.dev/posts/</loc>
-    <lastmod>2021-03-17T12:00:00+01:00</lastmod>
-  </url><url>
-    <loc>https://www.carmine.dev/</loc>
     <lastmod>2021-03-17T12:00:00+01:00</lastmod>
   </url><url>
     <loc>https://www.carmine.dev/categories/web/</loc>
@@ -82,9 +94,6 @@
   </url><url>
     <loc>https://www.carmine.dev/posts/multipartpost/</loc>
     <lastmod>2020-02-02T17:54:02+01:00</lastmod>
-  </url><url>
-    <loc>https://www.carmine.dev/categories/linux/</loc>
-    <lastmod>2020-01-01T21:44:50+01:00</lastmod>
   </url><url>
     <loc>https://www.carmine.dev/categories/opinion/</loc>
     <lastmod>2020-01-01T21:44:50+01:00</lastmod>

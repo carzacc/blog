@@ -6,7 +6,17 @@
     <description>Recent content in Posts on The Carmine Zaccagnino Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Mar 2021 12:00:00 +0100</lastBuildDate><atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 02 Jul 2022 10:30:00 +0200</lastBuildDate><atom:link href="https://www.carmine.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating a Kubernetes Cluster with Fedora CoreOS 36</title>
+      <link>https://www.carmine.dev/posts/kubernetesclusterfcos/</link>
+      <pubDate>Sat, 02 Jul 2022 10:30:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/kubernetesclusterfcos/</guid>
+      <description>In this post I&amp;rsquo;m going to explain how to create a Kubernetes 1.24 cluster on Fedora CoreOS 36 nodes.
+I will assume that, if you&amp;rsquo;re reading this, you already know that Fedora CoreOS is a great choice as a Kubernetes node OS because of both the ease of maintenance provided by RPM-OSTree and Zincati and the really easy way to automate provisioning of new nodes thanks to the use of Butane and Ignition.</description>
+    </item>
+    
     <item>
       <title>What’s New In Flutter 2? on Smashing Magazine</title>
       <link>https://www.carmine.dev/posts/flutter2smashing/</link>
