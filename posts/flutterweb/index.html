@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-us"><head>
-  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
-
   <meta charset="utf-8">
   <title>The Current State of Flutter for the Web</title>
 
@@ -12,7 +10,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.80.0" />
+  <meta name="generator" content="Hugo 0.93.3" />
 
   <!-- plugins -->
   
@@ -30,23 +28,6 @@
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
 
   
-  
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'UA-108378671-3');
-  </script>
   
   
 
@@ -85,12 +66,6 @@
             
             <li class="nav-item">
               <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/cookiedeclaration">Website Cookies Declaration</a>
             </li>
             
           
@@ -147,7 +122,7 @@
 <h1 id="how-hard-is-it-to-make-it-work">How hard is it to make it work?</h1>
 <p>This section is going to overlap with the first of my Smashing Magazine articles, but just a little bit.</p>
 <p>First of all, Flutter Web development is not available on the stable channel, and this means you need to switch to the <em>beta</em> channel. In addition to that, you need to run the</p>
-<pre><code>$ flutter config --enable-web
+<pre tabindex="0"><code>$ flutter config --enable-web
 </code></pre><p>command to enable Web development, but you probably already knew all of that. Still, I can&rsquo;t really take anything for granted when I&rsquo;m writing to the whole of the Internet, and I&rsquo;m already making it hard enough to understand what I&rsquo;m talking about to people who don&rsquo;t even know what the heck Flutter is, and if that&rsquo;s you I know a book you should read. Ask me about that, or maybe just take a look at my Twitter or this blog.</p>
 <p>Anyway, after you&rsquo;ve done that the Web browser will become a device Flutter will try to use to debug and you will be able to run <code>flutter build web</code> to get a bundle delivered to the <code>build</code> folder containing what the browser needs to show your beautiful Web app to your users, in particular your Dart code will be compiled to JS and the <code>index.html</code> file will be built based on the <code>index.html</code> in the <code>web</code> directory, which is the Web equivalent of the <code>android</code> and <code>ios</code> directories: you can modify it to change the app name and favicon, for example.</p>
 <p>One thing you might not know is that Flutter for the Web has another build target: a WASM target using Skia running on WebGL.</p>

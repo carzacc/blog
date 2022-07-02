@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-us"><head>
-  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
-
   <meta charset="utf-8">
   <title>Bash scripting for everyday actions</title>
 
@@ -12,7 +10,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.80.0" />
+  <meta name="generator" content="Hugo 0.93.3" />
 
   <!-- plugins -->
   
@@ -30,23 +28,6 @@
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
 
   
-  
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'UA-108378671-3');
-  </script>
   
   
 
@@ -85,12 +66,6 @@
             
             <li class="nav-item">
               <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/cookiedeclaration">Website Cookies Declaration</a>
             </li>
             
           
@@ -155,9 +130,9 @@
 <h2 id="running-bash-on-windows">Running Bash on Windows</h2>
 <p>If you’re running Windows, you’ll have to install the WSL (Windows Subsystem for Linux) by installing one of the packages available in the Windows Store that include Bash. You just need to open the Windows Store, search for Ubuntu (for example) and install it. When starting for the first time, it will prompt you to enter a username and password you’ll need to remember. The password won’t even be shown to you in the form of asterisks, in case you’re confused by the fact it seems like you’re not actually typing anything in.</p>
 <p>After that, you’ll be able to access Bash in any directory on your PC by running the</p>
-<pre><code>bash
+<pre tabindex="0"><code>bash
 </code></pre><p>command. You can exit the Bash shell by running the</p>
-<pre><code>exit
+<pre tabindex="0"><code>exit
 </code></pre><p>command.</p>
 <p>More details about how to use it will be provided in the rest of the article.</p>
 <h2 id="bash-scripting-the-basics">Bash scripting: the basics</h2>
@@ -165,53 +140,53 @@
 <h3 id="a-quick-introduction-to-bash-and-the-unix-command-line">A quick introduction to Bash and the Unix command line</h3>
 <p>This section will be a very quick introduction to the usage of the Bash shell and the Unix command line in general, given that most shells are very similar when it comes to the most basic tasks. There are plenty of books available online that will teach you how to use it, many of which are aimed directly at Linux users, but they also apply to other Unix-like operating systems and to the Windows Subsystem for Linux.</p>
 <p>The first thing to understand about any command line interface is that it’s like using a file manager: at any point you’re operating in a specific directory, called the <em>working directory</em>. Running the command (by typing it in and then pressing enter)</p>
-<pre><code>pwd
+<pre tabindex="0"><code>pwd
 </code></pre><p>will return the current working directory.</p>
 <p>The directory structure of Unix-like operating systems is a tree that branches out from the single <em>root</em> directory, the path of which is simply the character <em>/</em>. Other directories are chained after that separated by forward slashes. For example, the <em>home</em> directory at the root of the tree is found at path</p>
-<pre><code>/home
+<pre tabindex="0"><code>/home
 </code></pre><p>and a hypothetical <em>user</em> directory inside that would be at path</p>
-<pre><code>/home/user
+<pre tabindex="0"><code>/home/user
 </code></pre><p>Paths can be also expressed as <em>relative</em> paths, based on the current CLI working directory. The current working directory is expressed as <em>./</em> and the parent directory (the directory that contains the working directory) is expressed as <em>../</em>.</p>
 <p>You can change the working directory using the <code>cd</code> command followed by the path of the directory, expressed either as a relative path or an absolute path. For example, if you want to change the working directory to the parent directory, you’d write</p>
-<pre><code>cd ../
+<pre tabindex="0"><code>cd ../
 </code></pre><p>The trailing slash can be omitted and, if you’re moving into a subdirectory you can omit the ./ at the start, making the commands</p>
-<pre><code>cd ./Pictures/italy_pics/
+<pre tabindex="0"><code>cd ./Pictures/italy_pics/
 </code></pre><p>and</p>
-<pre><code>cd Pictures/italy_pics
+<pre tabindex="0"><code>cd Pictures/italy_pics
 </code></pre><p>equivalent.</p>
 <p>Files can be copied using the <code>cp</code> command, which takes two arguments: the path to the file to be copied and the path where you want the copy to be created, including the file name if you want the copy to have a different name: if you have a file called pic001.png in the italy_pics subdirectory and you want to copy it to the current working directory retaining the original file name, you’d run one of the following three commands (in decreasing order of command length)</p>
-<pre><code>cp italy_pics/pic001.png ./pic001.png
+<pre tabindex="0"><code>cp italy_pics/pic001.png ./pic001.png
 cp italy_pics/pic001.png ./
 cp italy_pics/pic001.png .
 </code></pre><p>The command to move files is <code>mv</code> and you use it just like <code>cp</code>, except for the fact that it can be used to rename files by trying to move a file into the same directory it came from but with a different file name:</p>
-<pre><code>mv italy_pics/pic001.png italy_pics/pic1.png
+<pre tabindex="0"><code>mv italy_pics/pic001.png italy_pics/pic1.png
 </code></pre><p>While using the interactive shell, you can use the <em>Tab</em> keyboard button to get automatic completion of commands and arguments when there is only one choice or get a list of possible option. This is not relevant for Bash scripting, but will be more relevant in the coming articles.</p>
 <h2 id="running-a-bash-script">Running a Bash script</h2>
 <p>Bash is an interpreted language and Bash scripts are ran mostly just like .py files.</p>
 <p>To run a bash script saved in a file called <code>script.sh</code>, open a terminal window in the same directory as the script and run</p>
-<pre><code>bash script.sh
+<pre tabindex="0"><code>bash script.sh
 </code></pre><p>But there is actually a better way: just like with Python scripts, you can add a line at the top of the file, called the shebang line.</p>
 <p>The shebang line consists of the two characters <code>#!</code> followed by the path to the interpreter to be used to run the script. In the case of bash, it is found at (or symlinked to) /bin/bash in pretty much every environment in which Bash installed, so you can add</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 </code></pre><p>at the very top of your script so that the shell knows what interpreter to run.</p>
 <p>This is useful because you can make the script executable with</p>
-<pre><code>chmod +x script.sh
+<pre tabindex="0"><code>chmod +x script.sh
 </code></pre><p>and then run it just like any executable with</p>
-<pre><code>./script.sh
+<pre tabindex="0"><code>./script.sh
 </code></pre><h2 id="bin">~/bin</h2>
 <p>If it’s a script you think you’ll need to use often, you can either add it to the systemwide binary file paths (where the packages you download are installed) or create a <code>bin</code> folder in your home directory and copy the script there. For example, rename the script file to the command to the name you want to give to the command, for example <code>myfirstscript</code> using <code>mv</code> and then create the <code>~/bin</code> directory and copy the file there with the following three commands (in an interactive Unix shell or Bash shell on Windows):</p>
-<pre><code>mv script.sh myfirstscript
+<pre tabindex="0"><code>mv script.sh myfirstscript
 mkdir ~/bin
 cp myfirstscript ~/bin/
 </code></pre><p>and you can run the script simply by running</p>
-<pre><code>myfirstscript
+<pre tabindex="0"><code>myfirstscript
 </code></pre><p>from any working directory as long as you’re using the same user account you used to copy the file.</p>
 <h2 id="writing-a-basic-bash-script">Writing a basic Bash script</h2>
 <p>Let’s start writing a Bash script by making a script that copies all of our organized pictures into a single directory and renameames them according to the place where they were taken. This is not quite as good as the watermark we wanted, but let’s do one thing at a time</p>
 <p>Open any text editor and create a file called <code>picorganizer</code> in the <code>~/bin</code> directory. The first thing you’ll need to add is the shebang line</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 </code></pre><p>Make it executable right away by opening a terminal and running</p>
-<pre><code>chmod +x ~/bin/picorganizer
+<pre tabindex="0"><code>chmod +x ~/bin/picorganizer
 </code></pre><h2 id="what-our-script-will-actually-need-to-do">What our script will actually need to do</h2>
 <p>To solve the problem we have, we need to:</p>
 <ol>
@@ -229,7 +204,7 @@ cp myfirstscript ~/bin/
 </ol>
 <h2 id="finding-the-files-we-need-to-copy">Finding the files we need to copy</h2>
 <p>The example directory tree we&rsquo;ll be working with (that you can get by running the <code>tree</code> command) will be the following</p>
-<pre><code>italy_pics/
+<pre tabindex="0"><code>italy_pics/
 ├── Center
 │   ├── Assisi
 │   ├── Florence
@@ -254,22 +229,22 @@ cp myfirstscript ~/bin/
 </code></pre><p>where each city/region name is a directory containing the pictures taken in that place. These are example places in Italy and do not necessarily represent places I would recommend going to, don&rsquo;t judge me for a semi-pseudo-random selection of places.</p>
 <p>To make the script aware of what we&rsquo;re working with, we need to get a list of files and directories and store them in a Bash variable. Let&rsquo;s start by learning the command to list files and directories.</p>
 <p>In the Bash interactive shell, we can use the</p>
-<pre><code>ls
+<pre tabindex="0"><code>ls
 </code></pre><p>command to simply list the files and directories contained in the working directory, or you can run it with a path argument, like this:</p>
-<pre><code>ls /path/to/dir
+<pre tabindex="0"><code>ls /path/to/dir
 </code></pre><p>to list the files and directories contained in <code>/path/to/dir</code>.</p>
 <p>We can save the output of the <code>ls</code> command to a variable called <code>list</code> by writing, in our Bash script, the following:</p>
-<pre><code>list=$(ls)
+<pre tabindex="0"><code>list=$(ls)
 </code></pre><p>where <code>$(command)</code> means <em>whatever <code>command</code> prints to standard output</em>. You can then use that variable just by prefixing the variable name with <code>$</code> or by prefixing it with <code>$</code> and enclosing the variable name in square brackets: just</p>
-<pre><code>ls
+<pre tabindex="0"><code>ls
 </code></pre><p>is equivalent to</p>
-<pre><code>files=$(ls)
-echo &quot;$files&quot;
+<pre tabindex="0"><code>files=$(ls)
+echo &#34;$files&#34;
 </code></pre><p>and to</p>
-<pre><code>files=$(ls)
-echo &quot;${files}&quot;
+<pre tabindex="0"><code>files=$(ls)
+echo &#34;${files}&#34;
 </code></pre><p>This is not actually what we need right now, though: Bash&rsquo;s <code>for in</code> loop is able to iterate over files in the working directory very easily, and we can just nest them and get to the pictures very quickly:</p>
-<pre><code>for area in *; do
+<pre tabindex="0"><code>for area in *; do
   for city in ${area}/*; do
     for picture in ${area}/${city}/*; do
       # do something with ${area}/${city}/${picture}
@@ -277,14 +252,14 @@ echo &quot;${files}&quot;
   done
 done
 </code></pre><p>We can simply copy them all to another directory renamed to reflect where they were taken by adding the <code>cp</code> command to the innermost <code>for</code> loop:</p>
-<pre><code>mkdir ../italy_pics_organized
+<pre tabindex="0"><code>mkdir ../italy_pics_organized
 i=1
 for area in *; do
   for city in ${area}/*; do
     for picture in ${city}/*; do
        extension=${picture##*.}
-       cityname=&quot;${city##*/}&quot;
-       cp ${picture} &quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
+       cityname=&#34;${city##*/}&#34;
+       cp ${picture} &#34;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&#34;
        ((i++))
     done
   done
@@ -296,51 +271,51 @@ done
 <p>We are doing something, and the script isn&rsquo;t going to get much more complicated than that, but we aren&rsquo;t adding a watermark yet. That&rsquo;s because there isn&rsquo;t a built-in tool to do that. No worries, though: the shell is expandable in the easiest way possible: by installing some software that provides a CLI interface.</p>
 <p>The tool for the job when it comes to image manipulation is <em>ImageMagick</em>, which you can install by following the instructions on its own <a href="https://imagemagick.org/script/download.php">official download page</a>.</p>
 <p>On Linux, what I actually recommend you to do is to install the <em>ImageMagick</em> package on Fedora/RHEL/CentOS by running</p>
-<pre><code>sudo dnf install ImageMagick
+<pre tabindex="0"><code>sudo dnf install ImageMagick
 </code></pre><p>on Fedora or RHEL/CentOS 8 or by running</p>
-<pre><code>sudo yum install ImageMagick
+<pre tabindex="0"><code>sudo yum install ImageMagick
 </code></pre><p>on RHEL/CentOS 7 or earlier.</p>
 <p>On Ubuntu, you can install the <em>imagemagick</em> package using APT by running</p>
-<pre><code>sudo apt install imagemagick
+<pre tabindex="0"><code>sudo apt install imagemagick
 </code></pre><p>When using WSL with Ubuntu installed on top of Windows, you need to follow instructions for installation on Ubuntu while inside the Bash shell interface.</p>
 <p>ImageMagick provides, among other things, a command called <code>convert</code>, which can be used, in conjunction with the <code>annotate</code> functionality, to add watermarks to images by running a command that looks like the following:</p>
-<pre><code>convert input.png -fill &quot;textcolor&quot; -pointsize textsize -gravity WhereTheTextWillBe -annotate +offsetHorizontal+offsetVertical &quot;watermark text&quot; output.png
+<pre tabindex="0"><code>convert input.png -fill &#34;textcolor&#34; -pointsize textsize -gravity WhereTheTextWillBe -annotate +offsetHorizontal+offsetVertical &#34;watermark text&#34; output.png
 </code></pre><p>where you need to replace <code>textcolor</code> with either a color name or an RGB hexadecimal color code (e.g. <code>green</code> or <code>#76ff03</code>), <code>textsize</code> with a number specifying the size of the font (e.g. <code>10</code> for a small font, <code>100</code> for a big font), <code>WhereTheText</code> will have to be replaced with something along the lines of <code>NorthEast</code> or <code>SouthWest</code> according to where you want the text to be, and <code>paddingHorizontal</code> and <code>paddingVertical</code> are offsets that can be used to move the text around or, more often, away from the edges. <code>input.png</code> and <code>output.png</code> have to be replaced with paths to the input and output pictures.</p>
 <p>For our example, the command I chose, with <code>${picture}</code>, <code>${watermarktext}</code> and <code>${saveto}</code> being variables, is:</p>
-<pre><code>convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermarktext}&quot; &quot;${saveto}&quot;
+<pre tabindex="0"><code>convert ./${picture} -fill &#34;white&#34; -pointsize 90 -gravity SouthEast -annotate +30+30 &#34;${watermarktext}&#34; &#34;${saveto}&#34;
 </code></pre><p>So the final script is:</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 mkdir ../italy_pics_organized
 i=1
 for area in *; do
   for city in ${area}/*; do
     for picture in ${city}/*.jpg; do
-      cityname=&quot;${city##*/}&quot;
-      extension=&quot;${picture##*.}&quot;
-      saveto=&quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
-      watermark=&quot;${cityname} (${area})&quot;
-      convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermark}&quot; &quot;${saveto}&quot;
+      cityname=&#34;${city##*/}&#34;
+      extension=&#34;${picture##*.}&#34;
+      saveto=&#34;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&#34;
+      watermark=&#34;${cityname} (${area})&#34;
+      convert ./${picture} -fill &#34;white&#34; -pointsize 90 -gravity SouthEast -annotate +30+30 &#34;${watermark}&#34; &#34;${saveto}&#34;
       ((i++))
     done
   done
 done
 </code></pre><p>After <a href="https://dev.to/moopet">Ben Sinclair</a> in the comments to this post on dev.to noticed that this wouldn&rsquo;t handle spaces in the path properly, I need to point out that you need to change the character used by Bash to separate items to loop through in the <code>for</code> loop by adding two lines at the top like the following:</p>
-<pre><code>IFS='
-'
+<pre tabindex="0"><code>IFS=&#39;
+&#39;
 </code></pre><p>which sets the separator to the newline character (<code>\n</code>, aka the <code>LF</code> character in character encoding specifications), so that the script ends up being this:</p>
-<pre><code>#!/bin/bash
+<pre tabindex="0"><code>#!/bin/bash
 mkdir ../italy_pics_organized
 i=1
-IFS='
-'
+IFS=&#39;
+&#39;
 for area in *; do
   for city in ${area}/*; do
     for picture in ${city}/*.jpg; do
-      cityname=&quot;${city##*/}&quot;
-      extension=&quot;${picture##*.}&quot;
-      saveto=&quot;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&quot;
-      watermark=&quot;${cityname} (${area})&quot;
-      convert ./${picture} -fill &quot;white&quot; -pointsize 90 -gravity SouthEast -annotate +30+30 &quot;${watermark}&quot; &quot;${saveto}&quot;
+      cityname=&#34;${city##*/}&#34;
+      extension=&#34;${picture##*.}&#34;
+      saveto=&#34;../italy_pics_organized/${i}-${cityname}(${area}).${extension}&#34;
+      watermark=&#34;${cityname} (${area})&#34;
+      convert ./${picture} -fill &#34;white&#34; -pointsize 90 -gravity SouthEast -annotate +30+30 &#34;${watermark}&#34; &#34;${saveto}&#34;
       ((i++))
     done
   done
@@ -349,21 +324,21 @@ done
 <p>Here are a few things I didn&rsquo;tell you you might need to know in the future when working with Bash or browsing Bash-related documentation.</p>
 <h2 id="the-difference-between--and-">The Difference Between # and $</h2>
 <p>Usually, when reading documentation about Unix command line usage (including the sections of my <a href="http://carmine.dev/programmingflutter/">book about cross-platform mobile app development</a> that concern Linux installation or CLI usage, for example) you might find that the commands are prefixed with the character <code>$</code>, like in the following example:</p>
-<pre><code>$ ls -alh
+<pre tabindex="0"><code>$ ls -alh
 </code></pre><p>or are prefixed with <code>#</code>, like in the following example:</p>
-<pre><code># vim /etc/fstab
+<pre tabindex="0"><code># vim /etc/fstab
 </code></pre><p>Those prefixed with <code>$</code> are meant to be executed as an unprivileged, regular user. Those prefixed with <code>#</code> are meant to be executed by the <code>root</code> account or by using <code>sudo</code>.</p>
 <h2 id="dont-delete-your-stuff-a-not-so-funny-anecdote">Don&rsquo;t Delete Your Stuff: a (Not So) Funny Anecdote</h2>
 <p>You might want to clean up and use the command</p>
-<pre><code>rm -rf *
+<pre tabindex="0"><code>rm -rf *
 </code></pre><p>if you know the working directory is going to be each of the directories in which you have pictures organized <em>the old way</em>, for example. Only use such a destructive command if you’re 100% sure there is no way for it to get executed in the wrong folder. Make sure to at least turn it into something that only deletes files with the extension you want to delete like this</p>
-<pre><code>rm -rf *.jpg
+<pre tabindex="0"><code>rm -rf *.jpg
 rm -rf *.jpeg
 </code></pre><p>If you’re thinking nobody would be so dumb not to think of it, there is at least one exception in the world. Some years ago I was a bit too confident and wrote a shell script that did some cleaning up afterwards. At some point during the execution of the script, it executed <code>rm -rf *</code> <em>in my home folder</em>. That’s not great.</p>
 <p>I only figured it out when it was halfway through deleting the Documents folder, and it had already deleted the <code>~/bin</code> folder containing, ironically, most of my commonly used (and harmless) bash scripts (some of which I already was using on some remote servers and that I was able to recover) and itself in the process. I had recent backups of most of the important stuff, so it wasn’t the end of the world for me, but I can’t say it wasn’t annoying.</p>
 <h2 id="the-bash-if">The Bash if</h2>
 <p>Bash has an <code>if</code> clause, I just didn&rsquo;t feel like adding more complication to the script (even though it would have been better for it) by adding functionality that requires its use, its basic syntax is</p>
-<pre><code>if [[ condition ]]; then
+<pre tabindex="0"><code>if [[ condition ]]; then
   # do something
 fi
 </code></pre><p>You can find more information about it online, and online you&rsquo;ll also find a lot more information on Bash than what it&rsquo;s made sense to include in this post.</p>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="en-us"><head>
-  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="1b18d828-dd87-4301-bdf6-4dd0a4c3c0c7" data-blockingmode="auto" type="text/javascript"></script>
-
   <meta charset="utf-8">
   <title>Two-Way, Real-Time Communication with WebSockets in Flutter Apps (&#43; Node backend Implementation)</title>
 
@@ -12,7 +10,7 @@
     
     
   <meta name="author" content="Carmine Zaccagnino">
-  <meta name="generator" content="Hugo 0.80.0" />
+  <meta name="generator" content="Hugo 0.93.3" />
 
   <!-- plugins -->
   
@@ -30,23 +28,6 @@
   <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
 
   
-  
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'UA-108378671-3');
-  </script>
   
   
 
@@ -85,12 +66,6 @@
             
             <li class="nav-item">
               <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
-            </li>
-            
-          
-            
-            <li class="nav-item">
-              <a class="nav-link" href="https://www.carmine.dev/cookiedeclaration">Website Cookies Declaration</a>
             </li>
             
           
@@ -164,7 +139,7 @@
 <p>The <code>WebSocketChannel.sink</code> is used to send messages. As the name implies, it&rsquo;s a <code>StreamSink</code>. If you&rsquo;ve read my book or have worked with the Firebase Cloud Firestore before, this is used in a similar way to the <code>Firestore</code>&rsquo;s <code>CollectionReference</code> object: <code>WebSocketChannel.sink.add(data)</code> sends data through the WebSocket.</p>
 <h3 id="closing-the-connection">Closing the Connection</h3>
 <p><code>channel.sink.close(statusCode);</code></p>
-<pre><code>  @override
+<pre tabindex="0"><code>  @override
   void dispose() {
     super.dispose();
     channel.sink.close(statusCodes.goingAway);
@@ -191,25 +166,25 @@
 <p>We&rsquo;re going to build the backend for the app with Node.js and the <a href="https://www.npmjs.com/package/ws"><code>ws</code> npm package</a>.</p>
 <h3 id="the-ws-package">The ws Package</h3>
 <p>There&rsquo;s a very popular and easy-to-use WebSocket client/server <a href="https://www.npmjs.com/package/ws">package for Node called simply <em>ws</em></a>, so you can install it using</p>
-<pre><code>$ npm install ws
+<pre tabindex="0"><code>$ npm install ws
 </code></pre><p>You can start a WebSocket server that listens to a given port with the following code:</p>
-<pre><code>var server = new WebSocket.Server(
+<pre tabindex="0"><code>var server = new WebSocket.Server(
   {
     port: port,
   }
 );
 </code></pre><p>you can wait for a connection and define a callback to be ran when a client connects with the following code:</p>
-<pre><code>server.on('connection', function connection(client) {
+<pre tabindex="0"><code>server.on(&#39;connection&#39;, function connection(client) {
 	// code to execute when a client connects
 });
 </code></pre><p>This gives us a <code>client</code> object we can use to send messages to the connected WebSocket client using <code>client.send()</code>:</p>
-<pre><code>client.send(msg);
+<pre tabindex="0"><code>client.send(msg);
 </code></pre><p>We can also listen for messages sent by the client over the WebSocket and run a function when that happens:</p>
-<pre><code>client.on('message', function incoming(message) {
+<pre tabindex="0"><code>client.on(&#39;message&#39;, function incoming(message) {
 	// code to execute when a message is received
 });
 </code></pre><p>An useful member of the <code>server</code> object is <code>server.clients</code>, which is an array of the connected clients. This means we can send a message to each connected client with the following:</p>
-<pre><code>for(var cl of server.clients) {
+<pre tabindex="0"><code>for(var cl of server.clients) {
   cl.send(message);
 }
 </code></pre><h3 id="implementing-the-backend">Implementing the Backend</h3>
