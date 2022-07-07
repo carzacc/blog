@@ -6,7 +6,16 @@
     <description>Recent content in kubernetes on The Carmine Zaccagnino Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Jul 2022 10:30:00 +0200</lastBuildDate><atom:link href="https://www.carmine.dev/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Jul 2022 12:40:00 +0200</lastBuildDate><atom:link href="https://www.carmine.dev/categories/kubernetes/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Does Kubernetes support SELinux?</title>
+      <link>https://www.carmine.dev/posts/kubernetesselinux/</link>
+      <pubDate>Thu, 07 Jul 2022 12:40:00 +0200</pubDate>
+      
+      <guid>https://www.carmine.dev/posts/kubernetesselinux/</guid>
+      <description>In my previous post about setting up a Kubernetes cluster using Fedora CoreOS nodes I mentioned the fact that SELinux should not be disabled when creating Kubernetes clusters.</description>
+    </item>
+    
     <item>
       <title>Creating a Kubernetes Cluster with Fedora CoreOS 36</title>
       <link>https://www.carmine.dev/posts/kubernetesclusterfcos/</link>

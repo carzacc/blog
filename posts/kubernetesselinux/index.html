@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+  <meta charset="utf-8">
+  <title>Does Kubernetes support SELinux?</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description"
+    content="">
+    
+    
+  <meta name="author" content="Carmine Zaccagnino">
+  <meta name="generator" content="Hugo 0.93.3" />
+
+  <!-- plugins -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.css ">
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/plugins/themify-icons/themify-icons.css ">
+  
+
+  <!-- Main Stylesheet -->
+  
+  <link rel="stylesheet" href="https://www.carmine.dev/scss/style.min.css" media="screen">
+
+  <!--Favicon-->
+  <link rel="shortcut icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+  <link rel="icon" href="https://www.carmine.dev/images/favicon.png " type="image/x-icon">
+
+  
+  
+  
+
+</head><body>
+    
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- navigation -->
+<header class="fixed-top navigation">
+
+  <div class="container">
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-transparent">
+      <a class="navbar-brand"href="https://www.carmine.dev/"><img class="img-fluid" src="/img/logo.svg" alt="The Carmine Zaccagnino Blog"></a>
+      <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation">
+        <i class="ti-menu h3"></i>
+      </button>
+
+      <div class="collapse navbar-collapse text-center" id="navigation">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://www.carmine.dev/"> Home </a>
+          </li>
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/articleselsewhere">Articles I&#39;ve Published Elsewhere</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/programmingflutter">Programming Flutter</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="http://www.carminezacc.com">The Rest of My Stuff</a>
+            </li>
+            
+          
+            
+            <li class="nav-item">
+              <a class="nav-link" href="https://www.carmine.dev/aboutme">What&#39;s This?</a>
+            </li>
+            
+          
+        </ul>
+        
+        <!-- search -->
+        <div class="search">
+          <button id="searchOpen" class="search-btn"><i class="ti-search"></i></button>
+          <div class="search-wrapper">
+            <form action="https://www.carmine.dev/search" class="h-100">
+              <input class="search-box px-4" id="search-query" name="s" type="search" placeholder="Type & Hit Enter...">
+            </form>
+            <button id="searchClose" class="search-close"><i class="ti-close text-dark"></i></button>
+          </div>
+        </div>
+        
+      </div>
+    </nav>
+  </div>
+</header>
+<!-- /navigation --> <div class="py-5 d-none d-lg-block"></div> 
+
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto block shadow mb-5">
+        <h2>Does Kubernetes support SELinux?</h2>
+        <div class="mb-3 post-meta">
+          <a href="/author/carmine-zaccagnino">Carmine Zaccagnino</a>,
+          Jul 7, 2022, 
+          <a href="/categories/kubernetes">Kubernetes</a>
+          
+          <a href="/categories/linux">Linux</a>
+          
+          <a href="/categories/devops">Devops</a>
+          
+          <a href="/categories/security">Security</a>
+          
+        </div>
+        
+        <div class="content mb-5">
+          <p><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--sONvDNUS--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/mjkfy895ai99yvr0lrrh.png" alt=""></p>
+<p>In my <a href="https://carmine.dev/posts/kubernetesclusterfcos/">previous post about setting up a Kubernetes cluster using Fedora CoreOS nodes</a> I mentioned the fact that SELinux should not be disabled when creating Kubernetes clusters.</p>
+<p>That is in complete contradiction to what many online tutorials<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup><sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup><sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup><sup id="fnref:5"><a href="#fn:5" class="footnote-ref" role="doc-noteref">5</a></sup> will tell you. But why is that?</p>
+<h3 id="generic-selinux-is-just-a-pita-myth">Generic &ldquo;SELinux is just a PITA&rdquo; myth</h3>
+<p>One reason is the idea, common among those who might have jumped across to RedHat-based system administration from other distributions, that SELinux breaks things and it&rsquo;s just easier to disable it. It isn&rsquo;t, really, not for servers. Maybe for a workstation that could be an acceptable compromise: you might do unpredictable things on it, so you might end up spending a lot of time troubleshooting a tool that feels like it&rsquo;s getting in the way of your work most of the time without much of a tangible security benefit.</p>
+<p>But servers are different: you use them to perform a job that is somewhat pre-defined: you&rsquo;re either running software directly on it, and you should know what that software is supposed to do with the network and the file system, or you&rsquo;re running containers, in which case what you&rsquo;re doing is still somewhat predictable, and you should regulate to the extent to which the workload is predictable.</p>
+<h3 id="the-selinux-doesnt-work-with-k8s-because-kubelet-doesnt-support-it-myth">The &ldquo;SELinux doesn&rsquo;t work with K8S because kubelet doesn&rsquo;t support it&rdquo; myth</h3>
+<p>Another reason that originated this idea that one should disable SELinux for Kubernetes clusters is that Kubernetes specifically doesn&rsquo;t play nice with SELinux because the Kubernetes official kubeadm setup tutorial <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/#installing-kubeadm-kubelet-and-kubectl">says so in the tab about RedHat-based distributions</a> which states, talking about disabling SELinux, that</p>
+<blockquote>
+<p><em>This is required to allow containers to access the host filesystem, which is needed by pod networks for example.</em></p>
+</blockquote>
+<p>Digging deeper, one will find, however, that SELinux is being used by people in production Kubernetes clusters, and there really aren&rsquo;t many issues, at most what is reported is the need to set SELinux labels on a few files and directories on some setups, but other setups may not even require any additional work. You can test this yourself with the <a href="https://carmine.dev/posts/kubernetesclusterfcos/">example Kubernetes setup tutorial I wrote and mentioned at the start of this post</a>.</p>
+<p>As <a href="https://medium.com/cri-o/cri-o-has-builtin-selinux-support-6ff45b707cf0">Daniel Walsh himself wrote in a blog post</a>, CRI-O integrates very well with SELinux and prevents dangerous actions like a container loading an old, unmaintained and therefore potentially vulnerable kernel module and breaking out of the isolation. Additionally, the <a href="https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.24/#selinuxoptions-v1-core">Kubernetes API itself</a> contains resources to specifically configure SELinux labels for containers. Doesn&rsquo;t sound like something they would do for a tool that &ldquo;doesn&rsquo;t work with Kubernetes&rdquo;, according to some. Also, <a href="https://github.com/cncf/tag-security/blob/main/security-whitepaper/v2/cloud-native-security-whitepaper.md">the CNCF security whitepaper</a> mentions SELinux as a tool that can be used to provide isolation and limit privileges, which is as much as we could expect from an high-level, architecturally-minded document.</p>
+<h3 id="kubernetes-does-work-with-selinux-enabled-so-you-shouldnt-disable-it-certainly-not-before-even-trying">Kubernetes DOES work with SELinux enabled, so you shouldn&rsquo;t disable it, certainly not before even trying</h3>
+<p>In conclusion, try things for yourself before giving up on a tool that could end up providing a critical security benefit. If you want to share a story about your own experience with SELinux and Kubernetes, it would be really appreciated <a href="https://dev.to/carminezacc/does-kubernetes-support-selinux-3oop">in the comments to this post on dev.to</a> or directly <a href="mailto:carmine@carminezacc.com">to my email carmine@carminezacc.com</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://www.matthiaspreu.com/posts/fedora-coreos-kubernetes-basic-setup/">https://www.matthiaspreu.com/posts/fedora-coreos-kubernetes-basic-setup/</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://ostechnix.com/install-kubernetes-cluster-using-kubeadm/">https://ostechnix.com/install-kubernetes-cluster-using-kubeadm/</a>&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3" role="doc-endnote">
+<p><a href="https://upcloud.com/resources/tutorials/install-kubernetes-cluster-centos-8">https://upcloud.com/resources/tutorials/install-kubernetes-cluster-centos-8</a>&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4" role="doc-endnote">
+<p><a href="https://docs.oracle.com/en/operating-systems/oracle-linux/kubernetes/kube_ha.html#requirements-selinux-ha">https://docs.oracle.com/en/operating-systems/oracle-linux/kubernetes/kube_ha.html#requirements-selinux-ha</a>&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:5" role="doc-endnote">
+<p><a href="https://linoxide.com/setup-kubernetes-kubeadm-centos/">https://linoxide.com/setup-kubernetes-kubeadm-centos/</a>&#160;<a href="#fnref:5" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+        </div>
+        <div class="mb-3 post-meta">
+          
+        </div>
+      </div>
+      <div class="col-lg-8 mx-auto block shadow">
+        
+        
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+
+<footer class="py-4 bg-light border-top">
+  <div class="container">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
+        <a href="https://www.carmine.dev/" class="d-block pb-3"><img src="/img/logo.svg" class="img-fluid" alt="The Carmine Zaccagnino Blog"></a>
+      </div>
+      <div class="col-lg-4 text-center mb-4 mb-lg-0">
+        <ul class="list-inline mb-0">
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">Send me an email at carmine@carminezacc.com</a></li>
+          
+          <li class="list-inline-item"><a class="text-dark d-block p-2" href="mailto:carmine@carminezacc.com">VATIN (Partita IVA): IT02118220769</a></li>
+          
+        </ul>
+      </div>
+      <div class="col-lg-4 text-lg-right text-center mb-4 mb-lg-0">
+        <ul class="list-inline social-icon mb-0">
+          
+        </ul>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <span></span>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script>
+  var indexURL = "https://www.carmine.dev/index.json"
+</script>
+
+
+<!-- JS Plugins -->
+
+<script src="https://www.carmine.dev/plugins/jQuery/jquery.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/bootstrap/bootstrap.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/fuse.min.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/mark.js"></script>
+
+<script src="https://www.carmine.dev/plugins/search/search.js"></script>
+
+
+<!-- Main Script -->
+
+<script src="https://www.carmine.dev/js/script.min.js"></script>
+
+
+
+
+</body>
+
+</html>
